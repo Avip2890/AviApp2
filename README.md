@@ -1,4 +1,4 @@
-# AviApp
+# AviApp2
 
 AviApp is an ASP.NET Core API application designed for managing customers.  
 The project is developed using .NET 9.0 and includes built-in API documentation with Swagger.
