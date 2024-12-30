@@ -1,5 +1,19 @@
+<<<<<<< HEAD
 bin/
 obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+=======
+# generated files
+target/
+generated/
+
+# dependencies
+Dependencies.toml
+
+# config files
+Config.toml
+# the config files used for testing, Uncomment the following line if you want to commit the test config files
+#!**/tests/Config.toml
+>>>>>>> d877455b2c58adad00e6b7234d137229e8ed739c
