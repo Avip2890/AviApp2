@@ -7,9 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="11.11.0" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Handlers\OrderHandlers\" />
+      <Folder Include="Queries\CustomerQueries\" />
+      <Folder Include="Queries\MenuItemQueries\" />
+      <Folder Include="Queries\OrderQueries\" />
+      <Folder Include="Validators\CustomerValidator\" />
+      <Folder Include="Validators\MenuItemValidators\" />
+      <Folder Include="Validators\OrderValidators\" />
     </ItemGroup>
 
 </Project>

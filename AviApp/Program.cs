@@ -1,5 +1,7 @@
+using System.Reflection;
 using AviApp.Interfaces;
 using AviApp.Services;
+using MediatR;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

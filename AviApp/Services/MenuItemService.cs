@@ -12,13 +12,14 @@ public class MenuItemService : IMenuItemService
 
     public MenuItem? GetMenuItemById(int id) => _menuItems.FirstOrDefault(m => m.Id == id);
 
-    public void AddMenuItem(MenuItem menuItem)
+    public MenuItem   AddMenuItem(MenuItem menuItem)
     {
         menuItem.Id = _menuItems.Count + 1; 
         _menuItems.Add(menuItem);
+        return menuItem;
     }
 
-    public void UpdateMenuItem(int id, MenuItem updatedMenuItem)
+    public MenuItem UpdateMenuItem(int id, MenuItem updatedMenuItem)
     {
         var menuItem = GetMenuItemById(id);
         if (menuItem != null)
@@ -27,15 +28,19 @@ public class MenuItemService : IMenuItemService
             menuItem.Description = updatedMenuItem.Description;
             menuItem.Price = updatedMenuItem.Price;
             menuItem.IsAvailable = updatedMenuItem.IsAvailable;
+            return menuItem;
         }
+        return null;
     }
 
-    public void DeleteMenuItem(int id)
+    public bool DeleteMenuItem(int id)
     {
         var menuItem = GetMenuItemById(id);
         if (menuItem != null)
         {
             _menuItems.Remove(menuItem);
+            return true;
         }
+        return false;
     }
 }

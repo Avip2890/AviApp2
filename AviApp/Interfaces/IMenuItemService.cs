@@ -7,7 +7,7 @@ public interface IMenuItemService
 {
     IEnumerable<MenuItem> GetAllMenuItems();
     MenuItem? GetMenuItemById(int id);
-    void AddMenuItem(MenuItem menuItem);
-    void UpdateMenuItem(int id, MenuItem updatedMenuItem);
-    void DeleteMenuItem(int id);
+    MenuItem AddMenuItem(MenuItem menuItem); 
+    MenuItem? UpdateMenuItem(int id, MenuItem updatedMenuItem);
+    bool DeleteMenuItem(int id);
 }

@@ -12,13 +12,14 @@ public class OrderService : IOrderService
 
     public Order? GetOrderById(int id) => _orders.FirstOrDefault(o => o.Id == id);
 
-    public void CreateOrder(Order order)
+    public Order CreateOrder(Order order)
     {
         order.Id = _orders.Count + 1; 
         _orders.Add(order);
+        return order;
     }
 
-    public void UpdateOrder(int id, Order updatedOrder)
+    public Order? UpdateOrder(int id, Order updatedOrder)
     {
         var order = GetOrderById(id);
         if (order != null)
@@ -26,15 +27,19 @@ public class OrderService : IOrderService
             order.CustomerId = updatedOrder.CustomerId;
             order.Items = updatedOrder.Items;
             order.OrderDate = updatedOrder.OrderDate;
+            return order;
         }
+        return null;
     }
 
-    public void DeleteOrder(int id)
+    public bool DeleteOrder(int id)
     {
         var order = GetOrderById(id);
         if (order != null)
         {
             _orders.Remove(order);
+            return true;
         }
+        return false;
     }
 }
