@@ -28,6 +28,7 @@ public class MenuItemController : ControllerBase
     [HttpPost]
     public IActionResult AddMenuItem([FromBody] MenuItem menuItem)
     {
+   
         _menuItemService.AddMenuItem(menuItem);
         return CreatedAtAction(nameof(GetMenuItemById), new { id = menuItem.Id }, menuItem);
     }
@@ -35,6 +36,7 @@ public class MenuItemController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateMenuItem(int id, [FromBody] MenuItem updatedMenuItem)
     {
+      
         _menuItemService.UpdateMenuItem(id, updatedMenuItem);
         return NoContent();
     }

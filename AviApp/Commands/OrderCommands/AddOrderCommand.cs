@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using AviApp.Models;
+using MediatR;
 
 namespace AviApp.Commands.OrderCommands;
 
 public class AddOrderCommand : IRequest<Models.Order>
 {
     public int CustomerId { get; set; }
-    public List<int> MenuItemIds { get; set; } = new List<int>();
+    public List<MenuItem> Items { get; set; } = new();
     public DateTime OrderDate { get; set; }
 }

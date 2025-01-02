@@ -34,22 +34,10 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateCustomer(Customer customer)
+    public IActionResult CreateCustomer([FromBody] Customer customer)
     {
         var newCustomer = _customerService.CreateCustomer(customer);
         return CreatedAtAction(nameof(GetCustomerById), new { id = newCustomer.Id }, newCustomer);
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult UpdateCustomer(int id, Customer updatedCustomer)
-    {
-        var customer = _customerService.UpdateCustomer(id, updatedCustomer);
-        if (customer == null)
-        {
-            return NotFound(new { Message = $"Customer with Id {id} not found." });
-        }
-
-        return Ok(customer);
     }
 
     [HttpDelete("{id}")]
@@ -62,5 +50,18 @@ public class CustomerController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateCustomer(int id, [FromBody] Customer updatedCustomer)
+    {
+        var customer = _customerService.UpdateCustomer(id, updatedCustomer);
+
+        if (customer == null)
+        {
+            return NotFound(new { Message = $"Customer with Id {id} not found." });
+        }
+
+        return Ok(customer);
     }
 }

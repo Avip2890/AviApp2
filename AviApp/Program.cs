@@ -1,8 +1,12 @@
 using System.Reflection;
+using AviApp.Data;
 using AviApp.Interfaces;
 using AviApp.Services;
+using AviApp.Validators.CustomerValidator;
 using MediatR;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CustomerValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddDbContext<AviAppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // Add Swagger
