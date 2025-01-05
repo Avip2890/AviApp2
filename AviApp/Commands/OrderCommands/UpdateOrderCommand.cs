@@ -1,9 +1,10 @@
-﻿using AviApp.Models;
+﻿using AviApp.Domain.Entities;
+using AviApp.Models;
 using MediatR;
 
 namespace AviApp.Commands.OrderCommands;
 
-public class UpdateOrderCommand : IRequest<Models.Order?>
+public class UpdateOrderCommand : IRequest<Order?>
 {
     public int Id { get; set; }
     public int CustomerId { get; set; }

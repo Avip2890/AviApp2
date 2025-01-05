@@ -1,7 +1,6 @@
-using AviApp.Commands.OrderCommands;
+/*using AviApp.Commands.OrderCommands;
 using AviApp.Interfaces;
 using MediatR;
-
 namespace AviApp.Handlers.OrderHandlers;
 
 public class AddOrderHandler : IRequestHandler<AddOrderCommand, Models.Order>
@@ -24,4 +23,4 @@ public class AddOrderHandler : IRequestHandler<AddOrderCommand, Models.Order>
 
         return Task.FromResult(_orderService.CreateOrder(newOrder));
     }
-}
+}*/

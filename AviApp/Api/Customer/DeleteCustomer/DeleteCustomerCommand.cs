@@ -1,6 +1,6 @@
-﻿using MediatR;
+using MediatR;
 
-namespace AviApp.Commands.CustomerCommands;
+namespace AviApp.Api.Customer.DeleteCustomer;
 
 public class DeleteCustomerCommand : IRequest<bool>
 {

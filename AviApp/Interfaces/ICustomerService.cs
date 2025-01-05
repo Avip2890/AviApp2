@@ -1,22 +1,13 @@
 ﻿
-using AviApp.Models;
+using AviApp.Domain.Entities;
 
 namespace AviApp.Interfaces;
 
 public interface ICustomerService
 {
-    // קבלת כל הלקוחות
-    List<Customer> GetAllCustomers();
-    
-    // קבלת לקוח לפי מזהה
-    Customer? GetCustomerById(int id);
-    
-    // יצירת לקוח חדש
-    Customer CreateCustomer(Customer customer);
-    
-    // עדכון לקוח קיים
-    Customer? UpdateCustomer(int id, Customer updatedCustomer);
-    
-    // מחיקת לקוח לפי מזהה
-    bool DeleteCustomer(int id);
+    Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default);
+    Task<Customer?> GetCustomerByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<Customer> CreateCustomer(Customer customer, CancellationToken cancellationToken = default);
+    Task<Customer?> UpdateCustomerAsync(Customer updatedCustomer, CancellationToken cancellationToken = default);
+    Task<bool> DeleteCustomerAsync(int id, CancellationToken cancellationToken = default);
 }

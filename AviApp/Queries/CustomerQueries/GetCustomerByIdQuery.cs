@@ -3,7 +3,7 @@ using MediatR;
 
 namespace AviApp.Queries.CustomerQueries;
 
-public class GetCustomerByIdQuery : IRequest<Customer?>
+public class GetCustomerByIdQuery : IRequest<CustomerDto?>
 {
     public int Id { get; set; }
 

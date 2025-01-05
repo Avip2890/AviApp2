@@ -1,3 +1,4 @@
+using AviApp.Domain.Entities;
 using AviApp.Models;
 using MediatR;
 

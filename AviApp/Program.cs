@@ -1,5 +1,5 @@
 using System.Reflection;
-using AviApp.Data;
+using AviApp.Domain.Context;
 using AviApp.Interfaces;
 using AviApp.Services;
 using AviApp.Validators.CustomerValidator;
@@ -17,7 +17,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CustomerValidator>();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddDbContext<AviAppDbContext>(options =>
+builder.Services.AddDbContext<AvipAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 

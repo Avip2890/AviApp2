@@ -1,4 +1,4 @@
-using AviApp.Models;
+using AviApp.Domain.Entities;
 using MediatR;
 
 namespace AviApp.Queries.CustomerQueries;

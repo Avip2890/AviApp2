@@ -1,4 +1,4 @@
-using AviApp.Interfaces;
+/*using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Queries.MenuItemQueries;
 using MediatR;
@@ -18,4 +18,4 @@ public class GetAllMenuItemsHandler : IRequestHandler<GetAllMenuItemsQuery, IEnu
     {
         return Task.FromResult(_menuItemService.GetAllMenuItems());
     }
-}
+}*/

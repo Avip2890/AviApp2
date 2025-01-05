@@ -1,4 +1,4 @@
-using AviApp.Commands.OrderCommands;
+/*using AviApp.Commands.OrderCommands;
 using AviApp.Interfaces;
 using MediatR;
 
@@ -24,4 +24,4 @@ public class UpdateOrderHandler : IRequestHandler<UpdateOrderCommand, Models.Ord
         return Task.FromResult(_orderService.UpdateOrder(request.Id, updatedOrder));
     }
     
-}
+}*/

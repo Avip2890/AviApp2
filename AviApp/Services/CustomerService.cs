@@ -1,42 +1,36 @@
-﻿
+﻿using AviApp.Domain.Context;
 using AviApp.Interfaces;
-using AviApp.Models;
+using AviApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AviApp.Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService(AvipAppDbContext context) : ICustomerService
 {
-    // רשימה מדומה (in-memory) לשמירת הלקוחות
-    private readonly List<Customer> _customers = new List<Customer>
-    {
-        new Customer { Id = 1, CustomerName = "John Doe", Phone = "123-456-7890" },
-        new Customer { Id = 2, CustomerName = "Jane Smith", Phone = "987-654-3210" }
-    };
-
     // קבלת כל הלקוחות
-    public List<Customer> GetAllCustomers()
+    public async Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default)
     {
-        return _customers;
+        return await context.Customers.ToListAsync(cancellationToken);
     }
 
     // קבלת לקוח לפי מזהה
-    public Customer? GetCustomerById(int id)
+    public async Task<Customer?> GetCustomerByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return _customers.FirstOrDefault(c => c.Id == id);
+        return await context.Customers.FindAsync(new object[] { id }, cancellationToken);
     }
 
     // יצירת לקוח חדש
-    public Customer CreateCustomer(Customer customer)
+    public async Task<Customer> CreateCustomer(Customer customer, CancellationToken cancellationToken = default)
     {
-        customer.Id = _customers.Count + 1;
-        _customers.Add(customer);
+        context.Customers.Add(customer);
+        await context.SaveChangesAsync(cancellationToken);
         return customer;
     }
 
     // עדכון לקוח קיים
-    public Customer? UpdateCustomer(int id, Customer updatedCustomer)
+    public async Task<Customer?> UpdateCustomerAsync(Customer updatedCustomer, CancellationToken cancellationToken = default)
     {
-        var customer = _customers.FirstOrDefault(c => c.Id == id);
+        var customer = await context.Customers.FindAsync(new object[] { updatedCustomer.Id }, cancellationToken);
         if (customer == null)
         {
             return null;
@@ -44,19 +38,22 @@ public class CustomerService : ICustomerService
 
         customer.CustomerName = updatedCustomer.CustomerName;
         customer.Phone = updatedCustomer.Phone;
+
+        await context.SaveChangesAsync(cancellationToken);
         return customer;
     }
 
     // מחיקת לקוח לפי מזהה
-    public bool DeleteCustomer(int id)
+    public async Task<bool> DeleteCustomerAsync(int id, CancellationToken cancellationToken = default)
     {
-        var customer = _customers.FirstOrDefault(c => c.Id == id);
+        var customer = await context.Customers.FindAsync(new object[] { id }, cancellationToken);
         if (customer == null)
         {
             return false;
         }
 
-        _customers.Remove(customer);
+        context.Customers.Remove(customer);
+        await context.SaveChangesAsync(cancellationToken);
         return true;
     }
 }

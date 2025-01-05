@@ -1,4 +1,4 @@
-﻿using AviApp.Commands.MenuItemCommands;
+﻿/*using AviApp.Commands.MenuItemCommands;
 using AviApp.Interfaces;
 using MediatR;
 
@@ -26,4 +26,4 @@ public class AddMenuItemHandler : IRequestHandler<AddMenuItemCommand, Models.Men
         return Task.FromResult<Models.MenuItem>(_menuItemService.AddMenuItem(newMenuItem));
 
     }
-}
+}*/

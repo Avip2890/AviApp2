@@ -26,19 +26,20 @@ public class MenuItemController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddMenuItem([FromBody] MenuItem menuItem)
+    public IActionResult AddMenuItem([FromBody] MenuItemDto menuItem)
     {
-   
-        _menuItemService.AddMenuItem(menuItem);
-        return CreatedAtAction(nameof(GetMenuItemById), new { id = menuItem.Id }, menuItem);
+        throw new Exception("");
+// _menuItemService.AddMenuItem(menuItem);
+        //  return CreatedAtAction(nameof(GetMenuItemById), new { id = menuItem.Id }, menuItem);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateMenuItem(int id, [FromBody] MenuItem updatedMenuItem)
+    public IActionResult UpdateMenuItem(int id, [FromBody] MenuItemDto updatedMenuItem)
     {
-      
-        _menuItemService.UpdateMenuItem(id, updatedMenuItem);
-        return NoContent();
+        throw new Exception("");
+
+        //_menuItemService.UpdateMenuItem(id, updatedMenuItem);
+        //return NoContent();
     }
 
     [HttpDelete("{id}")]

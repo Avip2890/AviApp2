@@ -1,4 +1,4 @@
-using AviApp.Interfaces;
+/*using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Queries.OrderQueries;
 using MediatR;
@@ -18,4 +18,4 @@ public class GetAllOrdersHandler : IRequestHandler<GetAllOrdersQuery, IEnumerabl
     {
         return Task.FromResult(_orderService.GetAllOrders());
     }
-}
+}*/

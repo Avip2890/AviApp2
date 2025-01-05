@@ -1,6 +1,6 @@
 ﻿namespace AviApp.Models;
 
-public class Customer
+public class CustomerDto
 {
     public int Id { get; set; }
     public string CustomerName { get; set; } = string.Empty;

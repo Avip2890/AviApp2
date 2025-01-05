@@ -1,45 +1,66 @@
-﻿using AviApp.Interfaces;
-using AviApp.Models;
-
+﻿using AviApp.Domain.Context;
+using AviApp.Interfaces;
+using AviApp.Domain.Entities;
 
 namespace AviApp.Services;
 
 public class OrderService : IOrderService
 {
-    private readonly List<Order> _orders = new List<Order>();
+    private readonly AvipAppDbContext _context;
 
-    public IEnumerable<Order> GetAllOrders() => _orders;
+    public OrderService(AvipAppDbContext context)
+    {
+        _context = context;
+    }
 
-    public Order? GetOrderById(int id) => _orders.FirstOrDefault(o => o.Id == id);
 
+    public IEnumerable<Order> GetAllOrders()
+    {
+        return _context.Orders.ToList();
+    }
+
+  
+    public Order? GetOrderById(int id)
+    {
+        return _context.Orders.Find(id);
+    }
+
+   
     public Order CreateOrder(Order order)
     {
-        order.Id = _orders.Count + 1; 
-        _orders.Add(order);
+        _context.Orders.Add(order);
+        _context.SaveChanges();
         return order;
     }
 
+   
     public Order? UpdateOrder(int id, Order updatedOrder)
     {
-        var order = GetOrderById(id);
-        if (order != null)
+        var order = _context.Orders.Find(id);
+        if (order == null)
         {
-            order.CustomerId = updatedOrder.CustomerId;
-            order.Items = updatedOrder.Items;
-            order.OrderDate = updatedOrder.OrderDate;
-            return order;
+            return null;
         }
-        return null;
+
+        order.CustomerId = updatedOrder.CustomerId;
+        order.OrderDate = updatedOrder.OrderDate;
+        
+
+        _context.SaveChanges();
+        return order;
     }
+
 
     public bool DeleteOrder(int id)
     {
-        var order = GetOrderById(id);
-        if (order != null)
+        var order = _context.Orders.Find(id);
+        if (order == null)
         {
-            _orders.Remove(order);
-            return true;
+            return false;
         }
-        return false;
+
+        _context.Orders.Remove(order);
+        _context.SaveChanges();
+        return true;
     }
 }

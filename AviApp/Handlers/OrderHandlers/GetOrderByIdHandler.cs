@@ -1,4 +1,4 @@
-using AviApp.Interfaces;
+/*using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Queries.OrderQueries;
 using MediatR;
@@ -18,4 +18,4 @@ public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, Order?>
     {
         return Task.FromResult(_orderService.GetOrderById(request.Id));
     }
-}
+}*/

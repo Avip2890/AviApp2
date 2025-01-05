@@ -1,4 +1,4 @@
-﻿using AviApp.Commands.MenuItemCommands;
+﻿/*using AviApp.Commands.MenuItemCommands;
 using AviApp.Interfaces;
 using MediatR;
 
@@ -27,4 +27,4 @@ public class UpdateMenuItemHandler : IRequestHandler<UpdateMenuItemCommand, Mode
 
         return Task.FromResult(_menuItemService.UpdateMenuItem(request.Id, updatedMenuItem));
     }
-}
+}*/

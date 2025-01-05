@@ -1,33 +1,40 @@
-﻿using AviApp.Interfaces;
-using AviApp.Models;
+﻿using AviApp.Domain.Context;
+using AviApp.Interfaces;
+using AviApp.Domain.Entities;
 
 
 namespace AviApp.Services;
 
 public class MenuItemService : IMenuItemService
 {
-    private readonly List<MenuItem> _menuItems = new List<MenuItem>();
+    private readonly AvipAppDbContext _context;
 
-    public IEnumerable<MenuItem> GetAllMenuItems() => _menuItems;
-
-    public MenuItem? GetMenuItemById(int id) => _menuItems.FirstOrDefault(m => m.Id == id);
-
-    public MenuItem   AddMenuItem(MenuItem menuItem)
+    public MenuItemService(AvipAppDbContext context)
     {
-        menuItem.Id = _menuItems.Count + 1; 
-        _menuItems.Add(menuItem);
+        _context = context;
+    }
+
+    public IEnumerable<MenuItem> GetAllMenuItems() => _context.MenuItems.ToList();
+
+    public MenuItem? GetMenuItemById(int id) => _context.MenuItems.Find(id);
+
+    public MenuItem AddMenuItem(MenuItem menuItem)
+    {
+        _context.MenuItems.Add(menuItem);
+        _context.SaveChanges();
         return menuItem;
     }
 
     public MenuItem UpdateMenuItem(int id, MenuItem updatedMenuItem)
     {
-        var menuItem = GetMenuItemById(id);
+        var menuItem = _context.MenuItems.Find(id);
         if (menuItem != null)
         {
             menuItem.Name = updatedMenuItem.Name;
             menuItem.Description = updatedMenuItem.Description;
             menuItem.Price = updatedMenuItem.Price;
             menuItem.IsAvailable = updatedMenuItem.IsAvailable;
+            _context.SaveChanges();
             return menuItem;
         }
         return null;
@@ -35,10 +42,11 @@ public class MenuItemService : IMenuItemService
 
     public bool DeleteMenuItem(int id)
     {
-        var menuItem = GetMenuItemById(id);
+        var menuItem = _context.MenuItems.Find(id);
         if (menuItem != null)
         {
-            _menuItems.Remove(menuItem);
+            _context.MenuItems.Remove(menuItem);
+            _context.SaveChanges();
             return true;
         }
         return false;

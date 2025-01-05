@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using AviApp.Domain.Entities;
+using MediatR;
 
 namespace AviApp.Commands.MenuItemCommands;
 
-public class UpdateMenuItemCommand : IRequest<Models.MenuItem?>
+public class UpdateMenuItemCommand : IRequest<MenuItem?>
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

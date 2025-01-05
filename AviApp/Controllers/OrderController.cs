@@ -25,19 +25,25 @@ public class OrderController : ControllerBase
         return order != null ? Ok(order) : NotFound();
     }
 
+    /*
     [HttpPost]
     public IActionResult CreateOrder([FromBody] Order order)
     {
-        _orderService.CreateOrder(order);
-        return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
-    }
+        throw new Exception("");
 
-    [HttpPut("{id}")]
+        //_orderService.CreateOrder(order);
+       // return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
+    }
+    */
+
+    /*[HttpPut("{id}")]
     public IActionResult UpdateOrder(int id, [FromBody] Order updatedOrder)
     {
-        _orderService.UpdateOrder(id, updatedOrder);
-        return NoContent();
-    }
+        throw new Exception("");
+
+       // _orderService.UpdateOrder(id, updatedOrder);
+       // return NoContent();
+    }*/
 
     [HttpDelete("{id}")]
     public IActionResult DeleteOrder(int id)

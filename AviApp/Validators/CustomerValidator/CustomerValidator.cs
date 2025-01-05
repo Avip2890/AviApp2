@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace AviApp.Validators.CustomerValidator;
 
-public class CustomerValidator : AbstractValidator<Customer>
+public class CustomerValidator : AbstractValidator<CustomerDto>
 {
     public CustomerValidator()
     {

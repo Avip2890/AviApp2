@@ -1,5 +1,5 @@
 ﻿
-using AviApp.Models;
+using AviApp.Domain.Entities;
 
 namespace AviApp.Interfaces;
 

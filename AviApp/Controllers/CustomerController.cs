@@ -1,30 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AviApp.Api.Customer;
+using Microsoft.AspNetCore.Mvc;
 using AviApp.Interfaces;
+using AviApp.Domain.Entities;
 using AviApp.Models;
+using MediatR;
 
 namespace AviApp.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CustomerController : ControllerBase
+public class CustomerController(ICustomerService customerService, IMediator mediator) : ControllerBase
 {
-    private readonly ICustomerService _customerService;
-
-    public CustomerController(ICustomerService customerService)
-    {
-        _customerService = customerService;
-    }
-
     [HttpGet]
-    public IActionResult GetAllCustomers()
+    public async Task<IActionResult> GetAllCustomers(CancellationToken cancellationToken = default)
     {
-        return Ok(_customerService.GetAllCustomers());
+        var customers = await customerService.GetAllCustomersAsync(cancellationToken);
+        return Ok(customers);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetCustomerById(int id)
+    public async Task<IActionResult> GetCustomerById(int id, CancellationToken cancellationToken = default)
     {
-        var customer = _customerService.GetCustomerById(id);
+        var customer = await customerService.GetCustomerByIdAsync(id, cancellationToken);
         if (customer == null)
         {
             return NotFound(new { Message = $"Customer with Id {id} not found." });
@@ -34,34 +31,38 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateCustomer([FromBody] Customer customer)
+    public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customer, CancellationToken cancellationToken = default)
     {
-        var newCustomer = _customerService.CreateCustomer(customer);
-        return CreatedAtAction(nameof(GetCustomerById), new { id = newCustomer.Id }, newCustomer);
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult DeleteCustomer(int id)
-    {
-        var result = _customerService.DeleteCustomer(id);
-        if (!result)
-        {
-            return NotFound(new { Message = $"Customer with Id {id} not found." });
-        }
-
-        return NoContent();
+        var command = new CreateCustomerCommand(customer);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateCustomer(int id, [FromBody] Customer updatedCustomer)
+    public async Task<IActionResult> UpdateCustomer(int id, [FromBody] CustomerDto customerDto, CancellationToken cancellationToken = default)
     {
-        var customer = _customerService.UpdateCustomer(id, updatedCustomer);
+        if (customerDto.Id != id)
+        {
+            return BadRequest(new { Message = "Customer ID in URL does not match ID in body." });
+        }
 
-        if (customer == null)
+        var updatedCustomer = new Customer
+        {
+            Id = id,
+            CustomerName = customerDto.CustomerName,
+            Phone = customerDto.Phone
+        };
+
+        var result = await customerService.UpdateCustomerAsync(updatedCustomer, cancellationToken);
+
+        if (result == null)
         {
             return NotFound(new { Message = $"Customer with Id {id} not found." });
         }
 
-        return Ok(customer);
+        return Ok(result);
     }
+
+
+
 }
