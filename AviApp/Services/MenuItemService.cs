@@ -1,7 +1,9 @@
 ﻿using AviApp.Domain.Context;
 using AviApp.Interfaces;
 using AviApp.Domain.Entities;
-
+using AviApp.Models;
+using AviApp.Mappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace AviApp.Services;
 
@@ -14,41 +16,66 @@ public class MenuItemService : IMenuItemService
         _context = context;
     }
 
-    public IEnumerable<MenuItem> GetAllMenuItems() => _context.MenuItems.ToList();
-
-    public MenuItem? GetMenuItemById(int id) => _context.MenuItems.Find(id);
-
-    public MenuItem AddMenuItem(MenuItem menuItem)
+    // קבלת כל פריטי התפריט
+    public async Task<IEnumerable<MenuItemDto>> GetAllMenuItemsAsync(CancellationToken cancellationToken)
     {
+        var menuItems = await _context.MenuItems.ToListAsync(cancellationToken);
+        return menuItems.Select(m => m.ToDto());
+    }
+
+    // קבלת פריט תפריט לפי מזהה
+    public async Task<MenuItemDto?> GetMenuItemByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        var menuItem = await _context.MenuItems.FindAsync(new object[] { id }, cancellationToken);
+        return menuItem?.ToDto();
+    }
+
+    // יצירת פריט תפריט חדש
+    public async Task<MenuItemDto> AddMenuItemAsync(MenuItemDto menuItemDto, CancellationToken cancellationToken)
+    {
+        var menuItem = new MenuItem
+        {
+            Name = menuItemDto.Name,
+            Description = menuItemDto.Description,
+            Price = menuItemDto.Price,
+            IsAvailable = menuItemDto.IsAvailable,
+            OrderId = null
+        };
+
         _context.MenuItems.Add(menuItem);
-        _context.SaveChanges();
-        return menuItem;
+        await _context.SaveChangesAsync(cancellationToken);
+        return menuItem.ToDto();
     }
 
-    public MenuItem UpdateMenuItem(int id, MenuItem updatedMenuItem)
+   
+    public async Task<MenuItemDto?> UpdateMenuItemAsync(int id, MenuItemDto updatedMenuItemDto, CancellationToken cancellationToken)
     {
-        var menuItem = _context.MenuItems.Find(id);
-        if (menuItem != null)
+        var menuItem = await _context.MenuItems.FindAsync(new object[] { id }, cancellationToken);
+        if (menuItem == null)
         {
-            menuItem.Name = updatedMenuItem.Name;
-            menuItem.Description = updatedMenuItem.Description;
-            menuItem.Price = updatedMenuItem.Price;
-            menuItem.IsAvailable = updatedMenuItem.IsAvailable;
-            _context.SaveChanges();
-            return menuItem;
+            return null;
         }
-        return null;
+
+        menuItem.Name = updatedMenuItemDto.Name;
+        menuItem.Description = updatedMenuItemDto.Description;
+        menuItem.Price = updatedMenuItemDto.Price;
+        menuItem.IsAvailable = updatedMenuItemDto.IsAvailable;
+
+        await _context.SaveChangesAsync(cancellationToken);
+        return menuItem.ToDto();
     }
 
-    public bool DeleteMenuItem(int id)
+    // מחיקת פריט תפריט לפי מזהה
+    public async Task<bool> DeleteMenuItemAsync(int id, CancellationToken cancellationToken)
     {
-        var menuItem = _context.MenuItems.Find(id);
-        if (menuItem != null)
+        var menuItem = await _context.MenuItems.FindAsync(new object[] { id }, cancellationToken);
+        if (menuItem == null)
         {
-            _context.MenuItems.Remove(menuItem);
-            _context.SaveChanges();
-            return true;
+            return false;
         }
-        return false;
+
+        _context.MenuItems.Remove(menuItem);
+        await _context.SaveChangesAsync(cancellationToken);
+        return true;
     }
 }

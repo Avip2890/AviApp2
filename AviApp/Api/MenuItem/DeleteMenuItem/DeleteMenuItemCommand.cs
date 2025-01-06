@@ -1,6 +1,8 @@
-﻿using MediatR;
+namespace AviApp.Api.MenuItem.DeleteMenuItem;
 
-namespace AviApp.Commands.MenuItemCommands;
+using MediatR;
+
+
 
 public class DeleteMenuItemCommand : IRequest<bool>
 {

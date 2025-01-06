@@ -2,21 +2,24 @@ using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Queries.CustomerQueries;
 using MediatR;
-using AviApp.Domain.Entities;
 
-namespace AviApp.Handlers.CustomerHandlers;
-
-public class GetAllCustomersHandler : IRequestHandler<GetAllCustomersQuery, List<Customer>>
+namespace AviApp.Handlers.CustomerHandlers
 {
-    private readonly ICustomerService _customerService;
-
-    public GetAllCustomersHandler(ICustomerService customerService)
+    public class GetAllCustomersHandler(ICustomerService customerService)
+        : IRequestHandler<GetAllCustomersQuery, List<CustomerDto>>
     {
-        _customerService = customerService;
-    }
+        public async Task<List<CustomerDto>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
+        {
+            // Fetch customers from the service
+            var customers = await customerService.GetAllCustomersAsync(cancellationToken);
 
-    public async Task<List<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
-    {
-        return await _customerService.GetAllCustomersAsync(cancellationToken);
+            // Map the entities to DTOs
+            return customers.Select(c => new CustomerDto
+            {
+                Id = c.Id,
+                CustomerName = c.CustomerName,
+                Phone = c.Phone
+            }).ToList();
+        }
     }
 }

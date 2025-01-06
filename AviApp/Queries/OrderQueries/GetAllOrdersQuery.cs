@@ -1,6 +1,7 @@
 using AviApp.Domain.Entities;
 using AviApp.Models;
 using MediatR;
+using Order = AviApp.Models.OrderDto;
 
 namespace AviApp.Queries.OrderQueries;
 

@@ -5,15 +5,15 @@ namespace AviApp.Mappers;
 
 public static class OrderMapper
 {
- 
-    public static Order ToEntity(this OrderDto model)
+    // המרה מ-DTO ל-Entity
+    public static Domain.Entities.Order ToEntity(this OrderDto model)
     {
-        return new Order
+        return new Domain.Entities.Order
         {
             Id = model.Id,
             CustomerId = model.CustomerId,
             OrderDate = model.OrderDate,
-            Items = model.Items.Select(item => new MenuItem
+            Items = model.Items.Select(item => new Domain.Entities.MenuItem
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -24,8 +24,8 @@ public static class OrderMapper
         };
     }
 
-  
-    public static OrderDto ToDto(this Order entity)
+    // המרה מ-Entity ל-DTO
+    public static OrderDto ToDto(this Domain.Entities.Order entity)
     {
         return new OrderDto
         {

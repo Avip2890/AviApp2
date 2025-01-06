@@ -63,6 +63,15 @@ public class CustomerController(ICustomerService customerService, IMediator medi
         return Ok(result);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCustomer(int id, CancellationToken cancellationToken)
+    {
+        var result = await customerService.DeleteCustomerAsync(id, cancellationToken);
+        if (!result)
+        {
+            return NotFound(new { Message = $"Customer with Id {id} not found." });
+        }
 
-
+        return NoContent();
+    }
 }

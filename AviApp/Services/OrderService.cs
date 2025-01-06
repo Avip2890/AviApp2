@@ -1,6 +1,8 @@
 ﻿using AviApp.Domain.Context;
 using AviApp.Interfaces;
 using AviApp.Domain.Entities;
+using AviApp.Mappers;
+using AviApp.Models;
 
 namespace AviApp.Services;
 
@@ -13,28 +15,26 @@ public class OrderService : IOrderService
         _context = context;
     }
 
-
-    public IEnumerable<Order> GetAllOrders()
+    public IEnumerable<OrderDto> GetAllOrders()
     {
-        return _context.Orders.ToList();
+        return _context.Orders.Select(o => o.ToDto()).ToList();
     }
 
-  
-    public Order? GetOrderById(int id)
+    public OrderDto? GetOrderById(int id)
     {
-        return _context.Orders.Find(id);
+        var order = _context.Orders.Find(id);
+        return order?.ToDto();
     }
 
-   
-    public Order CreateOrder(Order order)
+    public OrderDto CreateOrder(OrderDto orderDto)
     {
-        _context.Orders.Add(order);
+        var orderEntity = orderDto.ToEntity();
+        _context.Orders.Add(orderEntity);
         _context.SaveChanges();
-        return order;
+        return orderEntity.ToDto();
     }
 
-   
-    public Order? UpdateOrder(int id, Order updatedOrder)
+    public OrderDto? UpdateOrder(int id, OrderDto updatedOrderDto)
     {
         var order = _context.Orders.Find(id);
         if (order == null)
@@ -42,14 +42,13 @@ public class OrderService : IOrderService
             return null;
         }
 
-        order.CustomerId = updatedOrder.CustomerId;
-        order.OrderDate = updatedOrder.OrderDate;
-        
+        order.CustomerId = updatedOrderDto.CustomerId;
+        order.OrderDate = updatedOrderDto.OrderDate;
+        order.Items = updatedOrderDto.Items.Select(item => item.ToEntity()).ToList();
 
         _context.SaveChanges();
-        return order;
+        return order.ToDto();
     }
-
 
     public bool DeleteOrder(int id)
     {

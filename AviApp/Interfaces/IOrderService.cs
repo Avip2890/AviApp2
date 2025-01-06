@@ -1,13 +1,12 @@
-﻿
-using AviApp.Domain.Entities;
+﻿using AviApp.Models;
 
 namespace AviApp.Interfaces;
 
 public interface IOrderService
 {
-    IEnumerable<Order> GetAllOrders();
-    Order? GetOrderById(int id);
-    Order CreateOrder(Order order);
-    Order? UpdateOrder(int id, Order updatedOrder);
+    IEnumerable<OrderDto> GetAllOrders();
+    OrderDto? GetOrderById(int id);
+    OrderDto CreateOrder(OrderDto order);
+    OrderDto? UpdateOrder(int id, OrderDto updatedOrder);
     bool DeleteOrder(int id);
 }

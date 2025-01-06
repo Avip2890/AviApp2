@@ -1,10 +1,11 @@
-﻿using AviApp.Domain.Entities;
+using AviApp.Models;
 using MediatR;
 
-namespace AviApp.Commands.MenuItemCommands;
+namespace AviApp.Api.MenuItem.UpdateMenuItem;
 
-public class AddMenuItemCommand : IRequest<MenuItem>
+public class UpdateMenuItemCommand : IRequest<MenuItemDto?>
 {
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
