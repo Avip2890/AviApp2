@@ -8,15 +8,15 @@ namespace AviApp.Services;
 public class CustomerService(AvipAppDbContext context) : ICustomerService
 {
     // קבלת כל הלקוחות
-    public async Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default)
+    public async Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken)
     {
-        return await context.Customers.ToListAsync(cancellationToken);
+        return await context.Customers.AsNoTracking().ToListAsync(cancellationToken);
     }
 
     // קבלת לקוח לפי מזהה
-    public async Task<Customer?> GetCustomerByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Customer?> GetCustomerByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return await context.Customers.FindAsync(new object[] { id }, cancellationToken);
+        return await context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
     // יצירת לקוח חדש

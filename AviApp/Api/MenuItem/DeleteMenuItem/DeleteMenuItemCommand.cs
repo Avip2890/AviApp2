@@ -4,7 +4,7 @@ using MediatR;
 
 
 
-public class DeleteMenuItemCommand : IRequest<bool>
+public abstract class DeleteMenuItemCommand : IRequest<bool>
 {
     public int Id { get; set; }
 

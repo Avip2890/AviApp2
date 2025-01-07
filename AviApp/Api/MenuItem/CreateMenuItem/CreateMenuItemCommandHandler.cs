@@ -1,10 +1,8 @@
-using AviApp.Api.MenuItem.CreateMenuItem;
-
 using AviApp.Interfaces;
 using AviApp.Models;
 using MediatR;
 
-namespace AviApp.Handlers.MenuItemHandlers;
+namespace AviApp.Api.MenuItem.CreateMenuItem;
 
 public class CreateMenuItemCommandHandler : IRequestHandler<CreateMenuItemCommand, MenuItemDto>
 {

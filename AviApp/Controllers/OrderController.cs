@@ -15,40 +15,52 @@ public class OrderController : ControllerBase
         _orderService = orderService;
     }
 
+    // קבלת כל ההזמנות
     [HttpGet]
-    public IActionResult GetAllOrders() => Ok(_orderService.GetAllOrders());
+    public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken = default)
+    {
+        var orders = await _orderService.GetAllOrdersAsync(cancellationToken);
+        return Ok(orders);
+    }
 
+    // קבלת הזמנה לפי מזהה
     [HttpGet("{id}")]
-    public IActionResult GetOrderById(int id)
+    public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken = default)
     {
-        var order = _orderService.GetOrderById(id);
-        return order != null ? Ok(order) : NotFound();
+        var order = await _orderService.GetOrderByIdAsync(id, cancellationToken);
+        return order != null ? Ok(order) : NotFound(new { Message = $"Order with Id {id} not found." });
     }
 
-    /*
+    // יצירת הזמנה חדשה
     [HttpPost]
-    public IActionResult CreateOrder([FromBody] Order order)
+    public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken = default)
     {
-        throw new Exception("");
-
-        //_orderService.CreateOrder(order);
-       // return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
+        var createdOrder = await _orderService.CreateOrderAsync(orderDto, cancellationToken);
+        return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.Id }, createdOrder);
     }
-    */
 
-    /*[HttpPut("{id}")]
-    public IActionResult UpdateOrder(int id, [FromBody] Order updatedOrder)
+    // עדכון הזמנה קיימת
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto updatedOrderDto, CancellationToken cancellationToken = default)
     {
-        throw new Exception("");
+        if (id != updatedOrderDto.Id)
+        {
+            return BadRequest(new { Message = "Order ID in URL does not match ID in body." });
+        }
 
-       // _orderService.UpdateOrder(id, updatedOrder);
-       // return NoContent();
-    }*/
+        var updatedOrder = await _orderService.UpdateOrderAsync(id, updatedOrderDto, cancellationToken);
+        return updatedOrder != null 
+            ? Ok(updatedOrder) 
+            : NotFound(new { Message = $"Order with Id {id} not found." });
+    }
 
+    // מחיקת הזמנה לפי מזהה
     [HttpDelete("{id}")]
-    public IActionResult DeleteOrder(int id)
+    public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken = default)
     {
-        _orderService.DeleteOrder(id);
-        return NoContent();
+        var result = await _orderService.DeleteOrderAsync(id, cancellationToken);
+        return result 
+            ? NoContent() 
+            : NotFound(new { Message = $"Order with Id {id} not found." });
     }
 }

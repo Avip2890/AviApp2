@@ -5,7 +5,7 @@ namespace AviApp.Validators.CustomerValidator;
 
 public abstract class CustomerValidator : AbstractValidator<CustomerDto>
 {
-    public CustomerValidator()
+    protected CustomerValidator()
     {
         RuleFor(c=>c.CustomerName)
             .NotEmpty().WithMessage("Customer name is required")

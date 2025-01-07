@@ -1,5 +1,4 @@
 using AviApp.Models;
-using AviApp.Validators.MenuItemValidators;
 using FluentValidation;
 
 namespace AviApp.Validators.OrderValidators;
@@ -18,6 +17,6 @@ public class OrderValidator : AbstractValidator<OrderDto>
             .NotEmpty().WithMessage("Order must contain at least one item.");
 
         RuleForEach(x => x.Items)
-            .SetValidator(new MenuItemValidator());
+            .GreaterThan(0).WithMessage("Each item ID must be greater than 0.");
     }
 }

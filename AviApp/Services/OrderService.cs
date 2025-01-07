@@ -1,65 +1,72 @@
 ﻿using AviApp.Domain.Context;
-using AviApp.Interfaces;
 using AviApp.Domain.Entities;
+using AviApp.Interfaces;
 using AviApp.Mappers;
 using AviApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AviApp.Services;
 
-public class OrderService : IOrderService
+public class OrderService(AvipAppDbContext context) : IOrderService
 {
-    private readonly AvipAppDbContext _context;
-
-    public OrderService(AvipAppDbContext context)
+    public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
-        _context = context;
+        var orders = await context.Orders.Include(o => o.Items).ToListAsync(cancellationToken);
+        return orders.Select(order => order.ToDto());
     }
 
-    public IEnumerable<OrderDto> GetAllOrders()
+    public async Task<OrderDto?> GetOrderByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return _context.Orders.Select(o => o.ToDto()).ToList();
-    }
-
-    public OrderDto? GetOrderById(int id)
-    {
-        var order = _context.Orders.Find(id);
+        var order = await context.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         return order?.ToDto();
     }
 
-    public OrderDto CreateOrder(OrderDto orderDto)
+    public async Task<OrderDto> CreateOrderAsync(OrderDto orderDto, CancellationToken cancellationToken = default)
     {
-        var orderEntity = orderDto.ToEntity();
-        _context.Orders.Add(orderEntity);
-        _context.SaveChanges();
+        // שליפת הפריטים מה-DB לפי מזהים
+        var menuItems = await context.MenuItems
+            .Where(mi => orderDto.Items.Contains(mi.Id))
+            .ToListAsync(cancellationToken);
+
+       
+        var orderEntity = new Order
+        {
+            OrderDate = orderDto.OrderDate,
+            CustomerId = orderDto.CustomerId,
+            Items = menuItems
+        };
+
+        context.Orders.Add(orderEntity);
+        await context.SaveChangesAsync(cancellationToken);
         return orderEntity.ToDto();
     }
 
-    public OrderDto? UpdateOrder(int id, OrderDto updatedOrderDto)
+    public async Task<OrderDto?> UpdateOrderAsync(int id, OrderDto updatedOrderDto, CancellationToken cancellationToken = default)
     {
-        var order = _context.Orders.Find(id);
-        if (order == null)
-        {
-            return null;
-        }
+        var existingOrder = await context.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        if (existingOrder == null) return null;
 
-        order.CustomerId = updatedOrderDto.CustomerId;
-        order.OrderDate = updatedOrderDto.OrderDate;
-        order.Items = updatedOrderDto.Items.Select(item => item.ToEntity()).ToList();
+        existingOrder.CustomerId = updatedOrderDto.CustomerId;
+        existingOrder.OrderDate = updatedOrderDto.OrderDate;
 
-        _context.SaveChanges();
-        return order.ToDto();
+        // עדכון הפריטים הקשורים
+        var menuItems = await context.MenuItems
+            .Where(mi => updatedOrderDto.Items.Contains(mi.Id))
+            .ToListAsync(cancellationToken);
+
+        existingOrder.Items = menuItems;
+
+        await context.SaveChangesAsync(cancellationToken);
+        return existingOrder.ToDto();
     }
 
-    public bool DeleteOrder(int id)
+    public async Task<bool> DeleteOrderAsync(int id, CancellationToken cancellationToken = default)
     {
-        var order = _context.Orders.Find(id);
-        if (order == null)
-        {
-            return false;
-        }
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        if (order == null) return false;
 
-        _context.Orders.Remove(order);
-        _context.SaveChanges();
+        context.Orders.Remove(order);
+        await context.SaveChangesAsync(cancellationToken);
         return true;
     }
 }

@@ -6,6 +6,6 @@ public class OrderDto
     public DateTime OrderDate { get; set; }
     public int CustomerId { get; set; }
 
-    public CustomerDto Customer { get; set; } = null!; // CustomerDto במקום Customer
-    public ICollection<MenuItemDto> Items { get; set; } = new List<MenuItemDto>(); // MenuItemDto במקום MenuItem
+   
+    public ICollection<int> Items { get; set; } = new List<int>();
 }

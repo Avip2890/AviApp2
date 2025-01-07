@@ -1,45 +1,29 @@
-using AviApp.Models;
 using AviApp.Domain.Entities;
+using AviApp.Models;
 
 namespace AviApp.Mappers;
 
 public static class OrderMapper
 {
-    // המרה מ-DTO ל-Entity
-    public static Domain.Entities.Order ToEntity(this OrderDto model)
+    public static Order ToEntity(this OrderDto dto, ICollection<MenuItem> menuItems)
     {
-        return new Domain.Entities.Order
+        return new Order
         {
-            Id = model.Id,
-            CustomerId = model.CustomerId,
-            OrderDate = model.OrderDate,
-            Items = model.Items.Select(item => new Domain.Entities.MenuItem
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Price = item.Price,
-                IsAvailable = item.IsAvailable
-            }).ToList()
+            Id = dto.Id,
+            CustomerId = dto.CustomerId,
+            OrderDate = dto.OrderDate,
+            Items = menuItems // פריטים שנשלפו מה-DB בהתבסס על מזהים
         };
     }
 
-    // המרה מ-Entity ל-DTO
-    public static OrderDto ToDto(this Domain.Entities.Order entity)
+    public static OrderDto ToDto(this Order entity)
     {
         return new OrderDto
         {
             Id = entity.Id,
             CustomerId = entity.CustomerId,
             OrderDate = entity.OrderDate,
-            Items = entity.Items.Select(item => new MenuItemDto
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Price = item.Price,
-                IsAvailable = item.IsAvailable
-            }).ToList()
+            Items = entity.Items.Select(item => item.Id).ToList() // החזרת מזהים בלבד
         };
     }
 }

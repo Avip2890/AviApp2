@@ -3,7 +3,7 @@ using MediatR;
 
 namespace AviApp.Api.MenuItem.CreateMenuItem;
 
-public class CreateMenuItemCommand : IRequest<MenuItemDto>
+public abstract class CreateMenuItemCommand : IRequest<MenuItemDto>
 {
     public MenuItemDto MenuItemDto { get; set; }
 
