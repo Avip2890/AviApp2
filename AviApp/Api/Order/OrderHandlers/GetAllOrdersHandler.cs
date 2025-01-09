@@ -13,17 +13,17 @@ namespace AviApp.Api.Order.OrderHandlers
 
             if (!result.IsSuccess)
             {
-                // זריקת שגיאה במקרה של כשל
+           
                 throw new Exception(result.Error);
             }
 
-            // המרת ה-Entities ל-DTOs באמצעות LINQ
+        
             return result.Value.Select(order => new OrderDto
             {
                 Id = order.Id,
                 CustomerId = order.CustomerId,
                 OrderDate = order.OrderDate,
-                Items = order.Items.Select(item => item.Id).ToList() // העברת מזהי פריטים בלבד
+                Items = order.Items.Select(item => item.Id).ToList()
             }).ToList();
         }
     }
