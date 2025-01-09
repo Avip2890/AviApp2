@@ -9,22 +9,25 @@ public class UpdateCustomerCommandHandler(ICustomerService customerService) : IR
 {
     public async Task<CustomerDto?> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        // שליפת הלקוח מהמאגר
-        var existingCustomer = await customerService.GetCustomerByIdAsync(request.Id, cancellationToken);
-        
-        if (existingCustomer == null)
+        var existingCustomerResult = await customerService.GetCustomerByIdAsync(request.Id, cancellationToken);
+
+        if (!existingCustomerResult.IsSuccess || existingCustomerResult.Value == null)
         {
-            return null; // הלקוח לא נמצא
+            return null; 
         }
 
-        // עדכון פרטי הלקוח
+        var existingCustomer = existingCustomerResult.Value;
+        
         existingCustomer.CustomerName = request.CustomerName;
         existingCustomer.Phone = request.Phone;
+        
+        var updatedCustomerResult = await customerService.UpdateCustomerAsync(existingCustomer, cancellationToken);
 
-        // שמירת העדכונים
-        var updatedCustomer = await customerService.UpdateCustomerAsync(existingCustomer, cancellationToken);
-
-        // המרת הישות המעדכנת ל-DTO
-        return updatedCustomer.ToDto();
+        if (!updatedCustomerResult.IsSuccess || updatedCustomerResult.Value == null)
+        {
+            return null; 
+        }
+        
+        return updatedCustomerResult.Value.ToDto();
     }
 }

@@ -1,6 +1,7 @@
 using AviApp.Api.MenuItem.MenuItemQueries;
 using AviApp.Interfaces;
 using AviApp.Models;
+using AviApp.Mappers;
 using MediatR;
 
 namespace AviApp.Api.MenuItem.MenuItemHandlers;
@@ -10,7 +11,16 @@ public class GetMenuItemByIdHandler(IMenuItemService menuItemService)
 {
     public async Task<MenuItemDto?> Handle(GetMenuItemByIdQuery request, CancellationToken cancellationToken)
     {
-        // קריאה לשירות בצורה אסינכרונית
-        return await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
+      
+        var result = await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+           
+            throw new InvalidOperationException(result.Error);
+        }
+
+      
+        return result.Value.ToDto();
     }
 }

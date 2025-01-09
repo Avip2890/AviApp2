@@ -1,33 +1,36 @@
 using AviApp.Interfaces;
 using AviApp.Models;
+using AviApp.Mappers;
 using MediatR;
 
 namespace AviApp.Api.MenuItem.UpdateMenuItem;
 
-public class UpdateMenuItemCommandHandler : IRequestHandler<UpdateMenuItemCommand, MenuItemDto?>
+public class UpdateMenuItemCommandHandler(IMenuItemService menuItemService)
+    : IRequestHandler<UpdateMenuItemCommand, MenuItemDto?>
 {
-    private readonly IMenuItemService _menuItemService;
-
-    public UpdateMenuItemCommandHandler(IMenuItemService menuItemService)
-    {
-        _menuItemService = menuItemService;
-    }
-
     public async Task<MenuItemDto?> Handle(UpdateMenuItemCommand request, CancellationToken cancellationToken)
     {
-       
-        var updatedMenuItemDto = new MenuItemDto
+        var existingMenuItemResult = await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
+
+        if (!existingMenuItemResult.IsSuccess || existingMenuItemResult.Value == null)
         {
-            Id = request.Id,
-            Name = request.Name,
-            Description = request.Description,
-            Price = request.Price,
-            IsAvailable = request.IsAvailable
-        };
+            return null; 
+        }
 
-       
-        var updatedMenuItem = await _menuItemService.UpdateMenuItemAsync(request.Id, updatedMenuItemDto, cancellationToken);
+        var existingMenuItem = existingMenuItemResult.Value;
 
-        return updatedMenuItem;
+        existingMenuItem.Name = request.Name;
+        existingMenuItem.Description = request.Description;
+        existingMenuItem.Price = request.Price;
+        existingMenuItem.IsAvailable = request.IsAvailable;
+        
+        var updatedMenuItemResult = await menuItemService.UpdateMenuItemAsync(request.Id, existingMenuItem, cancellationToken);
+
+        if (!updatedMenuItemResult.IsSuccess || updatedMenuItemResult.Value == null)
+        {
+            return null; 
+        }
+        
+        return updatedMenuItemResult.Value.ToDto();
     }
 }

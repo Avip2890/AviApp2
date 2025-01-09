@@ -2,12 +2,7 @@ using MediatR;
 
 namespace AviApp.Api.Customer.DeleteCustomer;
 
-public abstract class DeleteCustomerCommand : IRequest<bool>
+public  class DeleteCustomerCommand(int id) : IRequest<bool>
 {
-    public int Id { get; set; }
-
-    public DeleteCustomerCommand(int id)
-    {
-        Id = id;
-    }
+    public int Id { get; set; } = id;
 }

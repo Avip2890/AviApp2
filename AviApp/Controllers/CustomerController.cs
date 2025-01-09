@@ -1,9 +1,8 @@
-﻿using AviApp.Api.Customer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AviApp.Interfaces;
-using AviApp.Domain.Entities;
 using AviApp.Models;
 using MediatR;
+using AviApp.Mappers;
 
 namespace AviApp.Controllers;
 
@@ -14,28 +13,44 @@ public class CustomerController(ICustomerService customerService, IMediator medi
     [HttpGet]
     public async Task<IActionResult> GetAllCustomers(CancellationToken cancellationToken = default)
     {
-        var customers = await customerService.GetAllCustomersAsync(cancellationToken);
-        return Ok(customers);
+        var result = await customerService.GetAllCustomersAsync(cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        return Ok(result.Value); 
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCustomerById(int id, CancellationToken cancellationToken = default)
     {
-        var customer = await customerService.GetCustomerByIdAsync(id, cancellationToken);
-        if (customer == null)
+        var result = await customerService.GetCustomerByIdAsync(id, cancellationToken);
+
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Customer with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
-        return Ok(customer);
+        return Ok(result.Value); 
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customer, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customerDto, CancellationToken cancellationToken = default)
     {
-        var command = new CreateCustomerCommand(customer);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
+        // המרת CustomerDto ל- Customer
+        var customerEntity = customerDto.ToEntity();
+
+        var result = await customerService.CreateCustomerAsync(customerEntity, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        // המרת Customer חזרה ל- CustomerDto
+        return CreatedAtAction(nameof(GetCustomerById), new { id = result.Value.Id }, result.Value.ToDto());
     }
 
     [HttpPut("{id}")]
@@ -46,30 +61,28 @@ public class CustomerController(ICustomerService customerService, IMediator medi
             return BadRequest(new { Message = "Customer ID in URL does not match ID in body." });
         }
 
-        var updatedCustomer = new Customer
-        {
-            Id = id,
-            CustomerName = customerDto.CustomerName,
-            Phone = customerDto.Phone
-        };
+        // המרת CustomerDto ל- Customer
+        var customerEntity = customerDto.ToEntity();
 
-        var result = await customerService.UpdateCustomerAsync(updatedCustomer, cancellationToken);
+        var result = await customerService.UpdateCustomerAsync(customerEntity, cancellationToken);
 
-        if (result == null)
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Customer with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
-        return Ok(result);
+        // המרת Customer חזרה ל- CustomerDto
+        return Ok(result.Value.ToDto());
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCustomer(int id, CancellationToken cancellationToken)
     {
         var result = await customerService.DeleteCustomerAsync(id, cancellationToken);
-        if (!result)
+
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Customer with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
         return NoContent();

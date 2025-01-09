@@ -1,13 +1,13 @@
-﻿
-using AviApp.Domain.Entities;
+﻿using AviApp.Domain.Entities;
+using AviApp.Results;
 
 namespace AviApp.Interfaces;
 
 public interface ICustomerService
 {
-    Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default);
-    Task<Customer?> GetCustomerByIdAsync(int id, CancellationToken cancellationToken = default);
-    Task<Customer> CreateCustomer(Customer customer, CancellationToken cancellationToken = default);
-    Task<Customer?> UpdateCustomerAsync(Customer updatedCustomer, CancellationToken cancellationToken = default);
-    Task<bool> DeleteCustomerAsync(int id, CancellationToken cancellationToken = default);
+    Task<Result<List<Customer>>> GetAllCustomersAsync(CancellationToken cancellationToken);
+    Task<Result<Customer>> GetCustomerByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Result<Customer>> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken);
+    Task<Result<Customer>> UpdateCustomerAsync(Customer updatedCustomer, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteCustomerAsync(int id, CancellationToken cancellationToken);
 }

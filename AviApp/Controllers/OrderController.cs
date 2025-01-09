@@ -1,4 +1,5 @@
 ﻿using AviApp.Interfaces;
+using AviApp.Mappers;
 using AviApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,39 +20,81 @@ public class OrderController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken = default)
     {
-        var orders = await _orderService.GetAllOrdersAsync(cancellationToken);
-        return Ok(orders);
+        var result = await _orderService.GetAllOrdersAsync(cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        // מיפוי לתוצאה מסוג OrderDto
+        var orderDtos = result.Value.Select(order => order.ToDto());
+        return Ok(orderDtos);
     }
 
     // קבלת הזמנה לפי מזהה
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken = default)
     {
-        var order = await _orderService.GetOrderByIdAsync(id, cancellationToken);
-        return order != null ? Ok(order) : NotFound(new { Message = $"Order with Id {id} not found." });
+        var result = await _orderService.GetOrderByIdAsync(id, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(new { Message = result.Error });
+        }
+
+        return Ok(result.Value.ToDto());
     }
 
     // יצירת הזמנה חדשה
     [HttpPost]
     public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken = default)
     {
-        var createdOrder = await _orderService.CreateOrderAsync(orderDto, cancellationToken);
-        return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.Id }, createdOrder);
+        // מיפוי מ-DTO ל-Entity
+        var menuItems = await _orderService.GetMenuItemsByIdsAsync(orderDto.Items, cancellationToken);
+        if (!menuItems.IsSuccess)
+        {
+            return BadRequest(new { Message = menuItems.Error });
+        }
+
+        var orderEntity = orderDto.ToEntity(menuItems.Value);
+
+        var result = await _orderService.CreateOrderAsync(orderEntity, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        return CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value.ToDto());
     }
 
     // עדכון הזמנה קיימת
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto updatedOrderDto, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto updatedOrderDto, CancellationToken cancellationToken)
     {
         if (id != updatedOrderDto.Id)
         {
             return BadRequest(new { Message = "Order ID in URL does not match ID in body." });
         }
 
-        var updatedOrder = await _orderService.UpdateOrderAsync(id, updatedOrderDto, cancellationToken);
-        return updatedOrder != null 
-            ? Ok(updatedOrder) 
-            : NotFound(new { Message = $"Order with Id {id} not found." });
+        // מיפוי מ-DTO ל-Entity
+        var menuItems = await _orderService.GetMenuItemsByIdsAsync(updatedOrderDto.Items, cancellationToken);
+        if (!menuItems.IsSuccess)
+        {
+            return BadRequest(new { Message = menuItems.Error });
+        }
+
+        var updatedOrderEntity = updatedOrderDto.ToEntity(menuItems.Value);
+
+        var result = await _orderService.UpdateOrderAsync(id, updatedOrderEntity, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(new { Message = result.Error });
+        }
+
+        return Ok(result.Value.ToDto());
     }
 
     // מחיקת הזמנה לפי מזהה
@@ -59,8 +102,12 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken = default)
     {
         var result = await _orderService.DeleteOrderAsync(id, cancellationToken);
-        return result 
-            ? NoContent() 
-            : NotFound(new { Message = $"Order with Id {id} not found." });
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(new { Message = result.Error });
+        }
+
+        return NoContent();
     }
 }

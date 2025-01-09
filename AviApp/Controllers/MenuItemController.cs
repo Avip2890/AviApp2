@@ -1,5 +1,6 @@
 ﻿using AviApp.Models;
 using AviApp.Interfaces;
+using AviApp.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AviApp.Controllers;
@@ -18,49 +19,68 @@ public class MenuItemController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllMenuItems(CancellationToken cancellationToken)
     {
-        var menuItems = await _menuItemService.GetAllMenuItemsAsync(cancellationToken);
-        return Ok(menuItems);
+        var result = await _menuItemService.GetAllMenuItemsAsync(cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        var menuItemsDto = result.Value.Select(m => m.ToDto()).ToList();
+        return Ok(menuItemsDto);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetMenuItemById(int id, CancellationToken cancellationToken)
     {
-        var menuItem = await _menuItemService.GetMenuItemByIdAsync(id, cancellationToken);
-        if (menuItem == null)
+        var result = await _menuItemService.GetMenuItemByIdAsync(id, cancellationToken);
+
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Menu item with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
-        return Ok(menuItem);
+        return Ok(result.Value.ToDto());
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateMenuItem([FromBody] MenuItemDto menuItemDto, CancellationToken cancellationToken)
     {
-        var createdMenuItem = await _menuItemService.AddMenuItemAsync(menuItemDto, cancellationToken);
-        return CreatedAtAction(nameof(GetMenuItemById), new { id = createdMenuItem.Id }, createdMenuItem);
+        var menuItemEntity = menuItemDto.ToEntity();
+        var result = await _menuItemService.AddMenuItemAsync(menuItemEntity, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(new { Message = result.Error });
+        }
+
+        return CreatedAtAction(nameof(GetMenuItemById), new { id = result.Value.Id }, result.Value.ToDto());
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateMenuItem(int id, [FromBody] MenuItemDto updatedMenuItemDto, CancellationToken cancellationToken)
     {
-        var menuItem = await _menuItemService.UpdateMenuItemAsync(id, updatedMenuItemDto, cancellationToken);
+        var menuItemEntity = updatedMenuItemDto.ToEntity();
+        menuItemEntity.Id = id;
 
-        if (menuItem == null)
+        var result = await _menuItemService.UpdateMenuItemAsync(id, menuItemEntity, cancellationToken);
+
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Menu item with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
-        return Ok(menuItem);
+        return Ok(result.Value.ToDto());
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMenuItem(int id, CancellationToken cancellationToken)
     {
         var result = await _menuItemService.DeleteMenuItemAsync(id, cancellationToken);
-        if (!result)
+
+        if (!result.IsSuccess)
         {
-            return NotFound(new { Message = $"Menu item with Id {id} not found." });
+            return NotFound(new { Message = result.Error });
         }
 
         return NoContent();

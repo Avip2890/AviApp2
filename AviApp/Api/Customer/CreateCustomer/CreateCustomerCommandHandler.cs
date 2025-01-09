@@ -5,15 +5,19 @@ using MediatR;
 
 namespace AviApp.Api.Customer;
 
-
-public class CreateCustomerCommandHandler(ICustomerService customerService): IRequestHandler<CreateCustomerCommand, CustomerDto>
+public class CreateCustomerCommandHandler(ICustomerService customerService)
+    : IRequestHandler<CreateCustomerCommand, CustomerDto?>
 {
-    public async Task<CustomerDto> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<CustomerDto?> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customerDb = request.CustomerDto.ToEntity();
-
-        customerDb = await customerService.CreateCustomer(customerDb, cancellationToken);
-
-        return customerDb.ToDto();
+        var result = await customerService.CreateCustomerAsync(request.CustomerDto.ToEntity(), cancellationToken);
+        
+        if (!result.IsSuccess)
+        {
+         
+            throw new Exception(result.Error); 
+        }
+        
+        return result.Value.ToDto();
     }
 }

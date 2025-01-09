@@ -1,13 +1,13 @@
 ﻿using AviApp.Domain.Entities;
-using MenuItem = AviApp.Models.MenuItemDto;
+using AviApp.Results;
 
 namespace AviApp.Interfaces;
 
 public interface IMenuItemService
 {
-    Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync(CancellationToken cancellationToken);
-    Task<MenuItem?> GetMenuItemByIdAsync(int id, CancellationToken cancellationToken);
-    Task<MenuItem> AddMenuItemAsync(MenuItem menuItem, CancellationToken cancellationToken);
-    Task<MenuItem?> UpdateMenuItemAsync(int id, MenuItem updatedMenuItem, CancellationToken cancellationToken);
-    Task<bool> DeleteMenuItemAsync(int id, CancellationToken cancellationToken);
+    Task<Result<List<MenuItem>>> GetAllMenuItemsAsync(CancellationToken cancellationToken);
+    Task<Result<MenuItem>> GetMenuItemByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Result<MenuItem>> AddMenuItemAsync(MenuItem menuItem, CancellationToken cancellationToken);
+    Task<Result<MenuItem>> UpdateMenuItemAsync(int id, MenuItem updatedMenuItem, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteMenuItemAsync(int id, CancellationToken cancellationToken);
 }
