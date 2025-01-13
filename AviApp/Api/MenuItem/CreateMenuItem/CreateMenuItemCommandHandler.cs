@@ -1,22 +1,25 @@
+using AviApp.Api.MenuItem.CreateMenuItem;
 using AviApp.Interfaces;
 using AviApp.Models;
-using AviApp.Mappers;
+using AviApp.Results;
 using MediatR;
+using AviApp.Mappers;
 
-namespace AviApp.Api.MenuItem.CreateMenuItem;
+namespace AviApp.Api.MenuItem.MenuItemHandlers;
 
-public class CreateMenuItemCommandHandler(IMenuItemService menuItemService)
-    : IRequestHandler<CreateMenuItemCommand, MenuItemDto>
+public class CreateMenuItemHandler(IMenuItemService menuItemService)
+    : IRequestHandler<CreateMenuItemCommand, Result<MenuItemDto>>
 {
-    public async Task<MenuItemDto> Handle(CreateMenuItemCommand request, CancellationToken cancellationToken)
+    public async Task<Result<MenuItemDto>> Handle(CreateMenuItemCommand request, CancellationToken cancellationToken)
     {
-        var result = await menuItemService.AddMenuItemAsync(request.MenuItemDto.ToEntity(), cancellationToken);
-        
+        var menuItemEntity = request.MenuItemDto.ToEntity();
+        var result = await menuItemService.AddMenuItemAsync(menuItemEntity, cancellationToken);
+
         if (!result.IsSuccess)
         {
-            throw new InvalidOperationException(result.Error);
+            return Result<MenuItemDto>.Failure(result.Error);
         }
 
-        return result.Value.ToDto();
+        return Result<MenuItemDto>.Success(result.Value.ToDto());
     }
 }

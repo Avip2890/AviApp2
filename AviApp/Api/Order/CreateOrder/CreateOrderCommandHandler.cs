@@ -6,25 +6,25 @@ using MediatR;
 
 namespace AviApp.Api.Order.CreateOrder;
 
-public class CreateOrderCommandHandler(IOrderService orderService) : IRequestHandler<CreateOrderCommand, OrderDto>
+public class CreateOrderHandler(IOrderService orderService) : IRequestHandler<CreateOrderCommand, Result<OrderDto>>
 {
-    public async Task<OrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result<OrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var menuItemsResult = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
-
-        if (!menuItemsResult.IsSuccess)
+        var menuItems = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
+        if (!menuItems.IsSuccess)
         {
-            throw new InvalidOperationException(menuItemsResult.Error);
+            return Result<OrderDto>.Failure(menuItems.Error);
         }
-        
-        var orderEntity = request.OrderDto.ToEntity(menuItemsResult.Value);
+
+        var orderEntity = request.OrderDto.ToEntity(menuItems.Value);
+
         var result = await orderService.CreateOrderAsync(orderEntity, cancellationToken);
 
         if (!result.IsSuccess)
         {
-            throw new InvalidOperationException(result.Error);
+            return Result<OrderDto>.Failure(result.Error);
         }
-        
-        return result.Value.ToDto();
+
+        return Result<OrderDto>.Success(result.Value.ToDto());
     }
 }

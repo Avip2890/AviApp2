@@ -1,9 +1,7 @@
 using MediatR;
 using AviApp.Models;
+using AviApp.Results;
 
 namespace AviApp.Api.MenuItem.MenuItemQueries;
 
-public class GetMenuItemByIdQuery(int id) : IRequest<MenuItemDto?>
-{
-    public int Id { get; set; } = id;
-}
+public record GetMenuItemByIdQuery(int Id) : IRequest<Result<MenuItemDto>>;

@@ -4,16 +4,17 @@ using MediatR;
 
 namespace AviApp.Api.Order.DeleteOrder;
 
-public class DeleteOrderCommandHandler(IOrderService orderService) : IRequestHandler<DeleteOrderCommand, bool>
+public class DeleteOrderHandler(IOrderService orderService) : IRequestHandler<DeleteOrderCommand, Result<bool>>
 {
-    public async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
     {
         var result = await orderService.DeleteOrderAsync(request.Id, cancellationToken);
 
         if (!result.IsSuccess)
         {
-            throw new InvalidOperationException(result.Error);
+            return Result<bool>.Failure(result.Error);
         }
-        return result.Value;
+
+        return Result<bool>.Success(true);
     }
 }

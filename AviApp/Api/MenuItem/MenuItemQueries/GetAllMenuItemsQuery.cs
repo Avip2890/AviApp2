@@ -1,8 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.MenuItem.MenuItemQueries;
 
-public class GetAllMenuItemsQuery : IRequest<IEnumerable<MenuItemDto>>
-{
-}
+public record GetAllMenuItemsQuery() : IRequest<Result<List<MenuItemDto>>>;

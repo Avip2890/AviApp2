@@ -1,11 +1,6 @@
 using AviApp.Models;
 using MediatR;
-using System.Collections.Generic;
+using AviApp.Results;
 
-namespace AviApp.Api.Order.OrderQueries
-{
-    public class GetAllOrdersQuery : IRequest<List<OrderDto>>
-    {
- 
-    }
-}
+namespace AviApp.Api.Order.OrderQueries;
+public record GetAllOrdersQuery() : IRequest<Result<List<OrderDto>>>;

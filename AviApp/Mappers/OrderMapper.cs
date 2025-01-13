@@ -12,7 +12,7 @@ public static class OrderMapper
             Id = dto.Id,
             CustomerId = dto.CustomerId,
             OrderDate = dto.OrderDate,
-            Items = menuItems // פריטים שנשלפו מה-DB בהתבסס על מזהים
+            Items = menuItems 
         };
     }
 
@@ -23,7 +23,7 @@ public static class OrderMapper
             Id = entity.Id,
             CustomerId = entity.CustomerId,
             OrderDate = entity.OrderDate,
-            Items = entity.Items.Select(item => item.Id).ToList() // החזרת מזהים בלבד
+            Items = entity.Items.Select(item => item.Id).ToList() 
         };
     }
 }

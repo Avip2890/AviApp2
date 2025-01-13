@@ -1,9 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Order.CreateOrder;
 
-public abstract class CreateOrderCommand(OrderDto orderDto) : IRequest<OrderDto>
-{
-    public OrderDto OrderDto { get; } = orderDto;
-}
+public record CreateOrderCommand(OrderDto OrderDto) : IRequest<Result<OrderDto>>;

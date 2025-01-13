@@ -5,17 +5,18 @@ using MediatR;
 namespace AviApp.Api.Customer.DeleteCustomer;
 
 public class DeleteCustomerCommandHandler(ICustomerService customerService)
-    : IRequestHandler<DeleteCustomerCommand, bool>
+    : IRequestHandler<DeleteCustomerCommand, Result<bool>>
 {
-    public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
+        // קריאה למחיקת הלקוח בשירות
         var result = await customerService.DeleteCustomerAsync(request.Id, cancellationToken);
-        
+
         if (!result.IsSuccess)
         {
-            throw new Exception(result.Error); 
+            return Result<bool>.Failure(result.Error);
         }
-        
-        return result.Value;
+
+        return Result<bool>.Success(true);
     }
 }

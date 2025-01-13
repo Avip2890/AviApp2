@@ -1,21 +1,20 @@
 using AviApp.Interfaces;
+using AviApp.Results;
 using MediatR;
 
-namespace AviApp.Api.MenuItem.DeleteMenuItem
+namespace AviApp.Api.MenuItem.DeleteMenuItem;
+
+public class DeleteMenuItemHandler(IMenuItemService menuItemService)
+    : IRequestHandler<DeleteMenuItemCommand, Result<bool>>
 {
-    public class DeleteMenuItemCommandHandler(IMenuItemService menuItemService)
-        : IRequestHandler<DeleteMenuItemCommand, bool>
+    public async Task<Result<bool>> Handle(DeleteMenuItemCommand request, CancellationToken cancellationToken)
     {
-        public async Task<bool> Handle(DeleteMenuItemCommand request, CancellationToken cancellationToken)
+        var result = await menuItemService.DeleteMenuItemAsync(request.Id, cancellationToken);
+        if (!result.IsSuccess)
         {
-            var result = await menuItemService.DeleteMenuItemAsync(request.Id, cancellationToken);
-
-            if (!result.IsSuccess)
-            {
-                throw new InvalidOperationException(result.Error);
-            }
-
-            return result.Value;
+            return Result<bool>.Failure(result.Error);
         }
+
+        return Result<bool>.Success(true);
     }
 }

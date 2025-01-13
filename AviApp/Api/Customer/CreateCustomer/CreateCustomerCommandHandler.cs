@@ -1,23 +1,27 @@
 using AviApp.Interfaces;
-using AviApp.Mappers;
 using AviApp.Models;
+using AviApp.Results;
+using AviApp.Mappers;
 using MediatR;
 
-namespace AviApp.Api.Customer;
+namespace AviApp.Api.Customer.CreateCustomer;
 
 public class CreateCustomerCommandHandler(ICustomerService customerService)
-    : IRequestHandler<CreateCustomerCommand, CustomerDto?>
+    : IRequestHandler<CreateCustomerCommand, Result<CustomerDto>>
 {
-    public async Task<CustomerDto?> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var result = await customerService.CreateCustomerAsync(request.CustomerDto.ToEntity(), cancellationToken);
-        
+     
+        var customerEntity = request.CustomerDto.ToEntity();
+
+      
+        var result = await customerService.CreateCustomerAsync(customerEntity, cancellationToken);
+
         if (!result.IsSuccess)
         {
-         
-            throw new Exception(result.Error); 
+            return Result<CustomerDto>.Failure(result.Error);
         }
-        
-        return result.Value.ToDto();
+
+        return Result<CustomerDto>.Success(result.Value.ToDto());
     }
 }

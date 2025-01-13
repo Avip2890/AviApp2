@@ -1,27 +1,23 @@
 using AviApp.Api.Order.OrderQueries;
 using AviApp.Interfaces;
+using AviApp.Mappers;
 using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Order.OrderHandlers;
 
-public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<GetOrderByIdQuery, OrderDto?>
+public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<GetOrderByIdQuery, Result<OrderDto>>
 {
-    public async Task<OrderDto?> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<OrderDto>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
         var result = await orderService.GetOrderByIdAsync(request.Id, cancellationToken);
-        
-        if (!result.IsSuccess) return null;
-    
-        var order = result.Value;
 
-        return new OrderDto
+        if (!result.IsSuccess)
         {
-            Id = order.Id,
-            CustomerId = order.CustomerId,
-            OrderDate = order.OrderDate,
-            Items = order.Items.Select(item => item.Id).ToList()
-        };
+            return Result<OrderDto>.Failure(result.Error);
+        }
+
+        return Result<OrderDto>.Success(result.Value.ToDto());
     }
 }

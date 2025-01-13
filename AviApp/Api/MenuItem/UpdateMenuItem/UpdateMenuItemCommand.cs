@@ -1,13 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.MenuItem.UpdateMenuItem;
 
-public abstract class UpdateMenuItemCommand : IRequest<MenuItemDto?>
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public decimal Price { get; set; }
-    public bool IsAvailable { get; set; }
-}
+public record UpdateMenuItemCommand(int Id, MenuItemDto MenuItemDto) : IRequest<Result<MenuItemDto>>;

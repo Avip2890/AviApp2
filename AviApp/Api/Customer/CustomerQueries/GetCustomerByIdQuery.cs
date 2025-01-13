@@ -1,9 +1,7 @@
-using MediatR;
 using AviApp.Models;
+using AviApp.Results;
+using MediatR;
 
 namespace AviApp.Api.Customer.CustomerQueries;
 
-public class GetCustomerByIdQuery(int id) : IRequest<CustomerDto?>
-{
-    public int Id { get; } = id;
-}
+public record GetCustomerByIdQuery(int Id) : IRequest<Result<CustomerDto>>;

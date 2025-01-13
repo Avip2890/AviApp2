@@ -1,43 +1,31 @@
 using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Mappers;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Order.UpdateOrder;
 
-public class UpdateOrderCommandHandler(IOrderService orderService) : IRequestHandler<UpdateOrderCommand, OrderDto?>
+public class UpdateOrderHandler(IOrderService orderService) : IRequestHandler<UpdateOrderCommand, Result<OrderDto>>
 {
-    public async Task<OrderDto?> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result<OrderDto>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
-       
-        var existingOrderResult = await orderService.GetOrderByIdAsync(request.Id, cancellationToken);
-
-        if (!existingOrderResult.IsSuccess || existingOrderResult.Value == null)
+        var menuItems = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
+        if (!menuItems.IsSuccess)
         {
-            return null; 
+            return Result<OrderDto>.Failure(menuItems.Error);
         }
 
-        var existingOrder = existingOrderResult.Value;
+        var updatedOrderEntity = request.OrderDto.ToEntity(menuItems.Value);
+        updatedOrderEntity.Id = request.Id;
 
-      
-        existingOrder.OrderDate = request.OrderDate;
-        existingOrder.CustomerId = request.CustomerId;
-        
-        var itemIds = request.Items.Select(item => item.Id);
-        var menuItemsResult = await orderService.GetMenuItemsByIdsAsync(itemIds, cancellationToken);
-        if (!menuItemsResult.IsSuccess || menuItemsResult.Value == null || !menuItemsResult.Value.Any())
-        {
-            throw new InvalidOperationException("Failed to fetch menu items for the order.");
-        }
-        existingOrder.Items = menuItemsResult.Value;
-        
-        var updatedOrderResult = await orderService.UpdateOrderAsync(request.Id, existingOrder, cancellationToken);
+        var result = await orderService.UpdateOrderAsync(request.Id, updatedOrderEntity, cancellationToken);
 
-        if (!updatedOrderResult.IsSuccess || updatedOrderResult.Value == null)
+        if (!result.IsSuccess)
         {
-            return null; 
+            return Result<OrderDto>.Failure(result.Error);
         }
-        
-        return updatedOrderResult.Value.ToDto();
+
+        return Result<OrderDto>.Success(result.Value.ToDto());
     }
 }

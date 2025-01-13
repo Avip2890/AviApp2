@@ -1,9 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Order.OrderQueries;
 
-public class GetOrderByIdQuery(int id) : IRequest<OrderDto?>
-{
-    public int Id { get; set; } = id;
-}
+public record GetOrderByIdQuery(int Id) : IRequest<Result<OrderDto>>;

@@ -1,107 +1,73 @@
-﻿using AviApp.Interfaces;
-using AviApp.Mappers;
-using AviApp.Models;
+﻿using AviApp.Api.Order.CreateOrder;
+using AviApp.Api.Order.DeleteOrder;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using AviApp.Api.Order.OrderQueries;
+using AviApp.Api.Order.UpdateOrder;
+using AviApp.Models;
 
 namespace AviApp.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrderController : ControllerBase
+public class OrderController(IMediator mediator) : ControllerBase
 {
-    private readonly IOrderService _orderService;
-
-    public OrderController(IOrderService orderService)
-    {
-        _orderService = orderService;
-    }
-
-    // קבלת כל ההזמנות
     [HttpGet]
-    public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken)
     {
-        var result = await _orderService.GetAllOrdersAsync(cancellationToken);
+        var result = await mediator.Send(new GetAllOrdersQuery(), cancellationToken);
 
         if (!result.IsSuccess)
         {
             return BadRequest(new { Message = result.Error });
         }
 
-        // מיפוי לתוצאה מסוג OrderDto
-        var orderDtos = result.Value.Select(order => order.ToDto());
-        return Ok(orderDtos);
+        return Ok(result.Value);
     }
 
-    // קבלת הזמנה לפי מזהה
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken)
     {
-        var result = await _orderService.GetOrderByIdAsync(id, cancellationToken);
+        var result = await mediator.Send(new GetOrderByIdQuery(id), cancellationToken);
 
         if (!result.IsSuccess)
         {
             return NotFound(new { Message = result.Error });
         }
 
-        return Ok(result.Value.ToDto());
+        return Ok(result.Value);
     }
 
-    // יצירת הזמנה חדשה
     [HttpPost]
-    public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken)
     {
-        // מיפוי מ-DTO ל-Entity
-        var menuItems = await _orderService.GetMenuItemsByIdsAsync(orderDto.Items, cancellationToken);
-        if (!menuItems.IsSuccess)
-        {
-            return BadRequest(new { Message = menuItems.Error });
-        }
-
-        var orderEntity = orderDto.ToEntity(menuItems.Value);
-
-        var result = await _orderService.CreateOrderAsync(orderEntity, cancellationToken);
+        var result = await mediator.Send(new CreateOrderCommand(orderDto), cancellationToken);
 
         if (!result.IsSuccess)
         {
             return BadRequest(new { Message = result.Error });
         }
 
-        return CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value.ToDto());
+        return CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value);
     }
 
-    // עדכון הזמנה קיימת
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto updatedOrderDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto orderDto, CancellationToken cancellationToken)
     {
-        if (id != updatedOrderDto.Id)
-        {
-            return BadRequest(new { Message = "Order ID in URL does not match ID in body." });
-        }
-
-        // מיפוי מ-DTO ל-Entity
-        var menuItems = await _orderService.GetMenuItemsByIdsAsync(updatedOrderDto.Items, cancellationToken);
-        if (!menuItems.IsSuccess)
-        {
-            return BadRequest(new { Message = menuItems.Error });
-        }
-
-        var updatedOrderEntity = updatedOrderDto.ToEntity(menuItems.Value);
-
-        var result = await _orderService.UpdateOrderAsync(id, updatedOrderEntity, cancellationToken);
+        var result = await mediator.Send(new UpdateOrderCommand(id, orderDto), cancellationToken);
 
         if (!result.IsSuccess)
         {
             return NotFound(new { Message = result.Error });
         }
 
-        return Ok(result.Value.ToDto());
+        return Ok(result.Value);
     }
 
-    // מחיקת הזמנה לפי מזהה
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken)
     {
-        var result = await _orderService.DeleteOrderAsync(id, cancellationToken);
+        var result = await mediator.Send(new DeleteOrderCommand(id), cancellationToken);
 
         if (!result.IsSuccess)
         {

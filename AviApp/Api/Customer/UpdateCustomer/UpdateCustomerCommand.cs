@@ -1,11 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Customer.UpdateCustomer;
 
-public abstract class UpdateCustomerCommand : IRequest<CustomerDto?>
-{
-    public int Id { get; set; }
-    public string CustomerName { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
-}
+public record UpdateCustomerCommand(CustomerDto CustomerDto) : IRequest<Result<CustomerDto>>;

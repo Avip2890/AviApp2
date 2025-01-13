@@ -1,9 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.MenuItem.CreateMenuItem;
 
-public abstract class CreateMenuItemCommand(MenuItemDto menuItemDto) : IRequest<MenuItemDto>
-{
-    public MenuItemDto MenuItemDto { get; set; } = menuItemDto;
-}
+public record CreateMenuItemCommand(MenuItemDto MenuItemDto) : IRequest<Result<MenuItemDto>>;
