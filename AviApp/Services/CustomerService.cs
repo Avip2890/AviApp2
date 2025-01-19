@@ -26,7 +26,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (customer == null)
         {
-            return Result<Customer>.Failure($"Customer with ID {id} not found.");
+            return Result<Customer>.Failure($"Customers with ID {id} not found.");
         }
 
         return Result<Customer>.Success(customer);
@@ -53,7 +53,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (customer == null)
         {
-            return Result<Customer>.Failure($"Customer with ID {updatedCustomer.Id} not found.");
+            return Result<Customer>.Failure($"Customers with ID {updatedCustomer.Id} not found.");
         }
 
         customer.CustomerName = updatedCustomer.CustomerName;
@@ -76,7 +76,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (customer == null)
         {
-            return Result<bool>.Failure($"Customer with ID {id} not found.");
+            return Result<bool>.Failure($"Customers with ID {id} not found.");
         }
 
         try
