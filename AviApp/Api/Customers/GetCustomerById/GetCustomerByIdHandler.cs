@@ -6,7 +6,6 @@ using AviApp.Results;
 using MediatR;
 
 
-
 namespace AviApp.Api.Customers.GetCustomerById;
 
 public class GetCustomerByIdHandler(ICustomerService customerService)

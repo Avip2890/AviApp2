@@ -5,7 +5,7 @@ using MediatR;
 using AviApp.Api.MenuItem.MenuItemQueries;
 using AviApp.Mappers;
 
-namespace AviApp.Api.MenuItem.MenuItemHandlers;
+namespace AviApp.Api.MenuItem.GetAllMenuItems;
 
 public class GetAllMenuItemsHandler(IMenuItemService menuItemService)
     : IRequestHandler<GetAllMenuItemsQuery, Result<List<MenuItemDto>>>

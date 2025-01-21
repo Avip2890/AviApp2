@@ -1,9 +1,7 @@
 using AviApp.Models;
+using AviApp.Results;
 using MediatR;
 
 namespace AviApp.Api.Customers.GetAllCustomers;
 
-public  class GetAllCustomersQuery : IRequest<List<CustomerDto>>
-{
-    
-}
+public record GetAllCustomersQuery() : IRequest<Result<List<CustomerDto>>>;

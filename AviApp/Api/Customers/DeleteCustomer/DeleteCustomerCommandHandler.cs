@@ -9,7 +9,7 @@ public class DeleteCustomerCommandHandler(ICustomerService customerService)
 {
     public async Task<Result<bool>> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
-        // קריאה למחיקת הלקוח בשירות
+       
         var result = await customerService.DeleteCustomerAsync(request.Id, cancellationToken);
 
         if (!result.IsSuccess)
