@@ -13,7 +13,7 @@ public class CreateOrderHandler(IOrderService orderService) : IRequestHandler<Cr
         var menuItems = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
         if (!menuItems.IsSuccess)
         {
-            return Result<OrderDto>.Failure(menuItems.Error);
+            return Error.BadRequest("Couldn't find menu items'");
         }
 
         var orderEntity = request.OrderDto.ToEntity(menuItems.Value);
@@ -22,7 +22,7 @@ public class CreateOrderHandler(IOrderService orderService) : IRequestHandler<Cr
 
         if (!result.IsSuccess)
         {
-            return Result<OrderDto>.Failure(result.Error);
+            return Error.BadRequest("CreateOrder command failed");
         }
 
         return Result<OrderDto>.Success(result.Value.ToDto());

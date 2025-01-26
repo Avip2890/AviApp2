@@ -1,11 +1,11 @@
-using AviApp.Api.MenuItem.CreateMenuItem;
+
 using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 using AviApp.Mappers;
 
-namespace AviApp.Api.MenuItem.MenuItemHandlers;
+namespace AviApp.Api.MenuItem.CreateMenuItem;
 
 public class CreateMenuItemHandler(IMenuItemService menuItemService)
     : IRequestHandler<CreateMenuItemCommand, Result<MenuItemDto>>
@@ -17,7 +17,7 @@ public class CreateMenuItemHandler(IMenuItemService menuItemService)
 
         if (!result.IsSuccess)
         {
-            return Result<MenuItemDto>.Failure(result.Error);
+            return Error.BadRequest("Failed to create menu item");
         }
 
         return Result<MenuItemDto>.Success(result.Value.ToDto());

@@ -5,7 +5,7 @@ using MediatR;
 using AviApp.Api.MenuItem.MenuItemQueries;
 using AviApp.Mappers;
 
-namespace AviApp.Api.MenuItem.MenuItemHandlers;
+namespace AviApp.Api.MenuItem.GetMenuItemById;
 
 public class GetMenuItemByIdHandler(IMenuItemService menuItemService)
     : IRequestHandler<GetMenuItemByIdQuery, Result<MenuItemDto>>
@@ -15,7 +15,7 @@ public class GetMenuItemByIdHandler(IMenuItemService menuItemService)
         var result = await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
         if (!result.IsSuccess)
         {
-            return Result<MenuItemDto>.Failure(result.Error);
+            Error.BadRequest("GetMenuItemById Failed");
         }
 
         return Result<MenuItemDto>.Success(result.Value.ToDto());

@@ -1,11 +1,11 @@
-using AviApp.Api.Order.OrderQueries;
+
 using AviApp.Interfaces;
 using AviApp.Mappers;
 using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 
-namespace AviApp.Api.Order.OrderHandlers;
+namespace AviApp.Api.Order.GetOrderById;
 
 public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<GetOrderByIdQuery, Result<OrderDto>>
 {
@@ -15,7 +15,7 @@ public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<G
 
         if (!result.IsSuccess)
         {
-            return Result<OrderDto>.Failure(result.Error);
+            return Error.BadRequest(" The Order did not found");
         }
 
         return Result<OrderDto>.Success(result.Value.ToDto());

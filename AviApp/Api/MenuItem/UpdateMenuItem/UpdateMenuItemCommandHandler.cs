@@ -18,7 +18,7 @@ public class UpdateMenuItemHandler(IMenuItemService menuItemService)
 
         if (!result.IsSuccess)
         {
-            return Result<MenuItemDto>.Failure(result.Error);
+            return Error.BadRequest("Could not update MenuItem");
         }
 
         return Result<MenuItemDto>.Success(result.Value.ToDto());

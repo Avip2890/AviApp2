@@ -1,8 +1,8 @@
 using System.Reflection;
+using AviApp.Api.Customers.CustomerValidator;
 using AviApp.Domain.Context;
 using AviApp.Interfaces;
 using AviApp.Services;
-using AviApp.Validators.CustomerValidator;
 using MediatR;
 using FluentValidation;
 using FluentValidation.AspNetCore;

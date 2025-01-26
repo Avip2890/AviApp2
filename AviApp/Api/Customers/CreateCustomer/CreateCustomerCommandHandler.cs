@@ -19,7 +19,7 @@ public class CreateCustomerCommandHandler(ICustomerService customerService)
 
         if (!result.IsSuccess)
         {
-            return Result<CustomerDto>.Failure(result.Error);
+            return Error.BadRequest("CreateCustomerCommand failed");
         }
 
         return Result<CustomerDto>.Success(result.Value.ToDto());

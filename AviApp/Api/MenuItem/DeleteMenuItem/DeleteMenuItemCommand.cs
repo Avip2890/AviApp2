@@ -6,4 +6,4 @@ namespace AviApp.Api.MenuItem.DeleteMenuItem;
 
 
 
-public record DeleteMenuItemCommand(int Id) : IRequest<Result<bool>>;
+public record DeleteMenuItemCommand(int Id) : IRequest<Result<Deleted>>;

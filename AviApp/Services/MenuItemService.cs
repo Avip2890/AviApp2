@@ -15,10 +15,10 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
 
         if (!menuItems.Any())
         {
-            return Result<List<MenuItem>>.Failure("No menu items found.");
+            return Error.NotFound("MenuItem Not Found");
         }
 
-        return Result<List<MenuItem>>.Success(menuItems);
+        return menuItems;
     }
     
     public async Task<Result<MenuItem>> GetMenuItemByIdAsync(int id, CancellationToken cancellationToken)
@@ -27,10 +27,10 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
 
         if (menuItem == null)
         {
-            return Result<MenuItem>.Failure($"Menu item with ID {id} not found.");
+            return Error.NotFound("MenuItem Not Found");
         }
 
-        return Result<MenuItem>.Success(menuItem);
+        return menuItem;
     }
     
     public async Task<Result<MenuItem>> AddMenuItemAsync(MenuItem menuItem, CancellationToken cancellationToken)
@@ -39,11 +39,11 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
         {
             context.MenuItems.Add(menuItem);
             await context.SaveChangesAsync(cancellationToken);
-            return Result<MenuItem>.Success(menuItem);
+            return menuItem;
         }
-        catch (Exception ex)
+        catch  
         {
-            return Result<MenuItem>.Failure($"Failed to add menu item: {ex.Message}");
+            return Error.BadRequest("Couldn't Add new MenuItem");
         }
     }
     
@@ -53,7 +53,7 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
 
         if (menuItem == null)
         {
-            return Result<MenuItem>.Failure($"Menu item with ID {id} not found.");
+            return Error.NotFound("MenuItem not found");
         }
 
         menuItem.Name = updatedMenuItem.Name;
@@ -64,32 +64,32 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
         try
         {
             await context.SaveChangesAsync(cancellationToken);
-            return Result<MenuItem>.Success(menuItem);
+            return menuItem;
         }
-        catch (Exception ex)
+        catch
         {
-            return Result<MenuItem>.Failure($"Failed to update menu item: {ex.Message}");
+            return Error.BadRequest("Couldn't Update MenuItem");
         }
     }
     
-    public async Task<Result<bool>> DeleteMenuItemAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<Deleted>> DeleteMenuItemAsync(int id, CancellationToken cancellationToken)
     {
         var menuItem = await context.MenuItems.FindAsync(new object[] { id }, cancellationToken);
 
         if (menuItem == null)
         {
-            return Result<bool>.Failure($"Menu item with ID {id} not found.");
+            return Error.NotFound("MenuItem Not Found");
         }
 
         try
         {
             context.MenuItems.Remove(menuItem);
             await context.SaveChangesAsync(cancellationToken);
-            return Result<bool>.Success(true);
+            return new Deleted();
         }
-        catch (Exception ex)
+        catch 
         {
-            return Result<bool>.Failure($"Failed to delete menu item: {ex.Message}");
+            return Error.BadRequest("Couldn't Delete MenuItem");
         }
     }
 }

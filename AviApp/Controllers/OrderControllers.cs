@@ -1,85 +1,56 @@
-
 using AviApp.Api.Order.CreateOrder;
 using AviApp.Api.Order.DeleteOrder;
-using AviApp.Api.Order.OrderQueries;
+using AviApp.Api.Order.GetAllOrders;
+using AviApp.Api.Order.GetOrderById;
 using AviApp.Api.Order.UpdateOrder;
 using AviApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AviApp.Controllers.OrderController;
+namespace AviApp.Controllers;
 
-[ApiController]
-[Route("api/order")]
-public class OrderController(IMediator mediator) : ControllerBase
+
+[Route("api/orders")]
+public class OrderController(IMediator mediator) : AppBaseController
 {
     [HttpGet]
-    [Route("all")]
+    [Route("")]
     public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllOrdersQuery(), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { Message = result.Error });
-        }
-
-        return Ok(result.Value);
+        return ResultOf(result);
     }
 
     [HttpGet]
-    [Route("get/{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetOrderByIdQuery(id), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { Message = result.Error });
-        }
-
-        return Ok(result.Value);
+        return ResultOf(result);
     }
 
     [HttpPost]
-    [Route("create")]
+    [Route("")]
     public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new CreateOrderCommand(orderDto), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { Message = result.Error });
-        }
-
-        return CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value);
+        return ResultOf(result, 
+            successResult: CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value));
     }
 
     [HttpPut]
-    [Route("update/{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto orderDto, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateOrderCommand(id, orderDto), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { Message = result.Error });
-        }
-
-        return Ok(result.Value);
+        return ResultOf(result);
     }
 
     [HttpDelete]
-    [Route("delete/{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteOrderCommand(id), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { Message = result.Error });
-        }
-
-        return NoContent();
+        return ResultOf(result, successResult: NoContent());
     }
 }

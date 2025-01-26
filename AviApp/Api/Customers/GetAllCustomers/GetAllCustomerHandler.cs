@@ -15,7 +15,7 @@ public class GetAllCustomersHandler(ICustomerService customerService)
         var result = await customerService.GetAllCustomersAsync(cancellationToken);
         if (!result.IsSuccess)
         {
-            return Result<List<CustomerDto>>.Failure(result.Error);
+            return Error.BadRequest("Customer service returned an empty result");
         }
 
         return Result<List<CustomerDto>>.Success(result.Value.Select(c => c.ToDto()).ToList());

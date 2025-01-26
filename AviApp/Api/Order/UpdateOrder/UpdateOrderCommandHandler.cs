@@ -13,7 +13,7 @@ public class UpdateOrderHandler(IOrderService orderService) : IRequestHandler<Up
         var menuItems = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
         if (!menuItems.IsSuccess)
         {
-            return Result<OrderDto>.Failure(menuItems.Error);
+            return Error.BadRequest("Order item not found");
         }
 
         var updatedOrderEntity = request.OrderDto.ToEntity(menuItems.Value);
@@ -23,7 +23,7 @@ public class UpdateOrderHandler(IOrderService orderService) : IRequestHandler<Up
 
         if (!result.IsSuccess)
         {
-            return Result<OrderDto>.Failure(result.Error);
+            return Error.BadRequest("Could not update Order");
         }
 
         return Result<OrderDto>.Success(result.Value.ToDto());

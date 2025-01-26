@@ -1,4 +1,3 @@
-
 using AviApp.Interfaces;
 using AviApp.Mappers;
 using AviApp.Models;
@@ -17,10 +16,9 @@ public class GetCustomerByIdHandler(ICustomerService customerService)
 
         if (!result.IsSuccess || result.Value == null)
         {
-            return Result<CustomerDto>.Failure($"Customers with ID {request.Id} not found.");
+            return Error.NotFound("Customer ID: {id} not found");
         }
-
-        // שימוש ב-Mapper להמרה ל-DTO
+        
         return Result<CustomerDto>.Success(result.Value.ToDto());
     }
 }

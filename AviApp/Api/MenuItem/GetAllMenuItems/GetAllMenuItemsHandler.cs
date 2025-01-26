@@ -15,7 +15,7 @@ public class GetAllMenuItemsHandler(IMenuItemService menuItemService)
         var result = await menuItemService.GetAllMenuItemsAsync(cancellationToken);
         if (!result.IsSuccess)
         {
-            return Result<List<MenuItemDto>>.Failure(result.Error);
+            return Error.BadRequest("GetAllMenuItems Failed");
         }
 
         return Result<List<MenuItemDto>>.Success(result.Value.Select(m => m.ToDto()).ToList());

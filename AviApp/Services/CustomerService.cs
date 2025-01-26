@@ -14,10 +14,10 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (!customers.Any())
         {
-            return Result<List<Customer>>.Failure("No customers found.");
+            return Error.NotFound("Customer not found");
         }
 
-        return Result<List<Customer>>.Success(customers);
+        return customers;
     }
     
     public async Task<Result<Customer>> GetCustomerByIdAsync(int id, CancellationToken cancellationToken)
@@ -26,10 +26,10 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (customer == null)
         {
-            return Result<Customer>.Failure($"Customers with ID {id} not found.");
+            return Error.NotFound("Customer not found");
         }
 
-        return Result<Customer>.Success(customer);
+        return customer;
     }
     
     public async Task<Result<Customer>> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken)
@@ -39,11 +39,11 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
             context.Customers.Add(customer);
             await context.SaveChangesAsync(cancellationToken);
 
-            return Result<Customer>.Success(customer);
+            return customer;
         }
-        catch (Exception ex)
+        catch
         {
-            return Result<Customer>.Failure($"Failed to create customer: {ex.Message}");
+            return Error.BadRequest("Couldn't create customer'");
         }
     }
     
@@ -53,7 +53,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
 
         if (customer == null)
         {
-            return Result<Customer>.Failure($"Customers with ID {updatedCustomer.Id} not found.");
+            return Error.NotFound("Customer not found");
         }
 
         customer.CustomerName = updatedCustomer.CustomerName;
@@ -62,32 +62,26 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
         try
         {
             await context.SaveChangesAsync(cancellationToken);
-            return Result<Customer>.Success(customer);
+            return customer;
         }
-        catch (Exception ex)
+        catch
         {
-            return Result<Customer>.Failure($"Failed to update customer: {ex.Message}");
+            return Error.BadRequest("Couldn't Update Customer");
         }
     }
 
-    public async Task<Result<bool>> DeleteCustomerAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<Deleted>> DeleteCustomerAsync(int id, CancellationToken cancellationToken)
     {
         var customer = await context.Customers.FindAsync(new object[] { id }, cancellationToken);
 
         if (customer == null)
         {
-            return Result<bool>.Failure($"Customers with ID {id} not found.");
+            return Error.NotFound("Customer Not Found");
         }
-
-        try
-        {
+        
             context.Customers.Remove(customer);
             await context.SaveChangesAsync(cancellationToken);
-            return Result<bool>.Success(true);
-        }
-        catch (Exception ex)
-        {
-            return Result<bool>.Failure($"Failed to delete customer: {ex.Message}");
-        }
+            return new Deleted();
+        
     }
 }

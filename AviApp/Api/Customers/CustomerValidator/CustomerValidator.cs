@@ -1,7 +1,7 @@
 using AviApp.Models;
 using FluentValidation;
 
-namespace AviApp.Validators.CustomerValidator;
+namespace AviApp.Api.Customers.CustomerValidator;
 
 public abstract class CustomerValidator : AbstractValidator<CustomerDto>
 {

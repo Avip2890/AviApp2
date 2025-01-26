@@ -14,10 +14,10 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
 
         if (!orders.Any())
         {
-            return Result<List<Order>>.Failure("No orders found.");
+            return Error.NotFound("Order not found");
         }
 
-        return Result<List<Order>>.Success(orders);
+        return orders;
     }
 
     public async Task<Result<Order>> GetOrderByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -26,24 +26,23 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
 
         if (order == null)
         {
-            return Result<Order>.Failure($"Order with ID {id} not found.");
+            return Error.NotFound("Order not found");
         }
 
-        return Result<Order>.Success(order);
+        return order;
     }
 
     public async Task<Result<Order>> CreateOrderAsync(Order order, CancellationToken cancellationToken = default)
     {
         try
         {
-            // Fetch related menu items from the database
             var menuItems = await context.MenuItems
                 .Where(mi => order.Items.Select(i => i.Id).Contains(mi.Id))
                 .ToListAsync(cancellationToken);
 
             if (!menuItems.Any())
             {
-                return Result<Order>.Failure("No valid menu items found for the order.");
+                return Error.NotFound("Order Not Found");
             }
 
             order.Items = menuItems;
@@ -51,11 +50,11 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
             context.Orders.Add(order);
             await context.SaveChangesAsync(cancellationToken);
 
-            return Result<Order>.Success(order);
+            return order;
         }
-        catch (Exception ex)
+        catch 
         {
-            return Result<Order>.Failure($"Failed to create order: {ex.Message}");
+            return Error.BadRequest("Error occurred while processing order");
         }
     }
 
@@ -65,7 +64,7 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
 
         if (existingOrder == null)
         {
-            return Result<Order>.Failure($"Order with ID {id} not found.");
+            return Error.NotFound("Order Not Found");
         }
 
         existingOrder.CustomerId = updatedOrder.CustomerId;
@@ -78,7 +77,7 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
 
         if (!menuItems.Any())
         {
-            return Result<Order>.Failure("No valid menu items found for the updated order.");
+            return Error.NotFound("Order with ID {id} not found");
         }
 
         existingOrder.Items = menuItems;
@@ -86,32 +85,32 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
         try
         {
             await context.SaveChangesAsync(cancellationToken);
-            return Result<Order>.Success(existingOrder);
+            return existingOrder;
         }
-        catch (Exception ex)
+        catch
         {
-            return Result<Order>.Failure($"Failed to update order: {ex.Message}");
+            return Error.BadRequest("Error saving order");
         }
     }
 
-    public async Task<Result<bool>> DeleteOrderAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<Deleted>> DeleteOrderAsync(int id, CancellationToken cancellationToken = default)
     {
         var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 
         if (order == null)
         {
-            return Result<bool>.Failure($"Order with ID {id} not found.");
+            return Error.NotFound("Order Not Found");
         }
 
         try
         {
             context.Orders.Remove(order);
             await context.SaveChangesAsync(cancellationToken);
-            return Result<bool>.Success(true);
+            return new Deleted();
         }
-        catch (Exception ex)
+        catch 
         {
-            return Result<bool>.Failure($"Failed to delete order: {ex.Message}");
+            return Error.BadRequest("Failed to delete order");
         }
     }
     public async Task<Result<List<MenuItem>>> GetMenuItemsByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken)
@@ -124,14 +123,14 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
 
             if (!menuItems.Any())
             {
-                return Result<List<MenuItem>>.Failure("No menu items found for the provided IDs.");
+                return Error.NotFound("MenuItem Not Found");
             }
 
-            return Result<List<MenuItem>>.Success(menuItems);
+            return menuItems;
         }
-        catch (Exception ex)
+        catch
         {
-            return Result<List<MenuItem>>.Failure($"Failed to fetch menu items: {ex.Message}");
+            return Error.BadRequest("Failed to get menuItems");
         }
     }
 }
