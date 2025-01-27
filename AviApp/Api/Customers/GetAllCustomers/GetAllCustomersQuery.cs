@@ -4,4 +4,4 @@ using MediatR;
 
 namespace AviApp.Api.Customers.GetAllCustomers;
 
-public record GetAllCustomersQuery() : IRequest<Result<List<CustomerDto>>>;
+public record GetAllCustomersQuery : IRequest<Result<List<CustomerDto>>>;

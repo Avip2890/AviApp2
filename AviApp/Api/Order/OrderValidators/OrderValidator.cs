@@ -1,7 +1,7 @@
 using AviApp.Models;
 using FluentValidation;
 
-namespace AviApp.Validators.OrderValidators;
+namespace AviApp.Api.Order.OrderValidators;
 
 public class OrderValidator : AbstractValidator<OrderDto>
 {

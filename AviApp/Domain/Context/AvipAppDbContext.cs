@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AviApp.Domain.Context;
 
-public partial class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options) : DbContext(options)
+public  class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options) : DbContext(options)
 {
     public virtual DbSet<Customer> Customers { get; set; }
     public virtual DbSet<MenuItem> MenuItems { get; set; }
@@ -44,5 +44,5 @@ public partial class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options
         });
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+   
 }
