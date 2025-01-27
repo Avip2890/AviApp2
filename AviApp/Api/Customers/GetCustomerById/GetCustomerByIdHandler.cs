@@ -13,12 +13,6 @@ public class GetCustomerByIdHandler(ICustomerService customerService)
     public async Task<Result<CustomerDto>> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
         var result = await customerService.GetCustomerByIdAsync(request.Id, cancellationToken);
-
-        if (!result.IsSuccess || result.Value == null)
-        {
-            return Error.NotFound("Customer ID: {id} not found");
-        }
-        
-        return Result<CustomerDto>.Success(result.Value.ToDto());
+        return result.IsSuccess ? result.Value.ToDto() : result.Errors;
     }
 }

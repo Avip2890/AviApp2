@@ -11,12 +11,7 @@ public  class OrderService(AvipAppDbContext context) : IOrderService
     public async Task<Result<List<Order>>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
         var orders = await context.Orders.Include(o => o.Items).ToListAsync(cancellationToken);
-
-        if (!orders.Any())
-        {
-            return Error.NotFound("Order not found");
-        }
-
+        
         return orders;
     }
 

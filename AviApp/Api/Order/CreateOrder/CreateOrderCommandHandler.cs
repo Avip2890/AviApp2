@@ -12,19 +12,13 @@ public class CreateOrderHandler(IOrderService orderService) : IRequestHandler<Cr
     {
         var menuItems = await orderService.GetMenuItemsByIdsAsync(request.OrderDto.Items, cancellationToken);
         if (!menuItems.IsSuccess)
-        {
             return Error.BadRequest("Couldn't find menu items'");
-        }
 
         var orderEntity = request.OrderDto.ToEntity(menuItems.Value);
-
         var result = await orderService.CreateOrderAsync(orderEntity, cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("CreateOrder command failed");
-        }
-
-        return Result<OrderDto>.Success(result.Value.ToDto());
+        return result.IsSuccess
+            ? result.Value.ToDto()
+            : result.Errors;
     }
 }

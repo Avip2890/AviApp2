@@ -13,11 +13,6 @@ public class GetMenuItemByIdHandler(IMenuItemService menuItemService)
     public async Task<Result<MenuItemDto>> Handle(GetMenuItemByIdQuery request, CancellationToken cancellationToken)
     {
         var result = await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
-        if (!result.IsSuccess)
-        {
-            Error.BadRequest("GetMenuItemById Failed");
-        }
-
-        return Result<MenuItemDto>.Success(result.Value.ToDto());
+        return result.IsSuccess ? result.Value.ToDto() : result.Errors;
     }
 }

@@ -1,4 +1,3 @@
-
 using AviApp.Interfaces;
 using AviApp.Mappers;
 using AviApp.Models;
@@ -13,11 +12,8 @@ public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<G
     {
         var result = await orderService.GetOrderByIdAsync(request.Id, cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest(" The Order did not found");
-        }
-
-        return Result<OrderDto>.Success(result.Value.ToDto());
+        return result.IsSuccess
+            ? result.Value.ToDto()
+            : result.Errors;
     }
 }

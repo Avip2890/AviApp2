@@ -10,11 +10,8 @@ public class DeleteOrderHandler(IOrderService orderService) : IRequestHandler<De
     {
         var result = await orderService.DeleteOrderAsync(request.Id, cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("DeleteOrder failed");
-        }
-
-        return new Deleted();
+        return result.IsSuccess
+            ? new Deleted()
+            : result.Errors;
     }
 }

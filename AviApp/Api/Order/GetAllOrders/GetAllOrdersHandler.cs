@@ -1,4 +1,3 @@
-
 using AviApp.Interfaces;
 using AviApp.Mappers;
 using AviApp.Models;
@@ -14,11 +13,8 @@ public class GetAllOrdersHandler(IOrderService orderService)
     {
         var result = await orderService.GetAllOrdersAsync(cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Couldn't get all orders'");
-        }
-
-        return Result<List<OrderDto>>.Success(result.Value.Select(order => order.ToDto()).ToList());
+        return result.IsSuccess
+            ? result.Value.Select(order => order.ToDto()).ToList()
+            : result.Errors;
     }
 }

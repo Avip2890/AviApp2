@@ -16,12 +16,6 @@ public class CreateCustomerCommandHandler(ICustomerService customerService)
 
       
         var result = await customerService.CreateCustomerAsync(customerEntity, cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("CreateCustomerCommand failed");
-        }
-
-        return Result<CustomerDto>.Success(result.Value.ToDto());
+return result.IsSuccess ? result.Value.ToDto() : result.Errors;
     }
 }

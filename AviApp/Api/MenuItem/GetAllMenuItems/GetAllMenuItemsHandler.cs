@@ -13,11 +13,8 @@ public class GetAllMenuItemsHandler(IMenuItemService menuItemService)
     public async Task<Result<List<MenuItemDto>>> Handle(GetAllMenuItemsQuery request, CancellationToken cancellationToken)
     {
         var result = await menuItemService.GetAllMenuItemsAsync(cancellationToken);
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("GetAllMenuItems Failed");
-        }
-
-        return Result<List<MenuItemDto>>.Success(result.Value.Select(m => m.ToDto()).ToList());
+        return result.IsSuccess
+            ? result.Value.Select(m => m.ToDto()).ToList()
+            : Error.BadRequest("Menu item Service returned no results");
     }
 }

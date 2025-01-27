@@ -12,12 +12,7 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
     public async Task<Result<List<MenuItem>>> GetAllMenuItemsAsync(CancellationToken cancellationToken)
     {
         var menuItems = await context.MenuItems.AsNoTracking().ToListAsync(cancellationToken);
-
-        if (!menuItems.Any())
-        {
-            return Error.NotFound("MenuItem Not Found");
-        }
-
+        
         return menuItems;
     }
     

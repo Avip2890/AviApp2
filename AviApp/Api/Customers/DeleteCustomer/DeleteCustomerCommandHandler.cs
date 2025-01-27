@@ -11,12 +11,6 @@ public class DeleteCustomerCommandHandler(ICustomerService customerService)
     {
        
         var result = await customerService.DeleteCustomerAsync(request.Id, cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Customer ");
-        }
-
-        return new Deleted();
+        return result.IsSuccess ? new Deleted() : result.Errors;
     }
 }

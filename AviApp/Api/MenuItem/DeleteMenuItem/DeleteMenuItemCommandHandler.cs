@@ -10,11 +10,7 @@ public class DeleteMenuItemHandler(IMenuItemService menuItemService)
     public async Task<Result<Deleted>> Handle(DeleteMenuItemCommand request, CancellationToken cancellationToken)
     {
         var result = await menuItemService.DeleteMenuItemAsync(request.Id, cancellationToken);
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Delete Failed"); 
-        }
+        return result.IsSuccess ? new Deleted() : result.Errors;
 
-        return new Deleted();
     }
 }

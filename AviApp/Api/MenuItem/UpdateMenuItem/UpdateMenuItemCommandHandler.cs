@@ -16,11 +16,8 @@ public class UpdateMenuItemHandler(IMenuItemService menuItemService)
 
         var result = await menuItemService.UpdateMenuItemAsync(request.Id, menuItemEntity, cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Could not update MenuItem");
-        }
-
-        return Result<MenuItemDto>.Success(result.Value.ToDto());
+        return result.IsSuccess 
+            ? Result<MenuItemDto>.Success(result.Value.ToDto()) 
+            : Error.BadRequest("Could not update MenuItem");
     }
 }

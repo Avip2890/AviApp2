@@ -11,12 +11,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
     public async Task<Result<List<Customer>>> GetAllCustomersAsync(CancellationToken cancellationToken)
     {
         var customers = await context.Customers.AsNoTracking().ToListAsync(cancellationToken);
-
-        if (!customers.Any())
-        {
-            return Error.NotFound("Customer not found");
-        }
-
+        
         return customers;
     }
     
@@ -79,9 +74,9 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
             return Error.NotFound("Customer Not Found");
         }
         
-            context.Customers.Remove(customer);
-            await context.SaveChangesAsync(cancellationToken);
-            return new Deleted();
+        context.Customers.Remove(customer);
+        await context.SaveChangesAsync(cancellationToken);
+        return new Deleted();
         
     }
 }

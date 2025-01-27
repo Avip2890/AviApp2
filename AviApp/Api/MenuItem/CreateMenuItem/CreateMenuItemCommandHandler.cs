@@ -15,11 +15,8 @@ public class CreateMenuItemHandler(IMenuItemService menuItemService)
         var menuItemEntity = request.MenuItemDto.ToEntity();
         var result = await menuItemService.AddMenuItemAsync(menuItemEntity, cancellationToken);
 
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Failed to create menu item");
-        }
-
-        return Result<MenuItemDto>.Success(result.Value.ToDto());
+        return result.IsSuccess 
+            ? result.Value.ToDto() 
+            : Error.BadRequest("Failed to create menu item");
     }
 }

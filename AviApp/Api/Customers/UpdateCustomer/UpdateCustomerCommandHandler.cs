@@ -14,7 +14,8 @@ public class UpdateCustomerCommandHandler(ICustomerService customerService)
     {
         var existingCustomerResult = await customerService.GetCustomerByIdAsync(request.CustomerDto.Id, cancellationToken);
 
-        if (!existingCustomerResult.IsSuccess || existingCustomerResult.Value == null)
+  
+        if (!existingCustomerResult.IsSuccess)
         {
             return Error.NotFound($"Customers with ID {request.CustomerDto.Id} not found.");
         }
@@ -24,14 +25,11 @@ public class UpdateCustomerCommandHandler(ICustomerService customerService)
         existingCustomer.CustomerName = request.CustomerDto.CustomerName;
         existingCustomer.Phone = request.CustomerDto.Phone;
 
-   
         var updatedCustomerResult = await customerService.UpdateCustomerAsync(existingCustomer, cancellationToken);
 
-        if (!updatedCustomerResult.IsSuccess || updatedCustomerResult.Value == null)
-        {
-            return Error.BadRequest("Update Failed ");
-        }
-        
-        return Result<CustomerDto>.Success(updatedCustomerResult.Value.ToDto());
+       
+        return (updatedCustomerResult.IsSuccess)
+            ? updatedCustomerResult.Value.ToDto()
+            : Error.BadRequest("Update Failed");
     }
 }

@@ -13,11 +13,8 @@ public class GetAllCustomersHandler(ICustomerService customerService)
     public async Task<Result<List<CustomerDto>>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
     {
         var result = await customerService.GetAllCustomersAsync(cancellationToken);
-        if (!result.IsSuccess)
-        {
-            return Error.BadRequest("Customer service returned an empty result");
-        }
-
-        return Result<List<CustomerDto>>.Success(result.Value.Select(c => c.ToDto()).ToList());
+        return result.IsSuccess 
+            ? result.Value.Select(c => c.ToDto()).ToList()
+            : Error.BadRequest("Customer service returned an empty result");
     }
 }
