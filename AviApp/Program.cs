@@ -1,11 +1,13 @@
 using System.Reflection;
 using AviApp.Api.Customers.CustomerValidator;
 using AviApp.Domain.Context;
+using AviApp.Errors;
 using AviApp.Interfaces;
 using AviApp.Services;
 using MediatR;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +27,10 @@ builder.Services.AddDbContext<AvipAppDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-
+builder.Services.AddSingleton<ProblemDetailsFactory, ProblemFactory>();
 var app = builder.Build();
+app.UseCors(corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -38,6 +42,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
