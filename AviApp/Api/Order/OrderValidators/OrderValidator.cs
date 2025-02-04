@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AviApp.Api.Order.OrderValidators;
 
-public class OrderValidator : AbstractValidator<OrderDto>
+public abstract class OrderValidator : AbstractValidator<OrderDto>
 {
-    public OrderValidator()
+    protected OrderValidator()
     {
         RuleFor(x => x.CustomerId)
             .GreaterThan(0).WithMessage("CustomerId must be greater than 0.");

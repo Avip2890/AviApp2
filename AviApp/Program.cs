@@ -1,8 +1,8 @@
 using System.Reflection;
-using AviApp.Api.Customers.CustomerValidator;
 using AviApp.Domain.Context;
-using AviApp.Errors;
+using AviApp.Errors.ProblemFactory;
 using AviApp.Interfaces;
+using AviApp.Pipelines;
 using AviApp.Services;
 using MediatR;
 using FluentValidation;
@@ -12,27 +12,30 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
-builder.Services.AddValidatorsFromAssemblyContaining<CustomerValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddProblemDetails();
 builder.Services.AddDbContext<AvipAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-// Add Swagger
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddSingleton<ProblemDetailsFactory, ProblemFactory>();
+
 var app = builder.Build();
 app.UseCors(corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

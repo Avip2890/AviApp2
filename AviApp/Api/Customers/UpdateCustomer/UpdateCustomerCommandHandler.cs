@@ -1,4 +1,3 @@
-using AviApp.Api.Customer.UpdateCustomer;
 using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Mappers;
@@ -12,18 +11,17 @@ public class UpdateCustomerCommandHandler(ICustomerService customerService)
 {
     public async Task<Result<CustomerDto>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var existingCustomerResult = await customerService.GetCustomerByIdAsync(request.CustomerDto.Id, cancellationToken);
+        var existingCustomerResult = await customerService.GetCustomerByIdAsync(request.Id, cancellationToken);
 
-  
         if (!existingCustomerResult.IsSuccess)
         {
-            return Error.NotFound($"Customers with ID {request.CustomerDto.Id} not found.");
+            return Error.NotFound($"Customer with ID {request.Id} not found.");
         }
 
         var existingCustomer = existingCustomerResult.Value;
         
-        existingCustomer.CustomerName = request.CustomerDto.CustomerName;
-        existingCustomer.Phone = request.CustomerDto.Phone;
+        existingCustomer.CustomerName = request.CustomerName;
+        existingCustomer.Phone = request.Phone;
 
         var updatedCustomerResult = await customerService.UpdateCustomerAsync(existingCustomer, cancellationToken);
 

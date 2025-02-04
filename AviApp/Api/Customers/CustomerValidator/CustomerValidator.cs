@@ -1,4 +1,4 @@
-using AviApp.Models;
+/*using AviApp.Models;
 using FluentValidation;
 
 namespace AviApp.Api.Customers.CustomerValidator;
@@ -16,4 +16,4 @@ public abstract class CustomerValidator : AbstractValidator<CustomerDto>
             .Length(10).WithMessage("Phone number must be exactly 10 digits.");
     }
 
-}
+}*/

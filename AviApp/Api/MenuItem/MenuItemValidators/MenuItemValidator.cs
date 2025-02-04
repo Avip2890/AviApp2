@@ -1,11 +1,11 @@
 using AviApp.Models;
 using FluentValidation;
 
-namespace AviApp.Validators.MenuItemValidators;
+namespace AviApp.Api.MenuItem.MenuItemValidators;
 
-public class MenuItemValidator : AbstractValidator<MenuItemDto>
+public abstract class MenuItemValidator : AbstractValidator<MenuItemDto>
 {
-    public MenuItemValidator()
+    protected MenuItemValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name cannot be empty.");

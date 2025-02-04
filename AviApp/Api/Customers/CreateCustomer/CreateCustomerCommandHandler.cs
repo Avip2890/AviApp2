@@ -6,16 +6,19 @@ using MediatR;
 
 namespace AviApp.Api.Customers;
 
-public class CreateCustomerCommandHandler(ICustomerService customerService)
+public class CreateCustomerCommandHandler(ICustomerService customerService) 
     : IRequestHandler<CreateCustomerCommand, Result<CustomerDto>>
 {
     public async Task<Result<CustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-     
-        var customerEntity = request.CustomerDto.ToEntity();
+        var customerEntity = new Domain.Entities.Customer
+        {
+            CustomerName = request.CustomerName,
+            Phone = request.Phone
+        };
 
-      
         var result = await customerService.CreateCustomerAsync(customerEntity, cancellationToken);
-return result.IsSuccess ? result.Value.ToDto() : result.Errors;
+
+        return result.IsSuccess ? result.Value.ToDto() : result.Errors;
     }
 }

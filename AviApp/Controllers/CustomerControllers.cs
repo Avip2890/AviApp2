@@ -1,8 +1,9 @@
-using AviApp.Api.Customer.UpdateCustomer;
+using AviApp.Api.Customers.UpdateCustomer;
 using AviApp.Api.Customers;
 using AviApp.Api.Customers.DeleteCustomer;
 using AviApp.Api.Customers.GetAllCustomers;
 using AviApp.Api.Customers.GetCustomerById;
+using AviApp.Api.Customers.UpdateCustomer;
 using AviApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,18 +34,19 @@ public class CustomerController(IMediator mediator) : AppBaseController
     [Route("")]
     public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customerDto, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateCustomerCommand(customerDto), cancellationToken);
+        var result = await mediator.Send(new CreateCustomerCommand(customerDto.CustomerName, customerDto.Phone), cancellationToken);
 
         return ResultOf(result, 
             successResult: CreatedAtAction(nameof(GetCustomerById), new { id = result.Value.Id }, result.Value));
     }
+
 
     [HttpPut]
     [Route("{id:int}")]
     public async Task<IActionResult> UpdateCustomer(int id, [FromBody] CustomerDto customerDto, CancellationToken cancellationToken)
     {
         
-        var result = await mediator.Send(new UpdateCustomerCommand(customerDto), cancellationToken);
+        var result = await mediator.Send(new UpdateCustomerCommand(id, customerDto.CustomerName, customerDto.Phone), cancellationToken);
         return ResultOf(result);
     }
 

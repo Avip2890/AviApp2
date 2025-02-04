@@ -4,5 +4,5 @@ using MediatR;
 
 namespace AviApp.Api.Customers;
 
-public record CreateCustomerCommand(CustomerDto CustomerDto) : IRequest<Result<CustomerDto>>;
+public record CreateCustomerCommand(string CustomerName, string Phone) : IRequest<Result<CustomerDto>>;
 
