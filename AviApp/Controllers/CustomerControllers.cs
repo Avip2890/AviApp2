@@ -3,7 +3,6 @@ using AviApp.Api.Customers;
 using AviApp.Api.Customers.DeleteCustomer;
 using AviApp.Api.Customers.GetAllCustomers;
 using AviApp.Api.Customers.GetCustomerById;
-using AviApp.Api.Customers.UpdateCustomer;
 using AviApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
