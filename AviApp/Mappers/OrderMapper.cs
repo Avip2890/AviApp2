@@ -5,14 +5,17 @@ namespace AviApp.Mappers;
 
 public static class OrderMapper
 {
-    public static Order ToEntity(this OrderDto dto, ICollection<MenuItem> menuItems)
+    public static Order ToEntity(this OrderDto model, List<MenuItem> menuItems)
     {
         return new Order
         {
-            Id = dto.Id,
-            CustomerId = dto.CustomerId,
-            OrderDate = dto.OrderDate,
-            Items = menuItems 
+            Id = model.Id ?? 0,
+            CustomerId = model.CustomerId,
+            OrderDate = model.OrderDate,
+            OrderMenuItems = menuItems.Select(m => new OrderMenuItems 
+            { 
+                MenuItemId = m.Id 
+            }).ToList() // ✅ שימוש בטבלת החיבור
         };
     }
 
@@ -23,7 +26,13 @@ public static class OrderMapper
             Id = entity.Id,
             CustomerId = entity.CustomerId,
             OrderDate = entity.OrderDate,
-            Items = entity.Items.Select(item => item.Id).ToList() 
+            OrderMenuItems = entity.OrderMenuItems
+                .Select(omi => new OrderMenuItemDto
+                {
+                    OrderId = omi.OrderId,
+                    MenuItemId = omi.MenuItemId
+                }).ToList() 
         };
     }
+
 }

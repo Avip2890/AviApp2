@@ -9,7 +9,7 @@ public static class CustomerMapper
     {
         return new Customer
         {
-            Id = model.Id,
+            Id = model.Id ?? 0,
             CustomerName = model.CustomerName,
             Phone = model.Phone
         };

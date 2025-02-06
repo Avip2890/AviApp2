@@ -1,3 +1,4 @@
+using AviApp.Domain.Entities;
 using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Results;
@@ -11,7 +12,7 @@ public class CreateCustomerCommandHandler(ICustomerService customerService)
 {
     public async Task<Result<CustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customerEntity = new Domain.Entities.Customer
+        var customerEntity = new Customer
         {
             CustomerName = request.CustomerName,
             Phone = request.Phone

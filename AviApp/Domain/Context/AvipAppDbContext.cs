@@ -3,46 +3,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AviApp.Domain.Context;
 
-public  class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options) : DbContext(options)
+public class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options) : DbContext(options)
 {
-    public virtual DbSet<Customer> Customers { get; set; }
-    public virtual DbSet<MenuItem> MenuItems { get; set; }
-    public virtual DbSet<Order> Orders { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<MenuItem> MenuItems { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderMenuItems> OrderMenuItems { get; set; } 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Customer>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Customer__3214EC0729B8E63E");
-            entity.Property(e => e.CustomerName).HasMaxLength(100);
-            entity.Property(e => e.Phone).HasMaxLength(15);
-        });
+        // 🔹 הגדרת טבלת הקישור OrderMenuItems עם מפתח משולב
+        modelBuilder.Entity<OrderMenuItems>()
+            .HasKey(omi => new { omi.OrderId, omi.MenuItemId });
 
-        modelBuilder.Entity<MenuItem>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.IsAvailable).HasColumnType("bit");
+        // 🔹 קשר בין Order ל- OrderMenuItems (Cascade Delete)
+        modelBuilder.Entity<OrderMenuItems>()
+            .HasOne(omi => omi.Order)
+            .WithMany(o => o.OrderMenuItems)
+            .HasForeignKey(omi => omi.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-       
-            entity.HasOne(e => e.Order)
-                .WithMany(o => o.Items)
-                .HasForeignKey(e => e.OrderId)
-                .OnDelete(DeleteBehavior.SetNull);
-        });
+        // 🔹 קשר בין MenuItem ל- OrderMenuItems (Cascade Delete)
+        modelBuilder.Entity<OrderMenuItems>()
+            .HasOne(omi => omi.MenuItem)
+            .WithMany(m => m.OrderMenuItems)
+            .HasForeignKey(omi => omi.MenuItemId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Order>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.OrderDate).HasColumnType("datetime");
-            entity.HasOne(o => o.Customer)
-                .WithMany()
-                .HasForeignKey(o => o.CustomerId)
-                .OnDelete(DeleteBehavior.Cascade); 
-        });
+        // 🔹 Order: ודא ששדות חובה לא יכולים להיות NULL
+        modelBuilder.Entity<Order>()
+            .Property(o => o.OrderDate)
+            .IsRequired()
+            .HasColumnType("datetime");
+
+        modelBuilder.Entity<Order>()
+            .Property(o => o.CustomerId)
+            .IsRequired();
+
+        // 🔹 Customer: ודא ששם הלקוח לא יכול להיות NULL
+        modelBuilder.Entity<Customer>()
+            .Property(c => c.CustomerName)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        // 🔹 MenuItem: ודא שמחיר לא ייחתך
+        modelBuilder.Entity<MenuItem>()
+            .Property(m => m.Price)
+            .HasPrecision(18, 2);
     }
-
-   
 }

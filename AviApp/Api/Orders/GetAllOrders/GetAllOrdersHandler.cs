@@ -4,7 +4,7 @@ using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 
-namespace AviApp.Api.Order.GetAllOrders;
+namespace AviApp.Api.Orders.GetAllOrders;
 
 public class GetAllOrdersHandler(IOrderService orderService)
     : IRequestHandler<GetAllOrdersQuery, Result<List<OrderDto>>>

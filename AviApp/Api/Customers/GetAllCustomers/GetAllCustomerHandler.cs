@@ -2,7 +2,6 @@ using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Results;
 using MediatR;
-using AviApp.Api.Customers.GetAllCustomers;
 using AviApp.Mappers;
 
 namespace AviApp.Api.Customers.GetAllCustomers;

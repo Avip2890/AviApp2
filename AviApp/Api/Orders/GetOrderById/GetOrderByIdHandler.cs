@@ -4,7 +4,7 @@ using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 
-namespace AviApp.Api.Order.GetOrderById;
+namespace AviApp.Api.Orders.GetOrderById;
 
 public class GetOrderByIdHandler(IOrderService orderService) : IRequestHandler<GetOrderByIdQuery, Result<OrderDto>>
 {

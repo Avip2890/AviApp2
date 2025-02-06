@@ -2,6 +2,6 @@ using AviApp.Models;
 using AviApp.Results;
 using MediatR;
 
-namespace AviApp.Api.Order.GetOrderById;
+namespace AviApp.Api.Orders.GetOrderById;
 
 public record GetOrderByIdQuery(int Id) : IRequest<Result<OrderDto>>;

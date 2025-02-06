@@ -1,28 +1,25 @@
-using AviApp.Api.Order.CreateOrder;
-using AviApp.Api.Order.DeleteOrder;
-using AviApp.Api.Order.GetAllOrders;
-using AviApp.Api.Order.GetOrderById;
-using AviApp.Api.Order.UpdateOrder;
+using AviApp.Api.Orders.CreateOrder;
+using AviApp.Api.Orders.DeleteOrder;
+using AviApp.Api.Orders.GetAllOrders;
+using AviApp.Api.Orders.GetOrderById;
+using AviApp.Api.Orders.UpdateOrder;
 using AviApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AviApp.Controllers;
 
-
 [Route("api/orders")]
 public class OrderController(IMediator mediator) : AppBaseController
 {
     [HttpGet]
-    [Route("")]
     public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllOrdersQuery(), cancellationToken);
         return ResultOf(result);
     }
 
-    [HttpGet]
-    [Route("{id:int}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetOrderByIdQuery(id), cancellationToken);
@@ -30,27 +27,50 @@ public class OrderController(IMediator mediator) : AppBaseController
     }
 
     [HttpPost]
-    [Route("")]
-    public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateOrder([FromBody] OrderDto? orderDto, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateOrderCommand(orderDto), cancellationToken);
-        return ResultOf(result, 
-            successResult: CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value));
+        if (orderDto == null)
+        {
+            return BadRequest("Order data is required.");
+        }
+
+        if (!orderDto.OrderMenuItems.Any())
+        {
+            return BadRequest("Order must contain at least one item.");
+        }
+
+        var result = await mediator.Send(new CreateOrderCommand(
+            orderDto.CustomerId,
+            orderDto.OrderMenuItems.Select(omi => omi.MenuItemId).ToList()
+        ), cancellationToken);
+
+        return result.IsSuccess 
+            ? CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value) 
+            : BadRequest(result.Errors);
     }
 
-    [HttpPut]
-    [Route("{id:int}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto orderDto, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new UpdateOrderCommand(id, orderDto), cancellationToken);
-        return ResultOf(result);
+        if (!orderDto.OrderMenuItems.Any())
+        {
+            return BadRequest("Order must contain at least one item.");
+        }
+
+        var result = await mediator.Send(new UpdateOrderCommand(
+            id, 
+            orderDto.CustomerId, 
+            orderDto.OrderDate, 
+            orderDto.OrderMenuItems.Select(omi => omi.MenuItemId).ToList()
+        ), cancellationToken);
+
+        return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
     }
 
-    [HttpDelete]
-    [Route("{id:int}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteOrderCommand(id), cancellationToken);
-        return ResultOf(result, successResult: NoContent());
+        return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
     }
 }

@@ -107,7 +107,7 @@ namespace AviApp.Errors.ProblemFactory
                 {
                     message = e.Message,
                     statusCode = e.StatusCode,
-                    code = e.Code
+                
                 }).ToList();
             }
         }

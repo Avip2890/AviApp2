@@ -17,6 +17,7 @@ public class CustomerController(IMediator mediator) : AppBaseController
     [Route("")]
     public async Task<IActionResult> GetAllCustomers(CancellationToken cancellationToken)
     {
+        
         var result = await mediator.Send(new GetAllCustomersQuery(), cancellationToken);
         return ResultOf(result);
     }
@@ -34,6 +35,11 @@ public class CustomerController(IMediator mediator) : AppBaseController
     public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customerDto, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new CreateCustomerCommand(customerDto.CustomerName, customerDto.Phone), cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest("Failed to create customer.");
+        }
 
         return ResultOf(result, 
             successResult: CreatedAtAction(nameof(GetCustomerById), new { id = result.Value.Id }, result.Value));
