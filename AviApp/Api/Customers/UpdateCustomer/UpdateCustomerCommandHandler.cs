@@ -8,7 +8,7 @@ namespace AviApp.Api.Customers.UpdateCustomer;
 
 public class UpdateCustomerCommandHandler(ICustomerService customerService)
     : IRequestHandler<UpdateCustomerCommand, Result<CustomerDto>>
-{
+{ 
     public async Task<Result<CustomerDto>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
         var existingCustomerResult = await customerService.GetCustomerByIdAsync(request.Id, cancellationToken);

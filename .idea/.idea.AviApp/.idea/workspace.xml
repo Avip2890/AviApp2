@@ -8,7 +8,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="Added new Table ORDERMENUITEMS." />
+    <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeleteUserCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersValidators.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/Role.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/User.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/UserRole.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Models/RoleDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Models/UserRoleDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources/f5f4e9bf-a73b-449a-a10f-89995001228e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources/f5f4e9bf-a73b-449a-a10f-89995001228e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/AviApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/AviApp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206140600_LinkOrderMenuItems.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206140600_LinkOrderMenuItems.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206142604_UpdateDbSchema.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206142604_UpdateDbSchema.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/AvipAppDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/appsettings.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,12 +77,19 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e3157c720a4245958cf8a1b12c4b4a27e90928/06/152d0697/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ae5a0322dbe6ebe61e4a9bd573e376bb7c713e068b330203771a988bdda6b/WebApplicationBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ae7144ab6bcfcc85f9f63e575186d3a9e4f9f4b6193d44698d15526498abd/DefaultProblemDetailsFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46219d784a0f61b84df30cecd14639d31c5b27bd473a2a2246570eea4359421/MissingMethodException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c634be8ebff5f9e2c02062e1d8b81198699e5c91e88b28c598e235d40b68/DefaultApiProblemDetailsWriter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ce37be1a06b16c6faa02038d2cc477dd3bca5b217ceeb41c5f2ad45c1bf9/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e3d0c01ead7c1fbe35a3504e9fbf28f212ac59349851c852a28fa06d719e95/MvcCoreServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fc2027f7e776fc105cddb56b1a25eeb3895b3ae6f3aac854d786e63bd01f75e2/CallSiteFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/CreateOrder/CreateOrderCommand.cs" root0="FORCE_HIGHLIGHTING" />
@@ -175,7 +226,10 @@
       <workItem from="1738849447961" duration="3452000" />
       <workItem from="1738855786588" duration="91000" />
       <workItem from="1738855920661" duration="47000" />
-      <workItem from="1738856082643" duration="377000" />
+      <workItem from="1738856082643" duration="2652000" />
+      <workItem from="1739096176982" duration="9397000" />
+      <workItem from="1739181355262" duration="668000" />
+      <workItem from="1739182056257" duration="9025000" />
     </task>
     <task id="LOCAL‎-00002" summary="Added Order and MenuItem services, models, and controllers">
       <option name="closed" value="true" />
@@ -345,7 +399,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1738856396325</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL‎-00023" summary="untracking files">
+      <option name="closed" value="true" />
+      <created>1738856557314</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL‎-00023" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1738856557314</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -399,7 +461,8 @@
     <MESSAGE value="Made change about validator in customers file.&#10;Added ProblemFactory.cs&#10; and ValidationBehavior.cs" />
     <MESSAGE value="fix 2 problems in Program.cs  &amp; CustomerControllers" />
     <MESSAGE value="Added new Table ORDERMENUITEMS." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added new Table ORDERMENUITEMS." />
+    <MESSAGE value="untracking files" />
+    <option name="LAST_COMMIT_MESSAGE" value="untracking files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
