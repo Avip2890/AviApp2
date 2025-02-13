@@ -25,22 +25,31 @@ namespace AviApp.Services;
 
             return user;
         }
-
-
+        
         public async Task<Result<User>> CreateUserAsync(User user, CancellationToken cancellationToken)
         {
             try
             {
+                var existingUser = await context.Users
+                    .FirstOrDefaultAsync(u => u.Email == user.Email, cancellationToken);
+
+                if (existingUser != null)
+                {
+                
+                    return Error.BadRequest("Email already exists.");
+                }
+                
                 context.Users.Add(user);
-                await context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken); 
+        
                 return user;
             }
-            catch
+            catch 
             {
-                return Error.BadRequest("Couldn't create user");
+                
+                return Error.BadRequest("Couldn't create user. ");
             }
         }
-
 
         public async Task<Result<User>> UpdateUserAsync(User updatedUser, CancellationToken cancellationToken)
         {
@@ -65,7 +74,7 @@ namespace AviApp.Services;
             }
 
         }
-
+        
         public async Task<Result<Deleted>> DeleteUserAsync(int id, CancellationToken cancellationToken)
         {
             var user = await context.Users.FindAsync(new object[] { id }, cancellationToken);
@@ -79,6 +88,10 @@ namespace AviApp.Services;
             await context.SaveChangesAsync(cancellationToken);
             return new Deleted();
 
+        }
+        public async Task<bool> UserExistsAsync(int userId, CancellationToken cancellationToken)
+        {
+            return await context.Users.AnyAsync(u => u.Id == userId, cancellationToken);
         }
     }
 

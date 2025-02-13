@@ -2,7 +2,7 @@ using AviApp.Interfaces;
 using AviApp.Models;
 using AviApp.Results;
 using MediatR;
-using AviApp.Api.MenuItem.MenuItemQueries;
+
 using AviApp.Mappers;
 
 namespace AviApp.Api.MenuItem.GetAllMenuItems;

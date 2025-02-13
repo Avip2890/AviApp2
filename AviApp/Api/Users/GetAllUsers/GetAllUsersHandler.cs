@@ -12,6 +12,7 @@ public class GetAllUsersHandler(IUserService userService): IRequestHandler<GetAl
     {
         var result = await userService.GetAllUsersAsync(cancellationToken);
         return result.IsSuccess
+        
             ? result.Value.Select(u => u.ToDto()).ToList()
             : Error.BadRequest("User service returned an empty result");
     }

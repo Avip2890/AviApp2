@@ -8,5 +8,5 @@ public class UserDto
     public required string Email { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public ICollection<UserRoleDto>? UserRolesDto { get; set; }
+   
 }

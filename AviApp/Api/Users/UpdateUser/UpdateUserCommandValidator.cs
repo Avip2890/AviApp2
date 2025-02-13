@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace AviApp.Api.Users.UpdateUser
 {
-    public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
-        public UpdateUserValidator()
+        public UpdateUserCommandValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("UserId is required.");

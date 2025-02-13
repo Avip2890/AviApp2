@@ -9,49 +9,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeleteUserCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersValidators.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/Role.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/User.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/UserRole.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Models/RoleDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Models/UserRoleDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Services/UserService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/CreateRole/CreateRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/CreateRole/CreateRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/CreateRole/CreateRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/DeleteRole/DeleteRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/DeleteRole/DeleteRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/DeleteRole/DeleteRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetAllRoles/GetAllRolesHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetAllRoles/GetAllRolesQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetAllRoles/GetAllRolesQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetRoleById/GetRoleByIdHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetRoleById/GetRoleByIdQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/GetRoleById/GetRoleByIdQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/UpdateRole/UpdateRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/UpdateRole/UpdateRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/Roles/UpdateRole/UpdateRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Controllers/RoleControllers.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Controllers/UserRoleControllers.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Interfaces/IRoleService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Interfaces/IUserRoleService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Mappers/RolesMapper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Mappers/UserRoleMapper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Services/RoleService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AviApp/Services/UserRoleService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources/f5f4e9bf-a73b-449a-a10f-89995001228e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/dataSources/f5f4e9bf-a73b-449a-a10f-89995001228e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/UpdateCustomer/UpdateCustomerCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/CreateCustomer/CreateCustomerValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/CreateCustomer/CreateCustomerCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/GetAllCustomers/GetAllCustomersQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/GetAllCustomers/GetAllCustomersQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Customers/GetAllCustomers/GetAllCustomersQueryValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Customers/GetAllCustomers/GetAllCustomersQueryValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsQueryValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetAllMenuItems/GetAllMenuItemsQueryValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdQueryValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/MenuItem/GetMenuItemById/GetMenuItemByIdQueryValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/DeleteUser/DeletUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersValidators.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetAllUsers/GetAllUsersQueryValidators.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/GetUserById/GetUserByIdQueryValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommandValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AviApp/AviApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/AviApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206140600_LinkOrderMenuItems.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206140600_LinkOrderMenuItems.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206142604_UpdateDbSchema.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/20250206142604_UpdateDbSchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Migrations/AvipAppDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/CustomerControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/CustomerControllers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/MenuItemControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/MenuItemControllers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/UserRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/UserRole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Models/RoleDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Models/RoleDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AviApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,17 +104,14 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a6b7f037ba7b44df80b8d3aa7e58eeb2e8e938/4d/54a7c9b1/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e3157c720a4245958cf8a1b12c4b4a27e90928/06/152d0697/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ae5a0322dbe6ebe61e4a9bd573e376bb7c713e068b330203771a988bdda6b/WebApplicationBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59cd7a17e4fcffda1ba3687b386939b4e155ba482f85c8fe9993bc8373d7f93/ApiBehaviorApplicationModelProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ae7144ab6bcfcc85f9f63e575186d3a9e4f9f4b6193d44698d15526498abd/DefaultProblemDetailsFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46219d784a0f61b84df30cecd14639d31c5b27bd473a2a2246570eea4359421/MissingMethodException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c0825838dbca581cf60bf89f4791b3457ede3abd17df9e3cc61257c8e15b43/DefaultValidatorExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c634be8ebff5f9e2c02062e1d8b81198699e5c91e88b28c598e235d40b68/DefaultApiProblemDetailsWriter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ce37be1a06b16c6faa02038d2cc477dd3bca5b217ceeb41c5f2ad45c1bf9/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e3d0c01ead7c1fbe35a3504e9fbf28f212ac59349851c852a28fa06d719e95/MvcCoreServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -117,7 +141,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.AviApp: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.AviApp: http.executor&quot;: &quot;Debug&quot;,
     &quot;.NET Launch Settings Profile.AviApp: https.executor&quot;: &quot;Debug&quot;,
     &quot;.NET Project.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -132,7 +156,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.AviApp: https">
+  <component name="RunManager" selected=".NET Launch Settings Profile.AviApp: http">
     <configuration name="Unnamed" type="DotNetProject" factoryName=".NET Project" nameIsGenerated="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/AviApp/bin/Debug/net9.0/AviApp.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -189,8 +213,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue=".NET Launch Settings Profile.AviApp: https" />
         <item itemvalue=".NET Launch Settings Profile.AviApp: http" />
+        <item itemvalue=".NET Launch Settings Profile.AviApp: https" />
       </list>
     </recent_temporary>
   </component>
@@ -229,7 +253,10 @@
       <workItem from="1738856082643" duration="2652000" />
       <workItem from="1739096176982" duration="9397000" />
       <workItem from="1739181355262" duration="668000" />
-      <workItem from="1739182056257" duration="9025000" />
+      <workItem from="1739182056257" duration="9559000" />
+      <workItem from="1739198338110" duration="232000" />
+      <workItem from="1739198584159" duration="20348000" />
+      <workItem from="1739349668306" duration="17346000" />
     </task>
     <task id="LOCAL‎-00002" summary="Added Order and MenuItem services, models, and controllers">
       <option name="closed" value="true" />
@@ -407,7 +434,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1738856557314</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL‎-00024" summary="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration">
+      <option name="closed" value="true" />
+      <created>1739198137845</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL‎-00024" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1739198137845</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +497,8 @@
     <MESSAGE value="fix 2 problems in Program.cs  &amp; CustomerControllers" />
     <MESSAGE value="Added new Table ORDERMENUITEMS." />
     <MESSAGE value="untracking files" />
-    <option name="LAST_COMMIT_MESSAGE" value="untracking files" />
+    <MESSAGE value="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -511,10 +547,10 @@
           <line>27</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'GetCustomerById'">
             <startOffsets>
-              <option value="806" />
+              <option value="798" />
             </startOffsets>
             <endOffsets>
-              <option value="807" />
+              <option value="799" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="21" />
@@ -524,10 +560,10 @@
           <line>35</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'CreateCustomer'">
             <startOffsets>
-              <option value="1099" />
+              <option value="1091" />
             </startOffsets>
             <endOffsets>
-              <option value="1100" />
+              <option value="1092" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="22" />
@@ -537,10 +573,10 @@
           <line>51</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'UpdateCustomer'">
             <startOffsets>
-              <option value="1678" />
+              <option value="1670" />
             </startOffsets>
             <endOffsets>
-              <option value="1679" />
+              <option value="1671" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="23" />
@@ -550,49 +586,23 @@
           <line>60</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'DeleteCustomer'">
             <startOffsets>
-              <option value="2008" />
+              <option value="2000" />
             </startOffsets>
             <endOffsets>
-              <option value="2009" />
+              <option value="2001" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/AviApp/Controllers/CustomerControllers.cs</url>
-          <line>22</line>
-          <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'GetAllCustomers'">
-            <startOffsets>
-              <option value="663" />
-            </startOffsets>
-            <endOffsets>
-              <option value="664" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/AviApp/Controllers/CustomerControllers.cs</url>
-          <line>18</line>
-          <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'GetAllCustomers'">
-            <startOffsets>
-              <option value="526" />
-            </startOffsets>
-            <endOffsets>
-              <option value="527" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/AviApp/Controllers/CustomerControllers.cs</url>
           <line>30</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'GetCustomerById'">
             <startOffsets>
-              <option value="936" />
+              <option value="928" />
             </startOffsets>
             <endOffsets>
-              <option value="937" />
+              <option value="929" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="27" />
@@ -602,10 +612,10 @@
           <line>45</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'CreateCustomer'">
             <startOffsets>
-              <option value="1499" />
+              <option value="1491" />
             </startOffsets>
             <endOffsets>
-              <option value="1500" />
+              <option value="1492" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="28" />
@@ -615,10 +625,10 @@
           <line>55</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'UpdateCustomer'">
             <startOffsets>
-              <option value="1863" />
+              <option value="1855" />
             </startOffsets>
             <endOffsets>
-              <option value="1864" />
+              <option value="1856" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="29" />
@@ -628,10 +638,10 @@
           <line>63</line>
           <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\CustomerControllers.cs" containingFunctionPresentation="Method 'DeleteCustomer'">
             <startOffsets>
-              <option value="2167" />
+              <option value="2159" />
             </startOffsets>
             <endOffsets>
-              <option value="2168" />
+              <option value="2160" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="30" />

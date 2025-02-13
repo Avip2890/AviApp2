@@ -6,7 +6,7 @@ using MediatR;
 
 namespace AviApp.Api.Users.UpdateUser;
 
-public class UpdateUserHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, Result<UserDto>>
+public class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, Result<UserDto>>
 {
     public async Task<Result<UserDto>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

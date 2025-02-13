@@ -1,13 +1,15 @@
+using AviApp.Models;
 using FluentValidation;
 
 namespace AviApp.Api.MenuItem.GetAllMenuItems;
 
-public class GetAllMenuItemsQueryValidator : AbstractValidator<GetAllMenuItemsQuery>
+public class GetAllMenuItemsQueryValidator : AbstractValidator<MenuItemDto>
 {
     public GetAllMenuItemsQueryValidator()
     {
-        RuleFor(_ => true) 
-            .Must(_ => true)
-            .WithMessage("Invalid query.");
+        RuleFor(x => x)
+            .NotNull()
+            .WithMessage("Query request cannot be null.");
+        
     }
 }

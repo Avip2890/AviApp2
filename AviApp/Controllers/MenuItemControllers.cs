@@ -1,7 +1,7 @@
 using AviApp.Api.MenuItem.CreateMenuItem;
 using AviApp.Api.MenuItem.DeleteMenuItem;
 using AviApp.Api.MenuItem.GetAllMenuItems;
-using AviApp.Api.MenuItem.MenuItemQueries;
+using AviApp.Api.MenuItem.GetMenuItemById;
 using AviApp.Api.MenuItem.UpdateMenuItem;
 using AviApp.Models;
 using MediatR;

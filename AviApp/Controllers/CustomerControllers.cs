@@ -17,10 +17,10 @@ public class CustomerController(IMediator mediator) : AppBaseController
     [Route("")]
     public async Task<IActionResult> GetAllCustomers(CancellationToken cancellationToken)
     {
-        
         var result = await mediator.Send(new GetAllCustomersQuery(), cancellationToken);
         return ResultOf(result);
     }
+
 
     [HttpGet]
     [Route("{id:int}")]

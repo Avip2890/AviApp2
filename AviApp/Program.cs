@@ -15,14 +15,17 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<JwtService>(new JwtService(builder.Configuration["JwtSettings:SecretKey"]));
+builder.Services.AddSingleton<JwtService>(sp => 
+    new JwtService(sp.GetRequiredService<IConfiguration>())
+);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         var secretKey = builder.Configuration["JwtSettings:SecretKey"];
         if (string.IsNullOrEmpty(secretKey))
         {
-            throw new ArgumentNullException("JwtSecretKey", "The secret key is not configured.");
+            throw new ArgumentNullException(nameof(secretKey), "The secret key is not configured.");
         }
 
         options.TokenValidationParameters = new TokenValidationParameters
@@ -47,6 +50,9 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddProblemDetails();

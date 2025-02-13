@@ -1,13 +1,15 @@
+
 using FluentValidation;
 
 namespace AviApp.Api.Customers.GetAllCustomers;
 
-public class GetAllCustomersQueryValidator : AbstractValidator<GetAllCustomersQuery>
+public class GetAllCustomerQueryValidator : AbstractValidator<GetAllCustomersQuery>
 {
-    public GetAllCustomersQueryValidator()
+    public GetAllCustomerQueryValidator()
     {
-        RuleFor(_ => true)
-            .Must(_ => true)
-            .WithMessage("Invalid query");
+        RuleFor(x => x)
+            .NotNull()
+            .WithMessage("Query request cannot be null.");
     }
 }
+

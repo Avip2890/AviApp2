@@ -7,8 +7,7 @@ using MediatR;
 
 namespace AviApp.Api.Users.CreateUser;
 
-public class CreateUserHandler(IUserService userService) 
-    : IRequestHandler<CreateUserCommand, Result<UserDto>>
+public class CreateUserCommandHandler(IUserService userService) : IRequestHandler<CreateUserCommand, Result<UserDto>>
 {
     public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -16,12 +15,18 @@ public class CreateUserHandler(IUserService userService)
         {
             UserName = request.UserName,
             Password = request.Password,
-            Email = request.Email
+            Email = request.Email,
+            CreatedAt = DateTime.UtcNow 
         };
 
         var result = await userService.CreateUserAsync(userEntity, cancellationToken);
 
-        return result.IsSuccess ? result.Value.ToDto() : result.Errors;
+        if (result.IsSuccess)
+        {
+            var userDto = result.Value.ToDto(); 
+            return Result<UserDto>.Success(userDto);
+        }
+
+        return result.Errors;
     }
-    
 }
