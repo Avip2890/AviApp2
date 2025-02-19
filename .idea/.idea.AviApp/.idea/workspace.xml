@@ -9,38 +9,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Auth/Login/LoginQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Api/Auth/Login/LoginQueryHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Controllers/AuthController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Interfaces/IAuthService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Models/LoginRequestDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AviApp/Services/AuthService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Orders/UpdateOrder/UpdateOrderCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Orders/UpdateOrder/UpdateOrderCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/UpdateUser/UpdateUserCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/AviApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/AviApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/RoleControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/RoleControllers.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/MenuItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/MenuItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/Order.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/OrderMenuItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/OrderMenuItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/Role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Mappers/OrderMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Mappers/OrderMapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Mappers/OrderMenuItemMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Mappers/OrderMenuItemMapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/UserRoleControllers.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/AviApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Services/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/OrderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/UserRoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserRoleService.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,11 +52,11 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a6b7f037ba7b44df80b8d3aa7e58eeb2e8e938/4d/54a7c9b1/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e3157c720a4245958cf8a1b12c4b4a27e90928/06/152d0697/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/251361482a1fa2bee4c1279ae3327ec461c81eac80b589209b48dc04f9b/LoginRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ae5a0322dbe6ebe61e4a9bd573e376bb7c713e068b330203771a988bdda6b/WebApplicationBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/595e4f2361fd31cb66c7e9303f46cf8f2fe77d96eea9d0e42c17cae783aa74/ServiceCollection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59cd7a17e4fcffda1ba3687b386939b4e155ba482f85c8fe9993bc8373d7f93/ApiBehaviorApplicationModelProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5c61e2589cd0c52752158fc13c93c2722694c6f969381a5a4e3729efdea9468/CryptoProviderFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6354a7b35d7821629924d3676acd7e67a6f7f94343e0e66ec439aa2bd6ed5/ThrowHelper.cs" root0="FORCE_HIGHLIGHTING" />
@@ -86,17 +72,12 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f6f937e7fde51c3ca061c59112cdd35b76a72e9ef8821ac361c6ef71e90ea88/ControllerEndpointRouteBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fc2027f7e776fc105cddb56b1a25eeb3895b3ae6f3aac854d786e63bd01f75e2/CallSiteFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/CreateOrder/CreateOrderCommand.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/avrahamp/RiderProjects/AviApp/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/avrahamp/RiderProjects/AviApp/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/avrahamp/RiderProjects/AviApp/AviApp/Api/Orders/CreateOrder/CreateOrderCommandHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/DeleteOrder/DeleteOrderCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/DeleteOrder/DeleteOrderCommandHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/GetAllOrders/GetAllOrdersQuery.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AviApp/Api/Orders/UpdateOrder/UpdateOrderCommandHandler.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/avrahamp/RiderProjects/AviApp/AviApp/Models/MenuItemDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/avrahamp/RiderProjects/AviApp/AviApp/Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProblemsViewState">
@@ -126,7 +107,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;HotReloadSettingsPage&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -233,6 +214,9 @@
       <workItem from="1739349668306" duration="17346000" />
       <workItem from="1739804374787" duration="621000" />
       <workItem from="1739882955805" duration="2721000" />
+      <workItem from="1739969392995" duration="2417000" />
+      <workItem from="1739972618809" duration="2031000" />
+      <workItem from="1739974670386" duration="108000" />
     </task>
     <task id="LOCAL‎-00002" summary="Added Order and MenuItem services, models, and controllers">
       <option name="closed" value="true" />
@@ -418,7 +402,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1739198137845</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL‎-00025" summary="JWT and BUGS">
+      <option name="closed" value="true" />
+      <created>1739969426421</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL‎-00025" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1739969426422</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +429,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>
@@ -474,7 +466,8 @@
     <MESSAGE value="Added new Table ORDERMENUITEMS." />
     <MESSAGE value="untracking files" />
     <MESSAGE value="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration" />
+    <MESSAGE value="JWT and BUGS" />
+    <option name="LAST_COMMIT_MESSAGE" value="JWT and BUGS" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -660,32 +653,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/AviApp/Controllers/UserRoleControllers.cs</url>
-          <line>35</line>
-          <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\UserRoleControllers.cs" containingFunctionPresentation="Method 'CreateUserRole'">
-            <startOffsets>
-              <option value="968" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1010" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/AviApp/Controllers/UserRoleControllers.cs</url>
-          <line>34</line>
-          <properties documentPath="C:\Users\avrahamp\RiderProjects\AviApp\AviApp\Controllers\UserRoleControllers.cs" containingFunctionPresentation="Method 'CreateUserRole'">
-            <startOffsets>
-              <option value="958" />
-            </startOffsets>
-            <endOffsets>
-              <option value="959" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="40" />
         </line-breakpoint>
         <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
           <properties exception="System.ArgumentOutOfRangeException" isInternal="false" displayValue="ArgumentOutOfRangeException" namespaceName="System">
