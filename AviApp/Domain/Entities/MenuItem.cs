@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
 namespace AviApp.Domain.Entities;
 
@@ -13,7 +14,6 @@ public partial class MenuItem
     public decimal Price { get; set; }
 
     public bool IsAvailable { get; set; }
-    
-    public int? OrderId { get; set; } 
-    public Order? Order { get; set; } 
+
+    public virtual ICollection<OrderMenuItem> OrderMenuItems { get; set; } = new List<OrderMenuItem>();
 }

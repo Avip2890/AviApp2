@@ -4,4 +4,5 @@ using MediatR;
 
 namespace AviApp.Api.MenuItem.UpdateMenuItem;
 
-public record UpdateMenuItemCommand(int Id, MenuItemDto MenuItemDto) : IRequest<Result<MenuItemDto>>;
+public record UpdateMenuItemCommand(int Id, string Name, decimal Price, string Description, bool IsAvailable) 
+    : IRequest<Result<MenuItemDto>>;

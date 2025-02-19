@@ -9,12 +9,11 @@ public static class MenuItemMapper
     {
         return new MenuItem
         {
-            Id = model.Id,
+            Id = model.Id ?? 0,
             Name = model.Name,
             Description = model.Description,
             Price = model.Price,
-            IsAvailable = model.IsAvailable,
-            OrderId = model.OrderId
+            IsAvailable = model.IsAvailable
         };
     }
 
@@ -26,8 +25,7 @@ public static class MenuItemMapper
             Name = entity.Name,
             Description = entity.Description,
             Price = entity.Price,
-            IsAvailable = entity.IsAvailable,
-            OrderId = entity.OrderId
+            IsAvailable = entity.IsAvailable
         };
     }
 }

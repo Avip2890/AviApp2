@@ -1,7 +1,7 @@
 using AviApp.Api.MenuItem.CreateMenuItem;
 using AviApp.Api.MenuItem.DeleteMenuItem;
 using AviApp.Api.MenuItem.GetAllMenuItems;
-using AviApp.Api.MenuItem.MenuItemQueries;
+using AviApp.Api.MenuItem.GetMenuItemById;
 using AviApp.Api.MenuItem.UpdateMenuItem;
 using AviApp.Models;
 using MediatR;
@@ -9,20 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AviApp.Controllers;
 
-
-[Route("api/menuitem")]
+[Route("api/menuitems")]
 public class MenuItemController(IMediator mediator) : AppBaseController
 {
     [HttpGet]
-    [Route("")]
     public async Task<IActionResult> GetAllMenuItems(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllMenuItemsQuery(), cancellationToken);
         return ResultOf(result);
     }
 
-    [HttpGet]
-    [Route("{id:int}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetMenuItemById(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetMenuItemByIdQuery(id), cancellationToken);
@@ -30,28 +27,38 @@ public class MenuItemController(IMediator mediator) : AppBaseController
     }
 
     [HttpPost]
-    [Route("")]
-    public async Task<IActionResult> CreateMenuItem([FromBody] MenuItemDto menuItemDto,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateMenuItem([FromBody] MenuItemDto menuItemDto, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateMenuItemCommand(menuItemDto), cancellationToken);
-        return ResultOf(result,
-            successResult: CreatedAtAction(nameof(GetMenuItemById), new { id = result.Value.Id }, result.Value));
+        var result = await mediator.Send(new CreateMenuItemCommand(
+            menuItemDto.Name,
+            menuItemDto.Description,
+            menuItemDto.Price,
+            menuItemDto.IsAvailable
+        ), cancellationToken);
+
+        return result.IsSuccess 
+            ? CreatedAtAction(nameof(GetMenuItemById), new { id = result.Value.Id }, result.Value) 
+            : BadRequest(result.Errors);
     }
 
-    [HttpPut]
-    [Route("{id:int}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateMenuItem(int id, [FromBody] MenuItemDto menuItemDto, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new UpdateMenuItemCommand(id, menuItemDto), cancellationToken);
-        return ResultOf(result);
+        var result = await mediator.Send(new UpdateMenuItemCommand(
+            id,
+            menuItemDto.Name,
+            menuItemDto.Price,
+            menuItemDto.Description,
+            menuItemDto.IsAvailable
+        ), cancellationToken);
+
+        return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
     }
 
-    [HttpDelete]
-    [Route("{id:int}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteMenuItem(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteMenuItemCommand(id), cancellationToken);
-        return ResultOf(result, successResult: NoContent());
+        return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
     }
 }

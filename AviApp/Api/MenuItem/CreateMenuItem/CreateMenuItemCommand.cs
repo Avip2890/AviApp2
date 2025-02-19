@@ -4,4 +4,4 @@ using MediatR;
 
 namespace AviApp.Api.MenuItem.CreateMenuItem;
 
-public record CreateMenuItemCommand(MenuItemDto MenuItemDto) : IRequest<Result<MenuItemDto>>;
+public record CreateMenuItemCommand(string Name, string Description, decimal Price,bool IsAvailable ) : IRequest<Result<MenuItemDto>>;

@@ -11,8 +11,18 @@ public class UpdateMenuItemHandler(IMenuItemService menuItemService)
 {
     public async Task<Result<MenuItemDto>> Handle(UpdateMenuItemCommand request, CancellationToken cancellationToken)
     {
-        var menuItemEntity = request.MenuItemDto.ToEntity();
-        menuItemEntity.Id = request.Id;
+        var existingMenuItemResult = await menuItemService.GetMenuItemByIdAsync(request.Id, cancellationToken);
+
+        if (!existingMenuItemResult.IsSuccess)
+        {
+            return Error.BadRequest($"Menu item with ID {request.Id} was not found.");
+        }
+        var menuItemEntity = existingMenuItemResult.Value;
+        menuItemEntity.Name = request.Name;
+        menuItemEntity.Price = request.Price;
+        menuItemEntity.Description = request.Description;
+        menuItemEntity.IsAvailable = request.IsAvailable;
+  
 
         var result = await menuItemService.UpdateMenuItemAsync(request.Id, menuItemEntity, cancellationToken);
 

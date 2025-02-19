@@ -32,6 +32,7 @@ public class CustomerService(AvipAppDbContext context) : ICustomerService
         try
         {
             context.Customers.Add(customer);
+            
             await context.SaveChangesAsync(cancellationToken);
 
             return customer;
