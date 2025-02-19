@@ -35,9 +35,7 @@ builder.Services.AddAuthentication(options => {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
             ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            RoleClaimType = ClaimTypes.Role
+            ValidateAudience = false
         };
     });
 
@@ -62,17 +60,15 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Define the Bearer Token security scheme
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
+        Description =
+            "JWT Authorization header using the Bearer scheme",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
         In = ParameterLocation.Header,
-        Description = "Please enter 'Bearer' followed by your token",
-        Scheme = "bearer",
-    });
+        Type = SecuritySchemeType.ApiKey,
 
-    // Apply security globally to all endpoints
+    });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -80,11 +76,10 @@ builder.Services.AddSwaggerGen(c =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
                 }
-            },
-            []
+            }, new List<string>()
         }
     });
 });
