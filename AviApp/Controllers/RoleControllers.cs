@@ -5,6 +5,7 @@ using AviApp.Api.Roles.GetRoleById;
 using AviApp.Api.Roles.UpdateRole;
 using AviApp.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AviApp.Controllers;
@@ -16,6 +17,7 @@ public class RolesController  (IMediator mediator) :AppBaseController
     
     [HttpGet]
     [Route("")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllRoles(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllRolesQuery(), cancellationToken);

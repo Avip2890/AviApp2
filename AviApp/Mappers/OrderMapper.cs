@@ -12,10 +12,10 @@ public static class OrderMapper
             Id = model.Id ?? 0,
             CustomerId = model.CustomerId,
             OrderDate = model.OrderDate,
-            OrderMenuItems = menuItems.Select(m => new OrderMenuItems 
+            /*OrderMenuItems = menuItems.Select(m => new OrderMenuItems 
             { 
-                MenuItemId = m.Id 
-            }).ToList() // ✅ שימוש בטבלת החיבור
+                 = m.Id 
+            }).ToList() // ✅ שימוש בטבלת החיבור*/
         };
     }
 
@@ -24,7 +24,7 @@ public static class OrderMapper
         return new OrderDto
         {
             Id = entity.Id,
-            CustomerId = entity.CustomerId,
+            CustomerId = entity.CustomerId ?? 0,
             OrderDate = entity.OrderDate,
             OrderMenuItems = entity.OrderMenuItems
                 .Select(omi => new OrderMenuItemDto

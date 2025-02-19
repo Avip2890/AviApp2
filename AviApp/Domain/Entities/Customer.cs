@@ -1,8 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
 namespace AviApp.Domain.Entities;
 
-public  class Customer
+public partial class Customer
 {
     public int Id { get; set; }
 
@@ -10,4 +11,5 @@ public  class Customer
 
     public string Phone { get; set; } = null!;
 
+    public virtual ICollection<OrderMenuItem> OrderMenuItems { get; set; } = new List<OrderMenuItem>();
 }

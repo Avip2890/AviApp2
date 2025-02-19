@@ -1,10 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace AviApp.Domain.Entities;
 
-public class OrderMenuItems
+public partial class OrderMenuItem
 {
     public int OrderId { get; set; }
-    public Order Order { get; set; } = null!;
-    
+
     public int MenuItemId { get; set; }
-    public MenuItem MenuItem { get; set; } = null!;
+
+    public int? CustomerId { get; set; }
+
+    public virtual Customer? Customer { get; set; }
+
+    public virtual MenuItem MenuItem { get; set; } = null!;
+
+    public virtual Order Order { get; set; } = null!;
 }

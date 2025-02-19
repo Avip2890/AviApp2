@@ -18,11 +18,12 @@ public class CreateUserRoleCommandValidator : AbstractValidator<CreateUserRoleCo
         RuleFor(x => x.RoleId)
             .GreaterThan(0).WithMessage("RoleId must be greater than 0.");
 
+        /*
         RuleFor(x => x)
-            .MustAsync(ExistValidUserRole).WithMessage("Invalid UserId or RoleId.");
+            .MustAsync(ExistValidUserRole).WithMessage("Invalid UserId or RoleId.");*/
     }
 
-    private async Task<bool> ExistValidUserRole(CreateUserRoleCommand command, CancellationToken cancellationToken)
+    /*private async Task<bool> ExistValidUserRole(CreateUserRoleCommand command, CancellationToken cancellationToken)
     {
         // בדוק אם המשתמש קיים
         var userExists = await _userService.UserExistsAsync(command.UserId, cancellationToken);
@@ -33,5 +34,5 @@ public class CreateUserRoleCommandValidator : AbstractValidator<CreateUserRoleCo
         if (!roleExists) return false;
 
         return true;
-    }
+    }*/
 }

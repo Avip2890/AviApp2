@@ -1,99 +1,109 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+﻿using System;
+using System.Collections.Generic;
 using AviApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace AviApp.Domain.Context
+namespace AviApp.Domain.Context;
+
+public partial class AvipAppDbContext : DbContext
 {
-    public class AvipAppDbContext(DbContextOptions<AvipAppDbContext> options) : DbContext(options)
+    public AvipAppDbContext(DbContextOptions<AvipAppDbContext> options)
+        : base(options)
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<MenuItem> MenuItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderMenuItems> OrderMenuItems { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<UserRole>()
-                .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.User)
-                .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.UserId);
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.UserName)
-                .HasMaxLength(100)
-                .IsRequired();
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Password)
-                .HasMaxLength(256)
-                .IsRequired();
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Email)
-                .HasMaxLength(100)
-                .IsRequired();
-
-            modelBuilder.Entity<OrderMenuItems>()
-                .HasKey(omi => new { omi.OrderId, omi.MenuItemId });
-
-            modelBuilder.Entity<OrderMenuItems>()
-                .HasOne(omi => omi.Order)
-                .WithMany(o => o.OrderMenuItems)
-                .HasForeignKey(omi => omi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<OrderMenuItems>()
-                .HasOne(omi => omi.MenuItem)
-                .WithMany(m => m.OrderMenuItems)
-                .HasForeignKey(omi => omi.MenuItemId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.OrderDate)
-                .IsRequired()
-                .HasColumnType("datetime");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.CustomerId)
-                .IsRequired();
-
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.CustomerName)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            modelBuilder.Entity<MenuItem>()
-                .Property(m => m.Price)
-                .HasPrecision(18, 2);
-        }
     }
 
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AvipAppDbContext>
+    public virtual DbSet<Customer> Customers { get; set; }
+
+    public virtual DbSet<MenuItem> MenuItems { get; set; }
+
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderMenuItem> OrderMenuItems { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public AvipAppDbContext CreateDbContext(string[] args)
+        modelBuilder.Entity<Customer>(entity =>
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AvipAppDbContext>();
+            entity.HasKey(e => e.Id).HasName("PK__Customer__3214EC0729B8E63E");
 
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            entity.Property(e => e.CustomerName).HasMaxLength(100);
+            entity.Property(e => e.Phone).HasMaxLength(15);
+        });
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
+        modelBuilder.Entity<MenuItem>(entity =>
+        {
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+        });
 
-            return new AvipAppDbContext(optionsBuilder.Options);
-        }
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.Property(e => e.CustomerName).HasMaxLength(100);
+            entity.Property(e => e.MenuItemName).HasMaxLength(100);
+            entity.Property(e => e.OrderDate).HasColumnType("datetime");
+            entity.Property(e => e.Phone).HasMaxLength(15);
+        });
+
+        modelBuilder.Entity<OrderMenuItem>(entity =>
+        {
+            entity.HasKey(e => new { e.OrderId, e.MenuItemId });
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.OrderMenuItems)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_OrderMenuItems_Customers");
+
+            entity.HasOne(d => d.MenuItem).WithMany(p => p.OrderMenuItems)
+                .HasForeignKey(d => d.MenuItemId)
+                .HasConstraintName("FK_OrderMenuItems_MenuItem");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderMenuItems)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK_OrderMenuItems_Order");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC075BC8C636");
+
+            entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC070D19B779");
+
+            entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
+
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.Password).HasMaxLength(256);
+            entity.Property(e => e.Username).HasMaxLength(100);
+
+            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserRole",
+                    r => r.HasOne<Role>().WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_UserRoles_Roles"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_UserRoles_Users"),
+                    j =>
+                    {
+                        j.HasKey("UserId", "RoleId").HasName("PK__UserRole__AF2760AD8EE79B57");
+                        j.ToTable("UserRoles");
+                    });
+        });
+
+        OnModelCreatingPartial(modelBuilder);
     }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

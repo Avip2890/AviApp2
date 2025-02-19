@@ -1,12 +1,19 @@
-﻿namespace AviApp.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class MenuItem
+namespace AviApp.Domain.Entities;
+
+public partial class MenuItem
 {
     public int Id { get; set; }
+
     public string Name { get; set; } = null!;
+
     public string Description { get; set; } = null!;
+
     public decimal Price { get; set; }
+
     public bool IsAvailable { get; set; }
 
-    public ICollection<OrderMenuItems> OrderMenuItems { get; set; } = new List<OrderMenuItems>();
+    public virtual ICollection<OrderMenuItem> OrderMenuItems { get; set; } = new List<OrderMenuItem>();
 }

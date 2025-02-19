@@ -20,20 +20,12 @@ public class CreateOrderHandler(IOrderService orderService)
             return Error.BadRequest("Couldn't find menu items.");
         }
 
-        // יצירת קשרים בין הזמנה למנות
-        var orderMenuItems = menuItemsResult.Value
-            .Select(menuItem => new OrderMenuItems
-            {
-                MenuItemId = menuItem.Id
-            })
-            .ToList();
 
         // יצירת הזמנה וקשירת המנות לה
         var orderEntity = new Order
         {
             CustomerId = request.CustomerId,
             OrderDate = request.OrderDate ?? DateTime.UtcNow,
-            OrderMenuItems = orderMenuItems  // שים לב לשמירת הקשר בין מנות להזמנה
         };
 
         // שמירת ההזמנה ב-DB

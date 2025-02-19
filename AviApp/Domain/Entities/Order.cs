@@ -1,11 +1,21 @@
-﻿namespace AviApp.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Order
+namespace AviApp.Domain.Entities;
+
+public partial class Order
 {
     public int Id { get; set; }
+
     public DateTime OrderDate { get; set; }
-    public int CustomerId { get; set; }
-    public Customer Customer { get; set; } = null!;
-    
-    public ICollection<OrderMenuItems> OrderMenuItems { get; set; } = new List<OrderMenuItems>(); // ✅ קשר מקשר בין הזמנות למנות
+
+    public string? CustomerName { get; set; }
+
+    public string? Phone { get; set; }
+
+    public string? MenuItemName { get; set; }
+
+    public int? CustomerId { get; set; }
+
+    public virtual ICollection<OrderMenuItem> OrderMenuItems { get; set; } = new List<OrderMenuItem>();
 }

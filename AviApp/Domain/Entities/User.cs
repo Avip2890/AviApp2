@@ -1,20 +1,19 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AviApp.Domain.Entities;
 
-    public class User
-    {
-        public int Id { get; set; }
-        [MaxLength(100)] 
-        public required string UserName { get; set; }
+public partial class User
+{
+    public int Id { get; set; }
 
-        [MaxLength(256)]  
-        public required string Password { get; set; }
+    public string Username { get; set; } = null!;
 
-        [MaxLength(100)]  
-        public required string Email { get; set; }
+    public string Password { get; set; } = null!;
 
-        public DateTime CreatedAt { get; set; }
-        
-        public ICollection<UserRole>? UserRoles { get; set; }
-    }
+    public string Email { get; set; } = null!;
+
+    public DateTime CreatedAt { get; set; }
+
+    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
+}

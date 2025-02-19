@@ -30,13 +30,7 @@ public class UpdateOrderHandler(IOrderService orderService)
             return Error.BadRequest("Invalid menu items.");
         }
         
-        existingOrder.OrderMenuItems = menuItemsResult.Value
-            .Select(menuItem => new OrderMenuItems
-            {
-                OrderId = existingOrder.Id,
-                MenuItemId = menuItem.Id
-            })
-            .ToList();
+
 
         var updatedOrderResult = await orderService.UpdateOrderAsync(request.Id, existingOrder, cancellationToken);
 

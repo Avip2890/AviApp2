@@ -11,7 +11,6 @@ public class OrderService(AvipAppDbContext context) : IOrderService
     public async Task<Result<List<Order>>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
         var orders = await context.Orders
-            .Include(o => o.Customer)
             .Include(o => o.OrderMenuItems) 
             .ThenInclude(omi => omi.MenuItem)
             .ToListAsync(cancellationToken);
@@ -90,14 +89,7 @@ public class OrderService(AvipAppDbContext context) : IOrderService
             return Error.NotFound("No valid menu items found.");
         }
 
-        existingOrder.OrderMenuItems = menuItems
-            .Select(menuItem => new OrderMenuItems
-            {
-                OrderId = existingOrder.Id,
-                MenuItemId = menuItem.Id
-            })
-            .ToList();
-
+   
         try
         {
             await context.SaveChangesAsync(cancellationToken);

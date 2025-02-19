@@ -6,46 +6,31 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AviApp.Services;
 
-public class JwtService
+public class JwtService(string secretKey)
 {
-    private readonly string _secretKey;
-    
-    public JwtService(IConfiguration configuration)
+    private readonly string _secretKey = secretKey ?? throw new ArgumentNullException(nameof(secretKey), "Secret Key cannot be null");
+
+    public string GenerateToken(User user)
     {
-        _secretKey = configuration["Jwt:SecretKey"] 
-                     ?? throw new ArgumentNullException(nameof(configuration), "SecretKey is missing in configuration.");
-    }
-
-    public string GenerateJwtToken(User user, List<string> roles)
-    {
-        if (user == null)
-            throw new ArgumentNullException(nameof(user));
-
-        if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Email))
-            throw new ArgumentException("User information is incomplete.");
-
+        
+        var tokenHandler = new JwtSecurityTokenHandler();
         var claims = new List<Claim>
+        
         {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(nameof(user.Id), user.Id.ToString()),
+            new Claim(nameof(user.Email), user.Email),
+            new Claim(ClaimTypes.Role, (user?.Roles?.Select(ur => ur.RoleName).FirstOrDefault()) ?? string.Empty)
         };
-            
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
-            
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            
-        var token = new JwtSecurityToken(
-            issuer: "http://localhost:5099",  
-            audience: "http://localhost:5099",
-            claims: claims,
-            expires: DateTime.Now.AddHours(1), 
-            signingCredentials: creds
-        );
 
-        return new JwtSecurityTokenHandler().WriteToken(token); 
+        var sectoken = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(120),
+            signingCredentials: creds);
+
+        var token =  new JwtSecurityTokenHandler().WriteToken(sectoken);
+        return token;
     }
 }

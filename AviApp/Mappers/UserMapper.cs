@@ -9,7 +9,7 @@ namespace AviApp.Mappers
         {
             return new User
             {
-                UserName = model.UserName,
+                Username = model.UserName,
                 Password = model.Password,
                 Email = model.Email,
                 CreatedAt = model.CreatedAt
@@ -21,7 +21,7 @@ namespace AviApp.Mappers
             return new UserDto
             {
                 Id = entity.Id,
-                UserName = entity.UserName,
+                UserName = entity.Username,
                 Password = entity.Password,
                 Email = entity.Email,
                 CreatedAt = entity.CreatedAt

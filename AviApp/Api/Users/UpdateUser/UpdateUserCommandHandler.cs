@@ -19,7 +19,7 @@ public class UpdateUserCommandHandler(IUserService userService) : IRequestHandle
         
         var existingUser = existingUserResult.Value;
         
-        existingUser.UserName = request.UserName;
+        existingUser.Username = request.UserName;
         existingUser.Email = request.Email;
         existingUser.Password = request.Password;
         

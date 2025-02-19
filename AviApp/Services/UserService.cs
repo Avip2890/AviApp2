@@ -60,7 +60,7 @@ namespace AviApp.Services;
                 return Error.NotFound("User not found");
             }
 
-            user.UserName = updatedUser.UserName;
+            user.Username = updatedUser.Username;
             user.Email = updatedUser.Email;
 
             try
@@ -93,5 +93,8 @@ namespace AviApp.Services;
         {
             return await context.Users.AnyAsync(u => u.Id == userId, cancellationToken);
         }
+
+      
+
     }
 

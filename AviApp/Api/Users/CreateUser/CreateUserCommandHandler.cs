@@ -13,7 +13,7 @@ public class CreateUserCommandHandler(IUserService userService) : IRequestHandle
     {
         var userEntity = new User
         {
-            UserName = request.UserName,
+            Username = request.UserName,
             Password = request.Password,
             Email = request.Email,
             CreatedAt = DateTime.UtcNow 
