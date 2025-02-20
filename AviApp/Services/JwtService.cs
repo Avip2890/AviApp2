@@ -19,8 +19,9 @@ public class JwtService(string secretKey)
         {
             new Claim(nameof(user.Id), user.Id.ToString()),
             new Claim(nameof(user.Email), user.Email),
-            new Claim(ClaimTypes.Role, (user?.Roles?.Select(ur => ur.RoleName).FirstOrDefault()) ?? string.Empty)
         };
+        
+        claims.AddRange(user.Roles.Select(role => new Claim(ClaimTypes.Role, role.RoleName)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

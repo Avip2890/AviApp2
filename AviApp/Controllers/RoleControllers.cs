@@ -26,6 +26,7 @@ public class RolesController  (IMediator mediator) :AppBaseController
     
     [HttpGet]
     [Route("{id:int}")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetRoleById(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetRoleByIdQuery(id), cancellationToken);

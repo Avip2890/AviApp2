@@ -30,19 +30,22 @@ namespace AviApp.Controllers;
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDto userDto, CancellationToken cancellationToken)
         {
-            
             var result = await mediator.Send(new CreateUserCommand(
                 userDto.UserName,
                 userDto.Password,
-                userDto.Email
-                ), cancellationToken);
-            
-            if(!result.IsSuccess)
+                userDto.Email,
+                userDto.RoleNames
+            ), cancellationToken);
+    
+            if (!result.IsSuccess)
             {
                 return BadRequest("Failed to create user.");
             }
-            return ResultOf(result,successResult:CreatedAtAction(nameof(GetUserById), new { id = result.Value.Id }, result.Value));
+
+            return ResultOf(result, successResult: CreatedAtAction(nameof(GetUserById), new { id = result.Value.Id }, result.Value));
         }
+
+
         
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto userDto, CancellationToken cancellationToken)
@@ -64,12 +67,15 @@ namespace AviApp.Controllers;
             return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
         }
 
-        // מחיקת משתמש
+      
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteUser(int id, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(new DeleteUserCommand(id), cancellationToken);
             return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
         }
+        
+      
+
     }
 

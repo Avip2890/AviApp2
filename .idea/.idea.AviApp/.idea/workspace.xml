@@ -8,25 +8,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/codestream.xml" afterDir="false" />
+    <list default="true" id="4390f391-bf27-41d0-b9b2-e98c7b8b3a24" name="Changes" comment="Remove UserRoles files">
+      <change afterPath="$PROJECT_DIR$/AviApp/check/CanActivateAttribute.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AviApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/CreateUserRole/CreateUserRoleCommandValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/DeleteUserRole/DeleteUserRoleCommandValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetRolesForUser/GetRolesForUserQueryValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQuery.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Api/UserRole/GetUsersByRole/GetUsersByRoleQueryValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/UserRoleControllers.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserRoleService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Api/Users/CreateUser/CreateUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/RoleControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/RoleControllers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Controllers/UserControllers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Domain/Context/AvipAppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Interfaces/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Mappers/UserMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Models/UserDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/JwtService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AviApp/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AviApp/Services/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +210,7 @@
       <workItem from="1739882955805" duration="2721000" />
       <workItem from="1739969392995" duration="2417000" />
       <workItem from="1739972618809" duration="2031000" />
-      <workItem from="1739974670386" duration="108000" />
+      <workItem from="1739974670386" duration="8010000" />
     </task>
     <task id="LOCAL‎-00002" summary="Added Order and MenuItem services, models, and controllers">
       <option name="closed" value="true" />
@@ -410,7 +404,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1739969426422</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL‎-00026" summary="Remove UserRoles files">
+      <option name="closed" value="true" />
+      <created>1739974976090</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL‎-00026" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1739974976090</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,7 +469,8 @@
     <MESSAGE value="untracking files" />
     <MESSAGE value="Added User folder to Api folder&#10;added Models of :&#10;User&#10;Role&#10;UserRole.cs&#10;new and update Migration" />
     <MESSAGE value="JWT and BUGS" />
-    <option name="LAST_COMMIT_MESSAGE" value="JWT and BUGS" />
+    <MESSAGE value="Remove UserRoles files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove UserRoles files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -8,5 +8,5 @@ public class UserDto
     public required string Email { get; set; }
     public DateTime CreatedAt { get; set; }
 
-   
+    public List<string> RoleNames { get; set; } = new List<string>(); 
 }

@@ -4,4 +4,4 @@ using MediatR;
 
 namespace AviApp.Api.Users.CreateUser;
 
-public record CreateUserCommand(string UserName, string Password, string Email ) : IRequest<Result<UserDto>>;
+public record CreateUserCommand(string UserName, string Password, string Email, List<string> RoleNames) : IRequest<Result<UserDto>>;

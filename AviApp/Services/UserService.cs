@@ -17,7 +17,11 @@ namespace AviApp.Services;
 
         public async Task<Result<User>> GetUserByIdAsync(int id, CancellationToken cancellationToken)
         {
-            var user = await context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            var user = await context.Users
+                .Include(u => u.Roles)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
             if (user == null)
             {
                 return Error.NotFound("User not found");
@@ -25,6 +29,7 @@ namespace AviApp.Services;
 
             return user;
         }
+
         
         public async Task<Result<User>> CreateUserAsync(User user, CancellationToken cancellationToken)
         {
@@ -94,7 +99,41 @@ namespace AviApp.Services;
             return await context.Users.AnyAsync(u => u.Id == userId, cancellationToken);
         }
 
-      
+        public async Task<Result<User>> AddRolesToUserAsync(int userId, List<string> roleNames, CancellationToken cancellationToken)
+        {
+            var user = await context.Users
+                .Include(u => u.Roles) 
+                .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+
+            if (user == null)
+            {
+                return Error.NotFound("User not found");
+            }
+
+            var roles = await context.Roles
+                .Where(r => roleNames.Contains(r.RoleName))
+                .ToListAsync(cancellationToken);
+
+            if (!roles.Any())
+            {
+                return Error.BadRequest("No valid roles found.");
+            }
+
+           
+            foreach (var role in roles)
+            {
+                if (!user.Roles.Contains(role)) 
+                {
+                    user.Roles.Add(role);
+                }
+            }
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            return user;
+        }
+
+
 
     }
 

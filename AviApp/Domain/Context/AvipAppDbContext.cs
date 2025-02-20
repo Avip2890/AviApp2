@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using AviApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

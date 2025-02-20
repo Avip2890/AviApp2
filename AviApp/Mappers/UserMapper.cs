@@ -24,7 +24,8 @@ namespace AviApp.Mappers
                 UserName = entity.Username,
                 Password = entity.Password,
                 Email = entity.Email,
-                CreatedAt = entity.CreatedAt
+                CreatedAt = entity.CreatedAt,
+                RoleNames = entity.Roles.Select(r => r.RoleName).ToList()
             };
         }
     }
