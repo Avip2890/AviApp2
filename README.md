@@ -44,3 +44,10 @@ The project is developed using .NET 9.0 and includes built-in API documentation 
    Verify the installation with the following command:
    ```bash
    dotnet --version
+   
+
+## **Generate Projects From OpenAPI Specification**
+
+```bash
+   openapi-generator-cli generate 
+```

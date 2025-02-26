@@ -12,7 +12,6 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace AviApp.Controllers;
 
 
-[Route("api/customers")]
 public class CustomerController(IMediator mediator) : AppBaseController
 {
     /// <summary>
