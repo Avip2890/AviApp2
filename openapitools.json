@@ -1,0 +1,39 @@
+{
+  "spaces": 2,
+  "generator-cli": {
+    "version": "6.4.0",
+    "generators": {
+      "client-react": {
+        "generatorName": "typescript-axios",
+        "output": "#{cwd}/output/frontend/open-api",
+        "skipValidateSpec": true,
+        "inputSpec": "AviApp-Spec.yaml",
+        "additionalProperties": {
+          "supportsES6": true,
+          "useSingleRequestParameter": true
+        }
+      },
+      "backend-asp-dot-net-core": {
+        "generatorName": "aspnetcore",
+        "output": "#{cwd}/output/backend/open-api",
+        "glob": "AviApp-Spec.yaml",
+        "additionalProperties": {
+          "packageName": "AviApp",
+          "packageTitle": "AviApp",
+          "aspnetCoreVersion": "5.0",
+          "buildTarget": "program",
+          "generateBody": true,
+          "newtonsoftVersion": "13.0.1",
+          "nullableReferenceTypes": true,
+          "operationIsAsync": true,
+          "operationResultTask": true,
+          "swashbuckleVersion": "5.0.0",
+          "useDefaultRouting": true,
+          "useFrameworkReference": true,
+          "useNewtonsoft": true,
+          "useSwashbuckle": true
+        }
+      }
+    }
+  }
+}

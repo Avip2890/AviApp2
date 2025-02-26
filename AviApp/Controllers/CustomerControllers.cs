@@ -3,9 +3,11 @@ using AviApp.Api.Customers;
 using AviApp.Api.Customers.DeleteCustomer;
 using AviApp.Api.Customers.GetAllCustomers;
 using AviApp.Api.Customers.GetCustomerById;
+using AviApp.Attributes;
 using AviApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AviApp.Controllers;
 
@@ -13,9 +15,18 @@ namespace AviApp.Controllers;
 [Route("api/customers")]
 public class CustomerController(IMediator mediator) : AppBaseController
 {
+    /// <summary>
+    /// Get all customers
+    /// </summary>
+    /// <remarks>Get all customers</remarks>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="200">OK</response>
     [HttpGet]
-    [Route("")]
-    public async Task<IActionResult> GetAllCustomers(CancellationToken cancellationToken)
+    [Route("/api/customers")]
+    [ValidateModelState]
+    [SwaggerOperation("GetCustomers")]
+    [SwaggerResponse(statusCode: 200, type: typeof(List<CustomerDto>), description: "OK")]
+    public virtual async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllCustomersQuery(), cancellationToken);
         return ResultOf(result);
@@ -40,9 +51,7 @@ public class CustomerController(IMediator mediator) : AppBaseController
         {
             return BadRequest("Failed to create customer.");
         }
-
-        return ResultOf(result, 
-            successResult: CreatedAtAction(nameof(GetCustomerById), new { id = result.Value.Id }, result.Value));
+        return ResultOf(result, successResult: Created("customer", result.Value));
     }
 
 
