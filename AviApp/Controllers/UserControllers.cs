@@ -30,19 +30,9 @@ namespace AviApp.Controllers;
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDto userDto, CancellationToken cancellationToken)
         {
-            var result = await mediator.Send(new CreateUserCommand(
-                userDto.UserName,
-                userDto.Password,
-                userDto.Email,
-                userDto.RoleNames
-            ), cancellationToken);
+            var result = await mediator.Send(new CreateUserCommand(userDto), cancellationToken);
     
-            if (!result.IsSuccess)
-            {
-                return BadRequest("Failed to create user.");
-            }
-
-            return ResultOf(result, successResult: CreatedAtAction(nameof(GetUserById), new { id = result.Value.Id }, result.Value));
+            return !result.IsSuccess ? BadRequest("Failed to create user.") : ResultOf(result, successResult: CreatedAtAction(nameof(GetUserById), new { id = result.Value.Id }, result.Value));
         }
 
 

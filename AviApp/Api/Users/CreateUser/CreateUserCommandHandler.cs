@@ -14,14 +14,15 @@ public class CreateUserCommandHandler(IUserService userService, AvipAppDbContext
 {
     public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine($"Creating user: {request.UserName}");
-        Console.WriteLine($"Requested Roles: {string.Join(", ", request.RoleNames)}");
+        var userRequest = request.CreateUserRequest;
+        Console.WriteLine($"Creating user: {userRequest.Name}");
+        Console.WriteLine($"Requested Roles: {string.Join(", ", userRequest.Name)}");
 
         var userEntity = new User
         {
-            Username = request.UserName,
-            Password = request.Password,
-            Email = request.Email,
+            Username = userRequest.Name,
+            Password = userRequest.Password,
+            Email = userRequest.Email,
             CreatedAt = DateTime.UtcNow,
             Roles = new List<Role>() 
         };

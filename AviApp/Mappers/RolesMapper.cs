@@ -9,7 +9,7 @@ public static class RolesMapper
     {
         return new Role
         {
-            RoleName = model.RoleName
+            RoleName = model.Name
         };
     }
     
@@ -18,7 +18,7 @@ public static class RolesMapper
         return new RoleDto
         {
             Id = entity.Id,
-            RoleName = entity.RoleName
+            Name = entity.RoleName
         };
     }
     

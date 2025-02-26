@@ -40,7 +40,7 @@ public class RolesController  (IMediator mediator) :AppBaseController
         
         var result = await mediator.Send(new CreateRoleCommand(
            
-            roleDto.RoleName
+            roleDto.Name
             ), 
             cancellationToken);
         
@@ -64,7 +64,7 @@ public class RolesController  (IMediator mediator) :AppBaseController
         
         var result = await mediator.Send(new UpdateRoleCommand(
             id,
-            roleDto.RoleName
+            roleDto.Name
             ), cancellationToken);
             
         

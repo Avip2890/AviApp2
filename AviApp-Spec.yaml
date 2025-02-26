@@ -229,6 +229,7 @@ paths:
           
 components:
   schemas:
+    
     CustomerDto:
       type: object
       properties:
@@ -243,6 +244,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+      
     LoginRequestDto:
       type: object
       properties:
@@ -253,6 +255,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+      
     MenuItemDto:
       type: object
       properties:
@@ -268,10 +271,10 @@ components:
           nullable: true
         price:
           type: number
-          format: double
         isAvailable:
           type: boolean
       additionalProperties: false
+      
     OrderDto:
       type: object
       properties:
@@ -291,6 +294,7 @@ components:
             $ref: "#/components/schemas/OrderMenuItemDto"
           nullable: true
       additionalProperties: false
+      
     OrderMenuItemDto:
       type: object
       properties:
@@ -301,5 +305,35 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+      
+    UserDto:
+      type: object
+      properties: 
+        id:
+          type: integer
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string  
+        createdAt:
+          type: string
+          format: date-time
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoleDto"
+          
+    RoleDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string      
+          
 security:
   - Bearer: []
+  
+  

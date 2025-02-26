@@ -24,19 +24,19 @@ namespace AviApp.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class RoleDto : IEquatable<RoleDto>
+    public partial class OrderMenuItemDto : IEquatable<OrderMenuItemDto>
     {
         /// <summary>
-        /// Gets or Sets Id
+        /// Gets or Sets OrderId
         /// </summary>
-        [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
+        [DataMember(Name="orderId", EmitDefaultValue=true)]
+        public int OrderId { get; set; }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// Gets or Sets MenuItemId
         /// </summary>
-        [DataMember(Name="name", EmitDefaultValue=false)]
-        public string Name { get; set; }
+        [DataMember(Name="menuItemId", EmitDefaultValue=true)]
+        public int MenuItemId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -45,9 +45,9 @@ namespace AviApp.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class RoleDto {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("class OrderMenuItemDto {\n");
+            sb.Append("  OrderId: ").Append(OrderId).Append("\n");
+            sb.Append("  MenuItemId: ").Append(MenuItemId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -70,29 +70,29 @@ namespace AviApp.Models
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((RoleDto)obj);
+            return obj.GetType() == GetType() && Equals((OrderMenuItemDto)obj);
         }
 
         /// <summary>
-        /// Returns true if RoleDto instances are equal
+        /// Returns true if OrderMenuItemDto instances are equal
         /// </summary>
-        /// <param name="other">Instance of RoleDto to be compared</param>
+        /// <param name="other">Instance of OrderMenuItemDto to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(RoleDto other)
+        public bool Equals(OrderMenuItemDto other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Id == other.Id ||
+                    OrderId == other.OrderId ||
                     
-                    Id.Equals(other.Id)
+                    OrderId.Equals(other.OrderId)
                 ) && 
                 (
-                    Name == other.Name ||
-                    Name != null &&
-                    Name.Equals(other.Name)
+                    MenuItemId == other.MenuItemId ||
+                    
+                    MenuItemId.Equals(other.MenuItemId)
                 );
         }
 
@@ -107,9 +107,9 @@ namespace AviApp.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     
-                    hashCode = hashCode * 59 + Id.GetHashCode();
-                    if (Name != null)
-                    hashCode = hashCode * 59 + Name.GetHashCode();
+                    hashCode = hashCode * 59 + OrderId.GetHashCode();
+                    
+                    hashCode = hashCode * 59 + MenuItemId.GetHashCode();
                 return hashCode;
             }
         }
@@ -117,12 +117,12 @@ namespace AviApp.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(RoleDto left, RoleDto right)
+        public static bool operator ==(OrderMenuItemDto left, OrderMenuItemDto right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(RoleDto left, RoleDto right)
+        public static bool operator !=(OrderMenuItemDto left, OrderMenuItemDto right)
         {
             return !Equals(left, right);
         }
