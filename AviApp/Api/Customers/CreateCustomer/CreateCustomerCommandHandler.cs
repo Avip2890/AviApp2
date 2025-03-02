@@ -12,10 +12,12 @@ public class CreateCustomerCommandHandler(ICustomerService customerService)
 {
     public async Task<Result<CustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
+        var customerCreateRequest = request.CreateCustomerRequest;
         var customerEntity = new Customer
         {
-            CustomerName = request.CustomerName,
-            Phone = request.Phone
+            
+            CustomerName = customerCreateRequest.CustomerName,
+            Phone = customerCreateRequest.Phone
         };
 
         var result = await customerService.CreateCustomerAsync(customerEntity, cancellationToken);

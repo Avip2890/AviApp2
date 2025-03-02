@@ -12,12 +12,13 @@ public class CreateMenuItemHandler(IMenuItemService menuItemService)
 {
     public async Task<Result<MenuItemDto>> Handle(CreateMenuItemCommand request, CancellationToken cancellationToken)
     {
+        var createMenuItemRequest = request.CreateMenuItemRequest;
         var menuItemEntity = new Domain.Entities.MenuItem
         {
-            Name = request.Name,
-            Price = request.Price,
-            Description = request.Description,
-            IsAvailable = request.IsAvailable,
+            Name = createMenuItemRequest.Name,
+            Price = createMenuItemRequest.Price,
+            Description = createMenuItemRequest.Description,
+            IsAvailable = createMenuItemRequest.IsAvailable,
           
         };
         var result = await menuItemService.AddMenuItemAsync(menuItemEntity, cancellationToken);

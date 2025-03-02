@@ -1,33 +1,69 @@
+using System.ComponentModel.DataAnnotations;
 using AviApp.Api.Orders.CreateOrder;
 using AviApp.Api.Orders.DeleteOrder;
 using AviApp.Api.Orders.GetAllOrders;
 using AviApp.Api.Orders.GetOrderById;
 using AviApp.Api.Orders.UpdateOrder;
+using AviApp.Attributes;
 using AviApp.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AviApp.Controllers;
 
-[Route("api/orders")]
+
 public class OrderController(IMediator mediator) : AppBaseController
 {
+    /// <summary>
+    /// Get all orders
+    /// </summary>
+    /// <remarks>Get all orders, no authentication required</remarks>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="200">OK</response>
     [HttpGet]
-    public async Task<IActionResult> GetAllOrders(CancellationToken cancellationToken)
+    [Route("/api/orders")]
+    [ValidateModelState]
+    [SwaggerOperation("GetOrders")]
+    public virtual async Task<IActionResult> GetOrders(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllOrdersQuery(), cancellationToken);
         return ResultOf(result);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetOrderById(int id, CancellationToken cancellationToken)
+    /// <summary>
+    /// Get an order by id
+    /// </summary>
+    /// <remarks>Get an order by id, no authentication required</remarks>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="200">OK</response>
+    [HttpGet]
+    [Route("/api/orders/{id}")]
+    [ValidateModelState]
+    [SwaggerOperation("GetOrder")]
+    public virtual async Task<IActionResult> GetOrder([FromRoute (Name = "id")][Required]int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetOrderByIdQuery(id), cancellationToken);
         return ResultOf(result);
     }
 
+    /// <summary>
+    /// Add a new order
+    /// </summary>
+    /// <remarks>Requires **Admin** authentication</remarks>
+    /// <param name="orderDto"></param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="201">New Order Created</response>
     [HttpPost]
-    public async Task<IActionResult> CreateOrder([FromBody] OrderDto? orderDto, CancellationToken cancellationToken)
+    [Route("/api/orders")]
+    [Consumes("application/json")]
+    [ValidateModelState]
+    [SwaggerOperation("AddOrder")]
+    [SwaggerResponse(statusCode: 201, type: typeof(List<OrderDto>), description: "New Order Created")]
+    [Authorize (Roles = "Admin")]
+    public virtual async Task<IActionResult> AddOrder([FromBody]OrderDto orderDto, CancellationToken cancellationToken)
     {
         if (orderDto == null)
         {
@@ -39,18 +75,28 @@ public class OrderController(IMediator mediator) : AppBaseController
             return BadRequest("Order must contain at least one item.");
         }
 
-        var result = await mediator.Send(new CreateOrderCommand(
-            orderDto.CustomerId,
-            orderDto.OrderMenuItems.Select(omi => omi.MenuItemId).ToList()
-        ), cancellationToken);
+        var result = await mediator.Send(new CreateOrderCommand(new OrderDto()), cancellationToken);
 
         return result.IsSuccess 
-            ? CreatedAtAction(nameof(GetOrderById), new { id = result.Value.Id }, result.Value) 
+            ? CreatedAtAction(nameof(GetOrder), new { id = result.Value.Id }, result.Value) 
             : BadRequest(result.Errors);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDto orderDto, CancellationToken cancellationToken)
+    /// <summary>
+    /// Update an order
+    /// </summary>
+    /// <remarks>Requires **Admin** authentication</remarks>
+    /// <param name="id"></param>
+    /// <param name="orderDto"></param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="200">OK</response>
+    [HttpPut]
+    [Route("/api/orders/{id}")]
+    [Consumes("application/json")]
+    [ValidateModelState]
+    [SwaggerOperation("UpdateOrder")]
+    [Authorize (Roles = "Admin")]
+    public virtual async Task<IActionResult> UpdateOrder([FromRoute (Name = "id")][Required]int id, [FromBody]OrderDto? orderDto, CancellationToken cancellationToken)
     {
         if (!orderDto.OrderMenuItems.Any())
         {
@@ -67,8 +113,19 @@ public class OrderController(IMediator mediator) : AppBaseController
         return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
     }
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteOrder(int id, CancellationToken cancellationToken)
+    /// <summary>
+    /// Delete an order
+    /// </summary>
+    /// <remarks>Requires **Admin** authentication</remarks>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+    /// <response code="200">Order is deleted</response>
+    [HttpDelete]
+    [Route("/api/orders/{id}")]
+    [ValidateModelState]
+    [SwaggerOperation("DeleteOrder")]
+    [Authorize (Roles = "Admin")]
+    public virtual async Task<IActionResult> DeleteOrder([FromRoute (Name = "id")][Required]int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteOrderCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : BadRequest(result.Errors);

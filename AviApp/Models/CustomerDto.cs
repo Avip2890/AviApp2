@@ -35,14 +35,14 @@ namespace AviApp.Models
         /// <summary>
         /// Gets or Sets CustomerName
         /// </summary>
-        [DataMember(Name="customerName", EmitDefaultValue=true)]
-        public string? CustomerName { get; set; }
+        [DataMember(Name="customerName", EmitDefaultValue=false)]
+        public string CustomerName { get; set; }
 
         /// <summary>
         /// Gets or Sets Phone
         /// </summary>
-        [DataMember(Name="phone", EmitDefaultValue=true)]
-        public string? Phone { get; set; }
+        [DataMember(Name="phone", EmitDefaultValue=false)]
+        public string Phone { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

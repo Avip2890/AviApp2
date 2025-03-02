@@ -15,9 +15,7 @@ public class CreateUserCommandHandler(IUserService userService, AvipAppDbContext
     public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var userRequest = request.CreateUserRequest;
-        Console.WriteLine($"Creating user: {userRequest.Name}");
-        Console.WriteLine($"Requested Roles: {string.Join(", ", userRequest.Name)}");
-
+        
         var userEntity = new User
         {
             Username = userRequest.Name,
@@ -28,10 +26,8 @@ public class CreateUserCommandHandler(IUserService userService, AvipAppDbContext
         };
         
         var roles = await context.Roles
-            .Where(r => request.RoleNames.Contains(r.RoleName))
+            .Where(r => request.CreateUserRequest.Roles.Select(roleDto => roleDto.Id).Contains(r.Id))
             .ToListAsync(cancellationToken);
-
-        Console.WriteLine($"Roles found in DB: {string.Join(", ", roles.Select(r => r.RoleName))}");
         
         foreach (var role in roles)
         {
@@ -40,8 +36,6 @@ public class CreateUserCommandHandler(IUserService userService, AvipAppDbContext
                 userEntity.Roles.Add(role);
             }
         }
-
-        Console.WriteLine($"Roles assigned to user: {string.Join(", ", userEntity.Roles.Select(r => r.RoleName))}");
         
         var result = await userService.CreateUserAsync(userEntity, cancellationToken);
 
@@ -58,9 +52,7 @@ public class CreateUserCommandHandler(IUserService userService, AvipAppDbContext
             }
 
             var userDto = savedUser.ToDto();
-
-            Console.WriteLine($"User created successfully with Roles: {string.Join(", ", userDto.RoleNames)}");
-
+            
             return Result<UserDto>.Success(userDto);
         }
 

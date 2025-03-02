@@ -47,7 +47,7 @@ namespace AviApp.Models
         /// <summary>
         /// Gets or Sets OrderMenuItems
         /// </summary>
-        [DataMember(Name="orderMenuItems", EmitDefaultValue=true)]
+        [DataMember(Name="orderMenuItems", EmitDefaultValue=false)]
         public List<OrderMenuItemDto> OrderMenuItems { get; set; }
 
         /// <summary>

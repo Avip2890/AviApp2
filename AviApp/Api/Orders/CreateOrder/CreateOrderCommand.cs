@@ -4,6 +4,6 @@ using MediatR;
 
 namespace AviApp.Api.Orders.CreateOrder;
 
-public record CreateOrderCommand(int CustomerId, List<int> Items, DateTime? OrderDate = null) 
+public record CreateOrderCommand(OrderDto CreateOrderRequest) 
     : IRequest<Result<OrderDto>>;
 

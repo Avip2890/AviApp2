@@ -12,26 +12,23 @@ public class CreateOrderHandler(IOrderService orderService)
 {
     public async Task<Result<OrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        // בדוק אם יש את כל פרטי המנות
-        var menuItemsResult = await orderService.GetMenuItemsByIdsAsync(request.Items, cancellationToken);
+        var createOrderRequest = request.CreateOrderRequest;
+        
+        var menuItemsResult = await orderService.GetMenuItemsByIdsAsync(request.CreateOrderRequest.OrderMenuItems.Select(x => x.MenuItemId), cancellationToken);
     
         if (!menuItemsResult.IsSuccess || !menuItemsResult.Value.Any())
         {
             return Error.BadRequest("Couldn't find menu items.");
         }
 
-
-        // יצירת הזמנה וקשירת המנות לה
         var orderEntity = new Order
         {
-            CustomerId = request.CustomerId,
-            OrderDate = request.OrderDate ?? DateTime.UtcNow,
+            CustomerId = createOrderRequest.CustomerId,
+            OrderDate = createOrderRequest.OrderDate.Date
         };
-
-        // שמירת ההזמנה ב-DB
+        
         var result = await orderService.CreateOrderAsync(orderEntity, cancellationToken);
-
-        // אם שמירת ההזמנה הצליחה, החזר את הנתונים
+        
         return result.IsSuccess ? result.Value.ToDto() : result.Errors;
     }
 }

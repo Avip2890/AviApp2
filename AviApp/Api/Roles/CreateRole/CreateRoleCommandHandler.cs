@@ -12,6 +12,7 @@ public class CreateRoleCommandHandler(IRoleService roleService)
 {
     public async Task<Result<RoleDto>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
+        
         var roleEntity=new Role
         {
          

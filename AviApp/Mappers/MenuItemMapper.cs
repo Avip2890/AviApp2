@@ -9,7 +9,7 @@ public static class MenuItemMapper
     {
         return new MenuItem
         {
-            Id = model.Id ?? 0,
+            Id = model.Id ,
             Name = model.Name,
             Description = model.Description,
             Price = model.Price,
