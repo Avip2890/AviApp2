@@ -11,7 +11,7 @@ public class ErrorControllers: ControllerBase
     
     public IActionResult Error()
     {
-        Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+       
         return Problem();
     }
     

@@ -22,6 +22,9 @@ public class UpdateMenuItemHandler(IMenuItemService menuItemService)
         menuItemEntity.Price = request.Price;
         menuItemEntity.Description = request.Description;
         menuItemEntity.IsAvailable = request.IsAvailable;
+        menuItemEntity.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl)
+            ? menuItemEntity.ImageUrl
+            : request.ImageUrl;
   
 
         var result = await menuItemService.UpdateMenuItemAsync(request.Id, menuItemEntity, cancellationToken);

@@ -1,5 +1,4 @@
 using AviApp.Domain.Context;
-using AviApp.Domain.Entities;
 using AviApp.Interfaces;
 using AviApp.Results;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,9 @@ public class AuthService(AvipAppDbContext context, JwtService jwtService) : IAut
 {
     public async Task<Result<string>> LoginAsync(string email, string password, CancellationToken cancellationToken)
     {
-        var user = await context.Users.Include(x => x.Roles).FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        var user = await context.Users
+            .Include(x => x.Roles)
+            .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
         if (user == null)
         {
@@ -21,9 +22,9 @@ public class AuthService(AvipAppDbContext context, JwtService jwtService) : IAut
         {
             return Error.BadRequest("Invalid password");
         }
-
-        var token = jwtService.GenerateToken(user);  
-
+        
+        var token = jwtService.GenerateToken(user);
+        
         return token;
     }
-}
+} 

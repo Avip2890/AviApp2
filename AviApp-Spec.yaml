@@ -1,3 +1,4 @@
+
 openapi: 3.0.1
 info:
   title: AviApp
@@ -12,7 +13,7 @@ paths:
         - Auth
       operationId: Login
       summary: Login
-      description: Login to the application
+      description: Login to the application, 
       requestBody:
         content:
           application/json:
@@ -32,7 +33,7 @@ paths:
         - Customer
       operationId: GetCustomers
       summary: Get all customers
-      description: Get all customers
+      description: Get all customers, no authentication required
       responses:
         "200":
           description: OK
@@ -42,23 +43,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CustomerDto'
-                
-
+              
     post:
       tags:
         - Customer
+      operationId: AddCustomer
+      summary: Add a new customer
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/CustomerDto"
+              
       responses:
-        "200":
-          description: OK
+        "201":
+          description: New Customer is created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        
   /api/customers/{id}:
     get:
       tags:
         - Customer
+      operationId: GetCustomer
+      summary: Get a customer by id
+      description: Get a customer by id, no authentication required
       parameters:
         - name: id
           in: path
@@ -72,6 +87,11 @@ paths:
     put:
       tags:
         - Customer
+      operationId: UpdateCustomer
+      summary: Update a customer
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
       parameters:
         - name: id
           in: path
@@ -86,10 +106,16 @@ paths:
               $ref: "#/components/schemas/CustomerDto"
       responses:
         "200":
-          description: OK
+          description: customer is updated
+          
     delete:
       tags:
         - Customer
+      operationId: DeleteCustomer
+      summary: Delete a customer
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
       parameters:
         - name: id
           in: path
@@ -99,123 +125,55 @@ paths:
             format: int32
       responses:
         "200":
-          description: OK
+          description: Customer is deleted
+          
   /api/menuitems:
     get:
       tags:
         - MenuItem
+      operationId: GetMenuItems
+      summary: Get all menu items
+      description: Get all menu items, no authentication required
       responses:
         "200":
           description: OK
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MenuItemDto'
     post:
       tags:
         - MenuItem
+      operationId: AddMenuItem
+      summary: Add a new menu item
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/MenuItemDto"
       responses:
-        "200":
-          description: OK
+        "201":
+          description: New menu item is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItemDto'
+                  
   /api/menuitems/{id}:
     get:
       tags:
         - MenuItem
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        "200":
-          description: OK
-    put:
-      tags:
-        - MenuItem
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MenuItemDto"
-      responses:
-        "200":
-          description: OK
-    delete:
-      tags:
-        - MenuItem
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        "200":
-          description: OK
-  /api/orders:
-    get:
-      tags:
-        - Order
-      responses:
-        "200":
-          description: OK
-    post:
-      tags:
-        - Order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/OrderDto"
-      responses:
-        "200":
-          description: OK
-  /api/orders/{id}:
-    get:
-      tags:
-        - Order
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        "200":
-          description: OK
-    put:
-      tags:
-        - Order
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/OrderDto"
-      responses:
-        "200":
-          description: OK
-    delete:
-      tags:
-        - Order
+      operationId: GetMenuItem
+      summary: Get a menu item by id
+      description: Get a menu item by id, no authentication required
       parameters:
         - name: id
           in: path
@@ -227,6 +185,343 @@ paths:
         "200":
           description: OK
           
+    put:
+      tags:
+        - MenuItem
+      operationId: UpdateMenuItem
+      summary: Update a menu item
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MenuItemDto"
+      responses:
+        "200":
+          description: Menu item is updated
+          
+    delete:
+      tags:
+        - MenuItem
+      operationId: DeleteMenuItem
+      summary: Delete a menu item
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Menu item is deleted
+          
+  /api/orders:
+    get:
+      tags:
+        - Order
+      operationId: GetOrders
+      summary: Get all orders
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin" ]
+      responses:
+        "200":
+          description: OK
+          
+    post:
+      tags:
+        - Order
+      operationId: AddOrder
+      summary: Add a new order
+      description: Add a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderDto"
+      responses:
+        "201":
+          description: New Order Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+          
+  /api/orders/{id}:
+    get:
+      tags:
+        - Order
+      operationId: GetOrder
+      summary: Get an order by id
+      description: Get an order by id, no authentication required
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          
+    put:
+      tags:
+        - Order
+      operationId: UpdateOrder 
+      summary: Update an order
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderDto"
+      responses:
+        "200":
+          description: OK
+          
+    delete:
+      tags:
+        - Order
+      operationId: DeleteOrder
+      summary: Delete an order
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Order is deleted
+          
+  /api/users:
+    get:
+      tags:
+        - User
+      operationId: GetUsers
+      summary: Get all users
+      description: Get all users, no authentication required
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+    post:
+      tags:
+        - User
+      operationId: AddUser
+      summary: Add new user
+      description: Add new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDto"
+      responses:
+        "201":
+          description: New User is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+                  
+  /api/users/{id}:
+    get:
+      tags:
+        - User
+      operationId: GetUser
+      summary: Get a User by id
+      description: Get a User by id, no authentication required
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          
+    delete:
+      tags:
+        - User
+      operationId: DeleteUser
+      summary: Delete User
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+  
+    put:
+      tags:
+        - User
+      operationId: UpdateUser
+      summary: Update User
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDto"
+      responses:
+        "200":
+          description: User is updated        
+    
+  /api/roles:
+    get:
+      tags:
+        - Role
+      operationId: GetRoles
+      summary: Get all roles
+      description: Get all roles, no authentication required
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDto'
+    post:
+      tags:
+        - Role
+      operationId: AddRole
+      summary: Add a new Role
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoleDto"
+      responses:
+        "201":
+          description: New Role is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDto'
+                  
+  /api/roles/{id}:
+    get:
+      tags:
+        - Role
+      operationId: GetRole
+      summary: Get a role by id
+      description: Get a role by id, no authentication required
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK 
+    
+    delete:
+      tags:
+        - Role
+      operationId: DeleteRole
+      summary: Delete a role
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: ["admin" ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Role is deleted      
+    
+    put:
+      tags:
+        - Role
+      operationId: UpdateRole
+      summary: Update role
+      description: Requires **Admin** authentication
+      security:
+        - Bearer: [ "admin"]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoleDto"
+      responses:
+        "200":
+          description: Role is updated
+
 components:
   schemas:
     
@@ -239,62 +534,71 @@ components:
           nullable: true
         customerName:
           type: string
-          nullable: true
         phone:
           type: string
-          nullable: true
-      additionalProperties: false
+      
       
     LoginRequestDto:
       type: object
       properties:
         email:
           type: string
-          nullable: true
         password:
           type: string
-          nullable: true
-      additionalProperties: false
-      
+          
     MenuItemDto:
       type: object
+      required:
+        - name
+        - price
+        - isAvailable
       properties:
         id:
           type: integer
           format: int32
-          nullable: true
+          readOnly: true  
         name:
           type: string
-          nullable: true
         description:
           type: string
-          nullable: true
+          nullable: false 
         price:
           type: number
         isAvailable:
           type: boolean
-      additionalProperties: false
-      
+        imageUrl:
+          type: string
+          nullable: false 
+          
     OrderDto:
       type: object
       properties:
         id:
           type: integer
           format: int32
-          nullable: true
+          readOnly: true
         orderDate:
           type: string
           format: date-time
-        customerId:
-          type: integer
-          format: int32
+        customerName:
+          type: string
+          nullable: false
+        phone:
+          type: string
+          nullable: false
+        email:
+          type: string
+          format: email
+          nullable: false
+        menuItemName:
+          type: string
+          default: ""
         orderMenuItems:
           type: array
           items:
             $ref: "#/components/schemas/OrderMenuItemDto"
-          nullable: true
-      additionalProperties: false
-      
+          
+    
     OrderMenuItemDto:
       type: object
       properties:
@@ -304,7 +608,7 @@ components:
         menuItemId:
           type: integer
           format: int32
-      additionalProperties: false
+      
       
     UserDto:
       type: object

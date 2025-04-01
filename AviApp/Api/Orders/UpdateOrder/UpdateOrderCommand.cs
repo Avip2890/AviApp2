@@ -4,5 +4,5 @@ using MediatR;
 
 namespace AviApp.Api.Orders.UpdateOrder;
 
-public record UpdateOrderCommand(int Id, int CustomerId, DateTime OrderDate, List<int> Items) 
+public record UpdateOrderCommand(int Id, string CustomerName, string Phone, DateTime OrderDate, string Email, List<int> Items) 
     : IRequest<Result<OrderDto>>;

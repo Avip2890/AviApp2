@@ -8,10 +8,7 @@ public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {
         RuleFor(x => x.Id)
             .GreaterThan(0).WithMessage("Order ID must be greater than 0.");
-
-        RuleFor(x => x.CustomerId)
-            .GreaterThan(0).WithMessage("Customer ID must be greater than 0.");
-
+        
         RuleFor(x => x.Items)
             .NotEmpty().WithMessage("Order must contain at least one item.");
     }

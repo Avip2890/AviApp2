@@ -15,7 +15,7 @@ public partial class Order
 
     public string? MenuItemName { get; set; }
 
-    public int? CustomerId { get; set; }
+    public string? Email { get; set; }
 
     public virtual ICollection<OrderMenuItem> OrderMenuItems { get; set; } = new List<OrderMenuItem>();
 }

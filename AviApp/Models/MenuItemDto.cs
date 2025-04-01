@@ -35,6 +35,7 @@ namespace AviApp.Models
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+        [Required]
         [DataMember(Name="name", EmitDefaultValue=false)]
         public string Name { get; set; }
 
@@ -47,14 +48,22 @@ namespace AviApp.Models
         /// <summary>
         /// Gets or Sets Price
         /// </summary>
+        [Required]
         [DataMember(Name="price", EmitDefaultValue=true)]
         public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or Sets IsAvailable
         /// </summary>
+        [Required]
         [DataMember(Name="isAvailable", EmitDefaultValue=true)]
         public bool IsAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ImageUrl
+        /// </summary>
+        [DataMember(Name="imageUrl", EmitDefaultValue=false)]
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -69,6 +78,7 @@ namespace AviApp.Models
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  IsAvailable: ").Append(IsAvailable).Append("\n");
+            sb.Append("  ImageUrl: ").Append(ImageUrl).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -129,6 +139,11 @@ namespace AviApp.Models
                     IsAvailable == other.IsAvailable ||
                     
                     IsAvailable.Equals(other.IsAvailable)
+                ) && 
+                (
+                    ImageUrl == other.ImageUrl ||
+                    ImageUrl != null &&
+                    ImageUrl.Equals(other.ImageUrl)
                 );
         }
 
@@ -152,6 +167,8 @@ namespace AviApp.Models
                     hashCode = hashCode * 59 + Price.GetHashCode();
                     
                     hashCode = hashCode * 59 + IsAvailable.GetHashCode();
+                    if (ImageUrl != null)
+                    hashCode = hashCode * 59 + ImageUrl.GetHashCode();
                 return hashCode;
             }
         }

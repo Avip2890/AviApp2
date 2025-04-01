@@ -1,38 +1,47 @@
 using AviApp.Domain.Entities;
 using AviApp.Models;
 
-namespace AviApp.Mappers;
-
-public static class OrderMapper
+namespace AviApp.Mappers
 {
-    public static Order ToEntity(this OrderDto model, List<MenuItem> menuItems)
+    public static class OrderMapper
     {
-        return new Order
+     
+        public static Order ToEntity(this OrderDto model, List<MenuItem> menuItems)
         {
-            Id = model.Id ?? 0,
-            CustomerId = model.CustomerId,
-            OrderDate = model.OrderDate,
-            /*OrderMenuItems = menuItems.Select(m => new OrderMenuItems 
-            { 
-                 = m.Id 
-            }).ToList() // ✅ שימוש בטבלת החיבור*/
-        };
-    }
+            return new Order
+            {
+                Id = model.Id,
+                Email = model.Email,
+                OrderDate = model.OrderDate,
+                CustomerName = model.CustomerName, 
+                Phone = model.Phone,
+                MenuItemName = string.Join(", ", menuItems.Select(m => m.Name)), 
+                OrderMenuItems = menuItems.Select(m => new OrderMenuItem
+                {
+                    MenuItemId = m.Id,
+                    OrderId = 0 
+                }).ToList()
+            };
+        }
+        
+        public static OrderDto ToDto(this Order entity)
+        {
+            return new OrderDto
+            {
+                Id = entity.Id, 
+                Email = entity.Email,
+                OrderDate = entity.OrderDate,
+                CustomerName = entity.CustomerName,
+                Phone = entity.Phone,
+                MenuItemName = entity.MenuItemName ?? "",
 
-    public static OrderDto ToDto(this Order entity)
-    {
-        return new OrderDto
-        {
-            Id = entity.Id,
-            CustomerId = entity.CustomerId ?? 0,
-            OrderDate = entity.OrderDate,
-            OrderMenuItems = entity.OrderMenuItems
-                .Select(omi => new OrderMenuItemDto
+                OrderMenuItems = entity.OrderMenuItems?.Select(omi => new OrderMenuItemDto
                 {
                     OrderId = omi.OrderId,
                     MenuItemId = omi.MenuItemId
-                }).ToList() 
-        };
-    }
+                }).ToList() ?? new List<OrderMenuItemDto>()
+            };
+        }
 
+    }
 }

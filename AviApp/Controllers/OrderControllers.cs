@@ -19,7 +19,7 @@ public class OrderController(IMediator mediator) : AppBaseController
     /// <summary>
     /// Get all orders
     /// </summary>
-    /// <remarks>Get all orders, no authentication required</remarks>
+    /// <remarks>Requires **Admin** authentication</remarks>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <response code="200">OK</response>
     [HttpGet]
@@ -52,7 +52,7 @@ public class OrderController(IMediator mediator) : AppBaseController
     /// <summary>
     /// Add a new order
     /// </summary>
-    /// <remarks>Requires **Admin** authentication</remarks>
+    /// <remarks>Add a new order</remarks>
     /// <param name="orderDto"></param>
     /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
     /// <response code="201">New Order Created</response>
@@ -62,9 +62,9 @@ public class OrderController(IMediator mediator) : AppBaseController
     [ValidateModelState]
     [SwaggerOperation("AddOrder")]
     [SwaggerResponse(statusCode: 201, type: typeof(List<OrderDto>), description: "New Order Created")]
-    [Authorize (Roles = "Admin")]
     public virtual async Task<IActionResult> AddOrder([FromBody]OrderDto orderDto, CancellationToken cancellationToken)
     {
+        
         if (orderDto == null)
         {
             return BadRequest("Order data is required.");
@@ -75,7 +75,7 @@ public class OrderController(IMediator mediator) : AppBaseController
             return BadRequest("Order must contain at least one item.");
         }
 
-        var result = await mediator.Send(new CreateOrderCommand(new OrderDto()), cancellationToken);
+        var result = await mediator.Send(new CreateOrderCommand(orderDto) , cancellationToken);
 
         return result.IsSuccess 
             ? CreatedAtAction(nameof(GetOrder), new { id = result.Value.Id }, result.Value) 
@@ -102,11 +102,12 @@ public class OrderController(IMediator mediator) : AppBaseController
         {
             return BadRequest("Order must contain at least one item.");
         }
-
         var result = await mediator.Send(new UpdateOrderCommand(
-            id, 
-            orderDto.CustomerId, 
-            orderDto.OrderDate, 
+            id,
+            orderDto.CustomerName ?? string.Empty,
+            orderDto.Phone ?? string.Empty,
+            orderDto.OrderDate,
+            orderDto.Email ?? string.Empty,
             orderDto.OrderMenuItems.Select(omi => omi.MenuItemId).ToList()
         ), cancellationToken);
 

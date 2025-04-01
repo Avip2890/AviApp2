@@ -7,34 +7,44 @@ using MediatR;
 
 namespace AviApp.Api.Orders.UpdateOrder;
 
-public class UpdateOrderHandler(IOrderService orderService) 
+public class UpdateOrderHandler(IOrderService orderService)
     : IRequestHandler<UpdateOrderCommand, Result<OrderDto>>
 {
     public async Task<Result<OrderDto>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
         var existingOrderResult = await orderService.GetOrderByIdAsync(request.Id, cancellationToken);
-
         if (!existingOrderResult.IsSuccess)
         {
             return Error.NotFound($"Order with ID {request.Id} not found.");
         }
 
         var existingOrder = existingOrderResult.Value;
-        
-        existingOrder.CustomerId = request.CustomerId;
+
+        existingOrder.Email = request.Email;
         existingOrder.OrderDate = request.OrderDate;
+        existingOrder.CustomerName = request.CustomerName;
+        existingOrder.Phone = request.Phone;
 
         var menuItemsResult = await orderService.GetMenuItemsByIdsAsync(request.Items, cancellationToken);
         if (!menuItemsResult.IsSuccess || !menuItemsResult.Value.Any())
         {
             return Error.BadRequest("Invalid menu items.");
         }
-        
 
+        existingOrder.OrderMenuItems.Clear();
 
-        var updatedOrderResult = await orderService.UpdateOrderAsync(request.Id, existingOrder, cancellationToken);
+        foreach (var menuItem in menuItemsResult.Value)
+        {
+            existingOrder.OrderMenuItems.Add(new OrderMenuItem
+            {
+                MenuItemId = menuItem.Id,
+                OrderId = existingOrder.Id
+            });
+        }
 
-        return updatedOrderResult.IsSuccess
+        var updatedOrderResult = await orderService.UpdateOrderAsync(existingOrder, cancellationToken);
+
+        return (updatedOrderResult.IsSuccess)
             ? updatedOrderResult.Value.ToDto()
             : Error.BadRequest("Update Failed");
     }

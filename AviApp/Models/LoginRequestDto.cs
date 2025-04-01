@@ -29,14 +29,14 @@ namespace AviApp.Models
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
-        [DataMember(Name="email", EmitDefaultValue=true)]
-        public string? Email { get; set; }
+        [DataMember(Name="email", EmitDefaultValue=false)]
+        public string Email { get; set; }
 
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
-        [DataMember(Name="password", EmitDefaultValue=true)]
-        public string? Password { get; set; }
+        [DataMember(Name="password", EmitDefaultValue=false)]
+        public string Password { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

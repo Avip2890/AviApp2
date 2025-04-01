@@ -19,6 +19,7 @@ public class JwtService(string secretKey)
         {
             new Claim(nameof(user.Id), user.Id.ToString()),
             new Claim(nameof(user.Email), user.Email),
+            
         };
         
         claims.AddRange(user.Roles.Select(role => new Claim(ClaimTypes.Role, role.RoleName)));

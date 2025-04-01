@@ -10,4 +10,5 @@ public interface ICustomerService
     Task<Result<Customer>> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken);
     Task<Result<Customer>> UpdateCustomerAsync(Customer updatedCustomer, CancellationToken cancellationToken);
     Task<Result<Deleted>> DeleteCustomerAsync(int id, CancellationToken cancellationToken);
+    
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using AviApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +44,7 @@ public partial class AvipAppDbContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.CustomerName).HasMaxLength(100);
+            entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.MenuItemName).HasMaxLength(100);
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.Phone).HasMaxLength(15);
@@ -88,11 +90,9 @@ public partial class AvipAppDbContext : DbContext
                     "UserRole",
                     r => r.HasOne<Role>().WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("FK_UserRoles_Roles"),
                     l => l.HasOne<User>().WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("FK_UserRoles_Users"),
                     j =>
                     {

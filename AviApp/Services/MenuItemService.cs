@@ -55,7 +55,7 @@ public class MenuItemService(AvipAppDbContext context) : IMenuItemService
         menuItem.Description = updatedMenuItem.Description;
         menuItem.Price = updatedMenuItem.Price;
         menuItem.IsAvailable = updatedMenuItem.IsAvailable;
-
+        menuItem.ImageUrl = updatedMenuItem.ImageUrl;
         try
         {
             await context.SaveChangesAsync(cancellationToken);

@@ -6,9 +6,7 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderCommandValidator()
     {
-        RuleFor(x => x.CreateOrderRequest.CustomerId)
-            .GreaterThan(0).WithMessage("Customer ID must be greater than 0.");
-
+        
         RuleFor(x => x.CreateOrderRequest.OrderMenuItems)
             .NotEmpty().WithMessage("Orders must contain at least one item.");
         

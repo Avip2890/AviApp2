@@ -35,63 +35,53 @@ public class OrderService(AvipAppDbContext context) : IOrderService
 
     public async Task<Result<Order>> CreateOrderAsync(Order order, CancellationToken cancellationToken = default)
     {
-        try
+        // בדיקה בטיחותית שהוזנו פריטים
+        if (order.OrderMenuItems == null || !order.OrderMenuItems.Any())
         {
-            if (!order.OrderMenuItems.Any())
-            {
-                return Error.BadRequest("Order must contain at least one item.");
-            }
-
-            var menuItemIds = order.OrderMenuItems.Select(omi => omi.MenuItemId).ToList();
-
-            var menuItems = await context.MenuItems
-                .Where(mi => menuItemIds.Contains(mi.Id))
-                .ToListAsync(cancellationToken);
-
-            if (!menuItems.Any())
-            {
-                return Error.NotFound("No valid menu items found.");
-            }
-
-            await context.Orders.AddAsync(order, cancellationToken);
-            await context.SaveChangesAsync(cancellationToken);
-
-            return order;
+            return Error.BadRequest("חייבים לבחור לפחות פריט אחד בהזמנה.");
         }
-        catch
-        {
-            return Error.BadRequest("Error occurred while processing order");
-        }
+        
+        var menuItemIds = order.OrderMenuItems.Select(omi => omi.MenuItemId).ToList();
+
+        var menuItems = await context.MenuItems
+            .Where(mi => menuItemIds.Contains(mi.Id))
+            .ToListAsync(cancellationToken);
+        
+        order.MenuItemName = string.Join(", ", menuItems.Select(mi => mi.Name));
+
+        await context.Orders.AddAsync(order, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+
+
+        return order;
     }
 
-    public async Task<Result<Order>> UpdateOrderAsync(int id, Order updatedOrder, CancellationToken cancellationToken = default)
+
+    public async Task<Result<Order>> UpdateOrderAsync(Order updatedOrder, CancellationToken cancellationToken = default)
     {
         var existingOrder = await context.Orders
-            .Include(o => o.OrderMenuItems)
-            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(o => o.Id == updatedOrder.Id, cancellationToken);
 
         if (existingOrder == null)
-        {
-            return Error.NotFound($"Order with ID {id} not found");
-        }
+            return Error.NotFound($"Order with ID {updatedOrder.Id} not found.");
 
-        existingOrder.CustomerId = updatedOrder.CustomerId;
+        existingOrder.Email = updatedOrder.Email;
         existingOrder.OrderDate = updatedOrder.OrderDate;
+        existingOrder.CustomerName = updatedOrder.CustomerName;
+        existingOrder.Phone = updatedOrder.Phone;
 
+     
         var menuItemIds = updatedOrder.OrderMenuItems.Select(omi => omi.MenuItemId).ToList();
 
         var menuItems = await context.MenuItems
             .Where(mi => menuItemIds.Contains(mi.Id))
             .ToListAsync(cancellationToken);
 
-        if (!menuItems.Any())
-        {
-            return Error.NotFound("No valid menu items found.");
-        }
+        existingOrder.MenuItemName = string.Join(", ", menuItems.Select(mi => mi.Name));
 
-   
         try
         {
+            context.Entry(existingOrder).State = EntityState.Modified;
             await context.SaveChangesAsync(cancellationToken);
             return existingOrder;
         }
@@ -101,6 +91,7 @@ public class OrderService(AvipAppDbContext context) : IOrderService
         }
     }
 
+    
     public async Task<Result<Deleted>> DeleteOrderAsync(int id, CancellationToken cancellationToken = default)
     {
         var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);

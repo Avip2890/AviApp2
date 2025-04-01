@@ -13,7 +13,8 @@ public static class MenuItemMapper
             Name = model.Name,
             Description = model.Description,
             Price = model.Price,
-            IsAvailable = model.IsAvailable
+            IsAvailable = model.IsAvailable,
+            ImageUrl = model.ImageUrl
         };
     }
 
@@ -25,7 +26,8 @@ public static class MenuItemMapper
             Name = entity.Name,
             Description = entity.Description,
             Price = entity.Price,
-            IsAvailable = entity.IsAvailable
+            IsAvailable = entity.IsAvailable,
+            ImageUrl = entity.ImageUrl
         };
     }
 }

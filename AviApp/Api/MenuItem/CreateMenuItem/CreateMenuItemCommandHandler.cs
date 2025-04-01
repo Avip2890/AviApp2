@@ -19,6 +19,7 @@ public class CreateMenuItemHandler(IMenuItemService menuItemService)
             Price = createMenuItemRequest.Price,
             Description = createMenuItemRequest.Description,
             IsAvailable = createMenuItemRequest.IsAvailable,
+            ImageUrl = createMenuItemRequest.ImageUrl
           
         };
         var result = await menuItemService.AddMenuItemAsync(menuItemEntity, cancellationToken);

@@ -94,7 +94,8 @@ public class MenuItemController(IMediator mediator) : AppBaseController
             menuItemDto.Name,
             menuItemDto.Price,
             menuItemDto.Description,
-            menuItemDto.IsAvailable
+            menuItemDto.IsAvailable,
+            menuItemDto.ImageUrl
         ), cancellationToken);
 
         return result.IsSuccess ? NoContent() : BadRequest(result.Errors);
